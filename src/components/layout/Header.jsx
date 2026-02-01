@@ -31,15 +31,11 @@ const Header = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <div className="bg-gradient-to-br from-blue-600 to-green-500 text-white p-2 rounded-lg mr-2 shadow-md">
-                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
-                  <path d="M12 2C12 2 12 8 12 12C12 16 8 18 8 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <path d="M12 2C12 2 12 8 12 12C12 16 16 18 16 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
-                  <circle cx="12" cy="12" r="3" fill="currentColor"/>
-                </svg>
-              </div>
-              <span className="text-xl font-bold text-gray-900">Geo<span className="text-blue-600">Pioneer</span></span>
+              <img 
+                src="/geopioneer-logo.png" 
+                alt="GeoPioneer - Net Zero Homes" 
+                className="h-12 w-auto"
+              />
             </Link>
           </div>
 
