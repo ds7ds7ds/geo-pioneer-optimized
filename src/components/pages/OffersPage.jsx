@@ -214,7 +214,21 @@ const OffersPage = () => {
               </CardContent>
             </Card>
 
-            {/* EaaS Card */}
+            {/* Tier 2 Own Card */}
+            <Card 
+              className="bg-white/10 border-blue-400/30 backdrop-blur-sm cursor-pointer hover:bg-white/20 transition-all"
+              onClick={() => document.getElementById('tier2').scrollIntoView({ behavior: 'smooth' })}
+            >
+              <CardContent className="pt-6 text-center">
+                <Badge className="mb-3 bg-blue-500 text-white">Tier 2 (Own)</Badge>
+                <h3 className="text-xl font-bold text-white mb-2">Purchase & Own</h3>
+                <p className="text-blue-200 text-sm mb-4">Own outright, max state incentives</p>
+                <div className="text-3xl font-bold text-blue-400">40-50%</div>
+                <p className="text-gray-400 text-xs mt-1">incentive offset</p>
+              </CardContent>
+            </Card>
+
+            {/* Tier 2 EaaS Card */}
             <Card 
               className="bg-white/10 border-purple-400/50 backdrop-blur-sm cursor-pointer hover:bg-white/20 transition-all relative"
               onClick={() => document.getElementById('tier2').scrollIntoView({ behavior: 'smooth' })}
@@ -223,25 +237,11 @@ const OffersPage = () => {
                 <Badge className="bg-yellow-400 text-gray-900 font-bold">⭐ POPULAR</Badge>
               </div>
               <CardContent className="pt-6 text-center">
-                <Badge className="mb-3 bg-purple-500 text-white">Tier 2 • EaaS</Badge>
+                <Badge className="mb-3 bg-purple-500 text-white">Tier 2 (EaaS)</Badge>
                 <h3 className="text-xl font-bold text-white mb-2">Energy Service</h3>
-                <p className="text-purple-200 text-sm mb-4">20-yr contract, 10-yr free maintenance</p>
+                <p className="text-purple-200 text-sm mb-4">$0 down + buyback option</p>
                 <div className="text-3xl font-bold text-purple-400">$0 Down</div>
                 <p className="text-gray-400 text-xs mt-1">5-10% instant savings</p>
-              </CardContent>
-            </Card>
-
-            {/* Purchase Card */}
-            <Card 
-              className="bg-white/10 border-blue-400/30 backdrop-blur-sm cursor-pointer hover:bg-white/20 transition-all"
-              onClick={() => document.getElementById('tier2').scrollIntoView({ behavior: 'smooth' })}
-            >
-              <CardContent className="pt-6 text-center">
-                <Badge className="mb-3 bg-blue-500 text-white">Tier 2 • Purchase</Badge>
-                <h3 className="text-xl font-bold text-white mb-2">NetZero Purchase</h3>
-                <p className="text-blue-200 text-sm mb-4">Own outright, max tax credits</p>
-                <div className="text-3xl font-bold text-blue-400">40-50%</div>
-                <p className="text-gray-400 text-xs mt-1">incentive offset</p>
               </CardContent>
             </Card>
           </div>
@@ -515,13 +515,13 @@ const OffersPage = () => {
                     </div>
                   </th>
                   <th className="text-center py-4 px-4">
-                    <div className="bg-purple-100 text-purple-800 rounded-lg py-2 px-4 font-bold">
-                      Tier 2 EaaS<br/><span className="font-normal text-sm">Energy Service</span>
+                    <div className="bg-blue-100 text-blue-800 rounded-lg py-2 px-4 font-bold">
+                      Tier 2 (Own)<br/><span className="font-normal text-sm">Purchase</span>
                     </div>
                   </th>
                   <th className="text-center py-4 px-4">
-                    <div className="bg-blue-100 text-blue-800 rounded-lg py-2 px-4 font-bold">
-                      Tier 2 Purchase<br/><span className="font-normal text-sm">Buy & Own</span>
+                    <div className="bg-purple-100 text-purple-800 rounded-lg py-2 px-4 font-bold">
+                      Tier 2 (EaaS)<br/><span className="font-normal text-sm">Service + Buyback</span>
                     </div>
                   </th>
                 </tr>
@@ -540,21 +540,21 @@ const OffersPage = () => {
                       )}
                     </td>
                     <td className="py-4 px-4 text-center">
-                      {row.eaas === true ? (
-                        <CheckCircle className="h-6 w-6 text-purple-500 mx-auto" />
-                      ) : row.eaas === false ? (
-                        <span className="text-gray-300">—</span>
-                      ) : (
-                        <span className="font-semibold text-purple-600">{row.eaas}</span>
-                      )}
-                    </td>
-                    <td className="py-4 px-4 text-center">
                       {row.purchase === true ? (
                         <CheckCircle className="h-6 w-6 text-blue-500 mx-auto" />
                       ) : row.purchase === false ? (
                         <span className="text-gray-300">—</span>
                       ) : (
                         <span className="font-semibold text-blue-600">{row.purchase}</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-4 text-center">
+                      {row.eaas === true ? (
+                        <CheckCircle className="h-6 w-6 text-purple-500 mx-auto" />
+                      ) : row.eaas === false ? (
+                        <span className="text-gray-300">—</span>
+                      ) : (
+                        <span className="font-semibold text-purple-600">{row.eaas}</span>
                       )}
                     </td>
                   </tr>
