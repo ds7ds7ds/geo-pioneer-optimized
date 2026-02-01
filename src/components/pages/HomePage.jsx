@@ -1,446 +1,204 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { CheckCircle, DollarSign, Home, Leaf, Zap, Phone, ArrowRight, Calculator, FileText, Battery, Sun } from 'lucide-react'
-import BlogSection from '../BlogSection.jsx'
-
-// Import images - using high-quality presentation images
-import geothermalHomeDiagram from '../../assets/geothermal-home-diagram.png'
-import groundSourceSystem from '../../assets/ground-source-system.png'
-import compactDrillingSite from '../../assets/compact-drilling-site.png'
-import newEnglandHouse from '/211118-AdobeStock_17893488-sm.jpg'
-import comacchioRig from '/1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg'
-import comacchioRig2 from '/comacchio-geo-600_a.2048x0.jpg'
-import geothermalOriginal from '../../assets/OZfoKICtUl3C.png'
-
-// Geothermal Image Carousel Component
-const GeothermalImageCarousel = () => {
-  const [currentImageIndex, setCurrentImageIndex] = useState(0)
-  
-  const images = [
-    {
-      src: '/geo-aerial-boston.jpg',
-      alt: "GeoPioneer Installation - Boston Area",
-      caption: "Active GeoPioneer installation in Greater Boston - solar + geothermal NetZero project"
-    },
-    {
-      src: '/geo-drilling-closeup.jpg',
-      alt: "Vertical Bore Drilling in Progress",
-      caption: "Our crew drilling 400ft vertical bores with 1.25\" PE4710 HDPE pipe"
-    },
-    {
-      src: '/geo-cedar-house.jpg',
-      alt: "Cedar Shake Home Geothermal Install",
-      caption: "Classic New England cedar shake home - solar panels + geothermal ground loop installation"
-    },
-    {
-      src: geothermalHomeDiagram,
-      alt: "Geothermal Home Installation Diagram",
-      caption: "How geothermal works in your home - heating and cooling"
-    },
-    {
-      src: groundSourceSystem,
-      alt: "Ground Source Heat Pump System",
-      caption: "Underground pipe system for year-round comfort"
-    },
-    {
-      src: '/1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg',
-      alt: "Comacchio GEO 601 Drilling Rig",
-      caption: "Professional Comacchio GEO 601 drilling rig - precision and efficiency"
-    },
-    {
-      src: geothermalOriginal,
-      alt: "Geothermal Winter and Summer Operation",
-      caption: "Winter heating and summer cooling operation schematic"
-    }
-  ]
-
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setCurrentImageIndex((prevIndex) => 
-        prevIndex === images.length - 1 ? 0 : prevIndex + 1
-      )
-    }, 5000) // Change image every 5 seconds
-
-    return () => clearInterval(interval)
-  }, [images.length])
-
-  return (
-    <div className="relative max-w-4xl mx-auto">
-      <div className="relative overflow-hidden rounded-lg shadow-2xl bg-slate-800">
-        <img 
-          src={images[currentImageIndex].src}
-          alt={images[currentImageIndex].alt}
-          className="w-full h-auto object-contain transition-opacity duration-700"
-          style={{ minHeight: '400px', maxHeight: '600px' }}
-        />
-        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-6">
-          <p className="text-white font-medium text-lg">{images[currentImageIndex].caption}</p>
-        </div>
-        
-        {/* Navigation arrows */}
-        <button
-          onClick={() => setCurrentImageIndex(currentImageIndex === 0 ? images.length - 1 : currentImageIndex - 1)}
-          className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-        </button>
-        <button
-          onClick={() => setCurrentImageIndex(currentImageIndex === images.length - 1 ? 0 : currentImageIndex + 1)}
-          className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full transition-colors"
-        >
-          <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
-        </button>
-      </div>
-      
-      {/* Dot indicators */}
-      <div className="flex justify-center mt-6 space-x-3">
-        {images.map((_, index) => (
-          <button
-            key={index}
-            onClick={() => setCurrentImageIndex(index)}
-            className={`w-4 h-4 rounded-full transition-all duration-300 ${
-              index === currentImageIndex 
-                ? 'bg-gradient-to-r from-green-400 to-cyan-400 scale-110' 
-                : 'bg-gray-500 hover:bg-gray-400'
-            }`}
-          />
-        ))}
-      </div>
-    </div>
-  )
-}
 
 const HomePage = () => {
   const [showAssessment, setShowAssessment] = useState(false)
 
   const keyBenefits = [
     {
-      icon: <Zap className="h-8 w-8 text-cyan-400" />,
+      icon: <Zap className="h-6 w-6" />,
       title: "400-600% Efficiency",
-      description: "Compared to 80-95% for fossil fuel systems",
-      highlight: "4-6x more efficient"
+      description: "4-6x more efficient than fossil fuel systems"
     },
     {
-      icon: <DollarSign className="h-8 w-8 text-green-400" />,
+      icon: <DollarSign className="h-6 w-6" />,
       title: "$200-$275/Month Savings",
-      description: "Compared to oil/propane + AC systems",
-      highlight: "Up to $3,300/year"
+      description: "Compared to oil/propane + AC systems"
     },
     {
-      icon: <Leaf className="h-8 w-8 text-green-400" />,
+      icon: <Leaf className="h-6 w-6" />,
       title: "50-70% Energy Reduction",
-      description: "Compared to conventional heating and cooling",
-      highlight: "Eco-friendly solution"
+      description: "Eco-friendly heating and cooling"
+    },
+    {
+      icon: <Home className="h-6 w-6" />,
+      title: "25-50 Year Lifespan",
+      description: "2-3x longer than conventional systems"
     }
   ]
 
   const customerSegments = [
     {
       title: "Existing Homes",
-      description: "Perfect for homes with 2000+ sq ft, central AC, and expensive heating fuels like oil or propane",
-      features: [
-        "Retrofit existing ductwork",
-        "Minimal property disruption",
-        "3-4 week installation",
-        "Immediate savings"
-      ],
-      cta: "Learn About Renovation",
+      description: "Perfect for homes with 2000+ sq ft, central AC, and expensive heating fuels",
+      features: ["Retrofit existing ductwork", "Minimal property disruption", "3-4 week installation"],
+      cta: "Learn More",
       link: "/existing-homes",
-      icon: <Home className="h-12 w-12 text-blue-600" />,
-      color: "blue"
+      icon: <Home className="h-8 w-8" />
     },
     {
       title: "New Construction",
-      description: "Maximize incentives and minimize operating costs for new construction projects",
-      features: [
-        "Competitive upfront costs",
-        "Maximum incentive eligibility",
-        "Optimal system integration",
-        "GaaS model available"
-      ],
-      cta: "Explore New Construction",
+      description: "Maximize incentives and minimize operating costs from day one",
+      features: ["Up to $34K in rebates", "30% Federal ITC for builders", "Optimal system integration"],
+      cta: "Learn More",
       link: "/new-construction",
-      icon: <Zap className="h-12 w-12 text-green-600" />,
-      color: "green"
-    }
-  ]
-
-  const incentives = [
-    {
-      amount: "$13,500",
-      title: "MassSave Rebate",
-      description: "Whole-home geothermal (up to $25K income-eligible)"
-    },
-    {
-      amount: "30%",
-      title: "Federal ITC via EaaS",
-      description: "Through TPO model—residential credit expired 2025"
-    },
-    {
-      amount: "0%",
-      title: "HEAT Loan",
-      description: "Up to $25K financing at 0% interest"
-    }
-  ]
-
-  const whyChooseUs = [
-    {
-      title: "Massachusetts Expertise",
-      description: "Specialized in New England's rocky terrain and compact drilling solutions",
-      icon: <Home className="h-6 w-6 text-blue-600" />
-    },
-    {
-      title: "Minimal Disruption",
-      description: "European-style compact equipment requires only 10x10 ft drilling area",
-      icon: <Leaf className="h-6 w-6 text-green-600" />
-    },
-    {
-      title: "Complete Solution",
-      description: "Heating, cooling, and hot water in one integrated system",
-      icon: <Zap className="h-6 w-6 text-purple-600" />
-    },
-    {
-      title: "Long-term Value",
-      description: "25-50 year lifespan vs 10-15 years for conventional systems",
-      icon: <DollarSign className="h-6 w-6 text-green-600" />
+      icon: <Zap className="h-8 w-8" />
     }
   ]
 
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 flex items-center">
-        <div className="absolute inset-0 bg-[url('/211118-AdobeStock_17893488-sm.jpg')] bg-cover bg-center opacity-20"></div>
-        <div className="absolute inset-0 bg-gradient-to-br from-slate-900/80 via-slate-800/70 to-slate-900/80"></div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-20">
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-20 lg:py-28">
+        <div className="absolute inset-0 bg-[url('/geo-aerial-boston.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <Badge className="mb-4 bg-cyan-400/20 text-cyan-400 hover:bg-cyan-400/30 border border-cyan-400/30">
+              <Badge className="mb-6 bg-cyan-500/20 text-cyan-400 border-cyan-400/30 text-sm px-4 py-1">
                 Massachusetts Geothermal Pioneers
               </Badge>
-              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4">
+              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4">
                 Set the temperature.
-                <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent block py-2 leading-tight">Forget the bills.</span>
+                <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent block mt-2">Forget the bills.</span>
               </h1>
-              <p className="text-xl text-cyan-200 mb-6 font-medium">
+              <p className="text-xl text-cyan-200 mb-4 font-medium">
                 Net-zero homes designed for full comfort and predictable costs.
               </p>
               <p className="text-lg text-gray-400 mb-8 leading-relaxed">
                 In many parts of the world, comfort is assumed. In the U.S., comfort often comes with anxiety.
-                <span className="text-gray-300 block mt-2">Net-zero homes change that. You set the temperature once — and stop worrying about energy prices forever.</span>
+                <span className="text-gray-300 block mt-2">Net-zero homes change that. Set the temperature once — stop worrying about energy prices forever.</span>
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
                   size="lg" 
-                  className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 text-lg"
+                  className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 text-lg font-semibold"
                   asChild
                 >
                   <Link to="/calculator">
                     <Calculator className="h-5 w-5 mr-2" />
-                    Calculate Your Savings
+                    Calculate Savings
                   </Link>
                 </Button>
                 <Button 
                   size="lg" 
-                  variant="outline"
-                  className="border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 px-8 py-4 text-lg"
+                  className="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 text-lg"
                   onClick={() => setShowAssessment(true)}
                 >
                   <FileText className="h-5 w-5 mr-2" />
-                  Get Free Assessment
+                  Free Assessment
                 </Button>
               </div>
             </div>
-            <div className="flex justify-center">
-              <GeothermalImageCarousel />
+            <div className="hidden lg:block">
+              <img 
+                src="/geothermal-netzero-diagram.jpg" 
+                alt="GeoPioneer Net Zero Home" 
+                className="rounded-2xl shadow-2xl border border-white/10"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Three-Tier Offers Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <Badge className="mb-4 bg-green-400/20 text-green-400 border-green-400/30 text-lg px-6 py-2">
-              New: Energy Freedom Program
+      {/* Energy Freedom Program */}
+      <section className="py-16 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <Badge className="mb-4 bg-green-500/20 text-green-400 border-green-400/30 px-4 py-1">
+              Energy Freedom Program
             </Badge>
-            <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+            <h2 className="text-3xl lg:text-4xl font-bold mb-4">
               Your Path to <span className="text-green-400">Energy Freedom</span>
             </h2>
-            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Three options to fit your goals: Free battery, Energy-as-a-Service, or buy and own
+            <p className="text-gray-300 text-lg max-w-2xl mx-auto">
+              Three options to fit your goals
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-6 mb-12">
-            {/* Tier 1 Card */}
-            <Card className="bg-gradient-to-br from-green-900/50 to-green-800/30 border-green-500/50 text-white overflow-hidden">
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-green-500 text-white">Tier 1</Badge>
-                  <span className="text-2xl font-bold text-green-400">FREE</span>
-                </div>
-                <CardTitle className="text-xl text-white flex items-center gap-3">
-                  <Battery className="h-7 w-7 text-green-400" />
-                  Battery Storage
-                </CardTitle>
-                <CardDescription className="text-gray-300 text-sm">
-                  Backup power, zero upfront cost
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">No money down</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">Backup during outages</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">Peak shaving savings</span>
-                  </li>
-                </ul>
-                <Link to="/offers">
-                  <Button className="w-full mt-3 bg-green-500 hover:bg-green-600 text-white">
-                    Get Free Battery
-                  </Button>
-                </Link>
+          <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto">
+            {/* Tier 1 */}
+            <Card className="bg-green-600/20 border-2 border-green-500 text-white">
+              <CardContent className="pt-6 text-center">
+                <Badge className="mb-3 bg-green-500 text-white">Tier 1</Badge>
+                <Battery className="h-10 w-10 text-green-400 mx-auto mb-3" />
+                <h3 className="text-xl font-bold mb-2">Free Battery</h3>
+                <p className="text-green-200 text-sm mb-4">Backup power + savings</p>
+                <div className="text-3xl font-bold text-green-400">FREE</div>
+                <p className="text-green-200/70 text-xs mt-1">Zero upfront cost</p>
               </CardContent>
             </Card>
 
-            {/* EaaS Card */}
-            <Card className="bg-gradient-to-br from-purple-900/50 to-purple-800/30 border-purple-400/50 text-white overflow-hidden relative">
-              <div className="absolute top-2 right-2">
-                <Badge className="bg-yellow-400 text-gray-900 text-xs">⭐ POPULAR</Badge>
+            {/* EaaS */}
+            <Card className="bg-purple-600/20 border-2 border-purple-400 text-white relative">
+              <div className="absolute -top-3 left-1/2 -translate-x-1/2">
+                <Badge className="bg-yellow-400 text-gray-900 font-bold">⭐ POPULAR</Badge>
               </div>
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-purple-500 text-white">EaaS</Badge>
-                  <span className="text-lg font-bold text-purple-300">$0 Down</span>
+              <CardContent className="pt-6 text-center">
+                <Badge className="mb-3 bg-purple-500 text-white">EaaS</Badge>
+                <div className="flex justify-center gap-1 mb-3">
+                  <Battery className="h-8 w-8 text-green-400" />
+                  <Sun className="h-8 w-8 text-yellow-400" />
+                  <Zap className="h-8 w-8 text-purple-400" />
                 </div>
-                <CardTitle className="text-xl text-white flex items-center gap-3">
-                  <div className="flex -space-x-1">
-                    <Battery className="h-6 w-6 text-green-400" />
-                    <Sun className="h-6 w-6 text-yellow-400" />
-                    <Zap className="h-6 w-6 text-purple-300" />
-                  </div>
-                  Energy Service
-                </CardTitle>
-                <CardDescription className="text-purple-200 text-sm">
-                  20-yr contract, 10-yr free maintenance
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-300 flex-shrink-0" />
-                    <span className="text-gray-200">5-10% instant savings</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-300 flex-shrink-0" />
-                    <span className="text-gray-200">Full NetZero system</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-purple-300 flex-shrink-0" />
-                    <span className="text-gray-200">Maintenance included</span>
-                  </li>
-                </ul>
-                <Link to="/offers#eaas">
-                  <Button className="w-full mt-3 bg-purple-500 hover:bg-purple-600 text-white">
-                    Learn About EaaS
-                  </Button>
-                </Link>
+                <h3 className="text-xl font-bold mb-2">Energy Service</h3>
+                <p className="text-purple-200 text-sm mb-4">$0 down, full system</p>
+                <div className="text-3xl font-bold text-purple-400">5-10%</div>
+                <p className="text-purple-200/70 text-xs mt-1">instant savings</p>
               </CardContent>
             </Card>
 
-            {/* Tier 2 Card */}
-            <Card className="bg-gradient-to-br from-blue-900/50 to-cyan-800/30 border-cyan-500/50 text-white overflow-hidden">
-              <CardHeader className="pb-4">
-                <div className="flex items-center justify-between">
-                  <Badge className="bg-blue-500 text-white">Tier 2</Badge>
-                  <span className="text-lg font-bold text-cyan-400">Buy & Own</span>
+            {/* Tier 2 */}
+            <Card className="bg-blue-600/20 border-2 border-blue-400 text-white">
+              <CardContent className="pt-6 text-center">
+                <Badge className="mb-3 bg-blue-500 text-white">Tier 2</Badge>
+                <div className="flex justify-center gap-1 mb-3">
+                  <Battery className="h-8 w-8 text-green-400" />
+                  <Sun className="h-8 w-8 text-yellow-400" />
+                  <Zap className="h-8 w-8 text-cyan-400" />
                 </div>
-                <CardTitle className="text-xl text-white flex items-center gap-3">
-                  <div className="flex -space-x-1">
-                    <Battery className="h-6 w-6 text-green-400" />
-                    <Sun className="h-6 w-6 text-yellow-400" />
-                    <Zap className="h-6 w-6 text-cyan-400" />
-                  </div>
-                  NetZero Purchase
-                </CardTitle>
-                <CardDescription className="text-gray-300 text-sm">
-                  Own outright, max tax credits
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-3">
-                <ul className="space-y-2 text-sm">
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">40-50% incentive offset</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">$3-5K+ annual savings</span>
-                  </li>
-                  <li className="flex items-center gap-2">
-                    <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">5-8 year payback</span>
-                  </li>
-                </ul>
-                <Link to="/offers#tier2">
-                  <Button className="w-full mt-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
-                    Calculate Savings
-                  </Button>
-                </Link>
+                <h3 className="text-xl font-bold mb-2">Buy & Own</h3>
+                <p className="text-blue-200 text-sm mb-4">Own outright, max incentives</p>
+                <div className="text-3xl font-bold text-cyan-400">40-50%</div>
+                <p className="text-blue-200/70 text-xs mt-1">incentive offset</p>
               </CardContent>
             </Card>
           </div>
 
-          <div className="text-center">
+          <div className="text-center mt-8">
             <Link to="/offers">
-              <Button size="lg" className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 font-bold">
+              <Button className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white font-semibold">
                 Compare All Options
-                <ArrowRight className="h-5 w-5 ml-2" />
+                <ArrowRight className="h-4 w-4 ml-2" />
               </Button>
             </Link>
           </div>
         </div>
       </section>
 
-      {/* Key Benefits Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Massachusetts Homeowners Choose Geothermal
+      {/* Key Benefits */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Why Geothermal?
             </h2>
-            <p className="text-lg text-gray-600 max-w-3xl mx-auto">
-              Based on data from International Ground Source Heat Pump Association (IGSHPA)
-            </p>
+            <p className="text-gray-600">Based on IGSHPA data</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {keyBenefits.map((benefit, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow group">
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardHeader>
-                  <div className="flex justify-center mb-4 group-hover:scale-110 transition-transform">
+                  <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
                     {benefit.icon}
                   </div>
-                  <CardTitle className="text-xl">{benefit.title}</CardTitle>
-                  <Badge variant="secondary" className="mt-2">{benefit.highlight}</Badge>
+                  <CardTitle className="text-lg">{benefit.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <p className="text-gray-600">{benefit.description}</p>
+                  <p className="text-gray-600 text-sm">{benefit.description}</p>
                 </CardContent>
               </Card>
             ))}
@@ -448,50 +206,36 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Customer Segments Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Choose Your Path to Geothermal
+      {/* Customer Segments */}
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">
+              Choose Your Path
             </h2>
-            <p className="text-lg text-gray-600">
-              Whether you're retrofitting an existing home or building new, we have the perfect solution
-            </p>
           </div>
-          <div className="grid lg:grid-cols-2 gap-8">
+          <div className="grid lg:grid-cols-2 gap-8 max-w-4xl mx-auto">
             {customerSegments.map((segment, index) => (
-              <Card key={index} className="hover:shadow-xl transition-shadow group">
+              <Card key={index} className="hover:shadow-xl transition-shadow">
                 <CardHeader>
-                  <div className="flex items-center space-x-4 mb-4">
-                    <div className="group-hover:scale-110 transition-transform">
+                  <div className="flex items-center gap-4 mb-2">
+                    <div className="bg-blue-100 p-3 rounded-lg text-blue-600">
                       {segment.icon}
                     </div>
-                    <div>
-                      <CardTitle className="text-2xl">{segment.title}</CardTitle>
-                    </div>
+                    <CardTitle className="text-xl">{segment.title}</CardTitle>
                   </div>
-                  <CardDescription className="text-base">
-                    {segment.description}
-                  </CardDescription>
+                  <CardDescription>{segment.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
                   <ul className="space-y-2 mb-6">
                     {segment.features.map((feature, idx) => (
-                      <li key={idx} className="flex items-center space-x-2">
+                      <li key={idx} className="flex items-center gap-2">
                         <CheckCircle className="h-4 w-4 text-green-600" />
-                        <span className="text-gray-700">{feature}</span>
+                        <span className="text-gray-700 text-sm">{feature}</span>
                       </li>
                     ))}
                   </ul>
-                  <Button 
-                    className={`w-full ${
-                      segment.color === 'blue' 
-                        ? 'bg-blue-600 hover:bg-blue-700' 
-                        : 'bg-green-600 hover:bg-green-700'
-                    } text-white`}
-                    asChild
-                  >
+                  <Button className="w-full bg-blue-600 hover:bg-blue-700 text-white" asChild>
                     <Link to={segment.link}>
                       {segment.cta}
                       <ArrowRight className="h-4 w-4 ml-2" />
@@ -504,140 +248,107 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* How It Works Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              How Geothermal Works
-            </h2>
-            <p className="text-lg text-gray-600">
-              Uses stable underground temperatures (50-55°F year-round) for efficient heating and cooling
-            </p>
-          </div>
+      {/* How It Works */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
-              <div className="space-y-8">
-                <div className="flex items-start space-x-4">
-                  <div className="bg-blue-100 p-3 rounded-full">
-                    <Zap className="h-6 w-6 text-blue-600" />
+              <Badge className="mb-4 bg-blue-100 text-blue-800">How It Works</Badge>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">
+                What is Geothermal?
+              </h2>
+              <div className="space-y-4">
+                <div className="flex items-start gap-4">
+                  <div className="bg-green-100 p-2 rounded-full text-green-600 flex-shrink-0">
+                    <Zap className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Winter Heating</h3>
-                    <p className="text-gray-600">
-                      Extracts heat from the ground and delivers it to your home with 400%+ efficiency
-                    </p>
+                    <h4 className="font-semibold text-gray-900">Stable Ground Temperature</h4>
+                    <p className="text-gray-600 text-sm">Uses earth's constant 50-55°F for year-round comfort</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-green-100 p-3 rounded-full">
-                    <Leaf className="h-6 w-6 text-green-600" />
+                <div className="flex items-start gap-4">
+                  <div className="bg-blue-100 p-2 rounded-full text-blue-600 flex-shrink-0">
+                    <Leaf className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Summer Cooling</h3>
-                    <p className="text-gray-600">
-                      Pulls heat from your home and deposits it into the ground with 600%+ efficiency
-                    </p>
+                    <h4 className="font-semibold text-gray-900">Summer Cooling</h4>
+                    <p className="text-gray-600 text-sm">Pulls heat from home, deposits into cooler ground</p>
                   </div>
                 </div>
-                <div className="flex items-start space-x-4">
-                  <div className="bg-purple-100 p-3 rounded-full">
-                    <Home className="h-6 w-6 text-purple-600" />
+                <div className="flex items-start gap-4">
+                  <div className="bg-orange-100 p-2 rounded-full text-orange-600 flex-shrink-0">
+                    <Home className="h-5 w-5" />
                   </div>
                   <div>
-                    <h3 className="text-xl font-semibold text-gray-900 mb-2">Vertical Bore Technology</h3>
-                    <p className="text-gray-600">
-                      400-1000 ft deep vertical bores ideal for Massachusetts properties with limited space
-                    </p>
+                    <h4 className="font-semibold text-gray-900">Winter Heating</h4>
+                    <p className="text-gray-600 text-sm">Extracts heat from warmer ground into your home</p>
                   </div>
                 </div>
               </div>
             </div>
-            <div className="flex justify-center">
+            <div>
               <img 
-                src={compactDrillingSite} 
-                alt="Compact Drilling Equipment" 
-                className="max-w-full h-auto rounded-lg shadow-lg"
+                src="/geo-drilling-closeup.jpg" 
+                alt="Geothermal Drilling" 
+                className="rounded-2xl shadow-xl"
               />
             </div>
           </div>
         </div>
       </section>
 
-      {/* Incentives Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-blue-600 text-white">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold mb-4">
-              Substantial Incentives Available Now
-            </h2>
-            <p className="text-xl text-blue-100">
-              Reduce your system cost by over 50% with combined federal and state incentives
-            </p>
+      {/* Incentives */}
+      <section className="py-16 bg-gradient-to-r from-green-600 to-cyan-600 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">Available Incentives</h2>
+            <p className="text-green-100">Reduce your cost by 40-50%</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-8">
-            {incentives.map((incentive, index) => (
-              <Card key={index} className="bg-white/10 border-white/20 text-white text-center hover:bg-white/20 transition-colors">
-                <CardHeader>
-                  <div className="text-4xl font-bold text-white mb-2">{incentive.amount}</div>
-                  <CardTitle className="text-xl text-white">{incentive.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-blue-100">{incentive.description}</p>
-                </CardContent>
-              </Card>
-            ))}
-          </div>
-        </div>
-      </section>
-
-      {/* Why Choose Us Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
-              Why Choose GeoPioneer
-            </h2>
-            <p className="text-lg text-gray-600">
-              Massachusetts' leading geothermal installation company
-            </p>
-          </div>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-            {whyChooseUs.map((reason, index) => (
-              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
-                <CardHeader>
-                  <div className="flex justify-center mb-4">
-                    {reason.icon}
-                  </div>
-                  <CardTitle className="text-lg">{reason.title}</CardTitle>
-                </CardHeader>
-                <CardContent>
-                  <p className="text-gray-600 text-sm">{reason.description}</p>
-                </CardContent>
-              </Card>
-            ))}
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+              <div className="text-4xl font-bold mb-2">$13,500</div>
+              <div className="font-semibold">MassSave Rebate</div>
+              <p className="text-green-200 text-sm mt-1">Up to $25K income-eligible</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+              <div className="text-4xl font-bold mb-2">30%</div>
+              <div className="font-semibold">Federal ITC</div>
+              <p className="text-green-200 text-sm mt-1">Via EaaS/TPO model</p>
+            </div>
+            <div className="bg-white/10 backdrop-blur-sm rounded-xl p-6 text-center">
+              <div className="text-4xl font-bold mb-2">0%</div>
+              <div className="font-semibold">HEAT Loan</div>
+              <p className="text-green-200 text-sm mt-1">Up to $25K financing</p>
+            </div>
           </div>
         </div>
       </section>
 
       {/* CTA Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-green-600">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
-            Ready to Start Saving with Geothermal?
+      <section className="py-16 bg-gray-50">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl font-bold text-gray-900 mb-6">
+            Ready to Start Saving?
           </h2>
-          <p className="text-xl text-green-100 mb-8">
-            Get a free assessment and discover how much you can save with Massachusetts' most efficient heating and cooling solution
+          <p className="text-lg text-gray-600 mb-8">
+            Get a free assessment and discover your savings potential
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
-
+            <Button 
+              size="lg" 
+              className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 font-bold"
+              onClick={() => setShowAssessment(true)}
+            >
+              Get Free Assessment
+            </Button>
             <a href="tel:+17816545879">
               <Button 
                 size="lg" 
-                className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-3 font-bold"
+                className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-4 font-bold"
               >
                 <Phone className="h-5 w-5 mr-2" />
-                Call (781) 654-5879
+                (781) 654-5879
               </Button>
             </a>
           </div>
@@ -646,14 +357,17 @@ const HomePage = () => {
 
       {/* Assessment Modal */}
       {showAssessment && (
-        <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white rounded-lg max-w-2xl w-full max-h-[90vh] overflow-y-auto">
-            <div className="p-6">
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="p-6 lg:p-8">
               <div className="flex justify-between items-center mb-6">
-                <h2 className="text-2xl font-bold text-gray-900">Get Your Free Assessment</h2>
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Get Your Free Assessment</h2>
+                  <p className="text-gray-600">We'll contact you within 24 hours</p>
+                </div>
                 <button 
                   onClick={() => setShowAssessment(false)}
-                  className="text-gray-400 hover:text-gray-600 text-2xl"
+                  className="text-gray-400 hover:text-gray-600 text-3xl leading-none"
                 >
                   ×
                 </button>
@@ -665,7 +379,7 @@ const HomePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                     <input 
                       type="text" 
-                      className="w-full p-3 border border-gray-300 rounded-md focus:border-cyan-400 focus:outline-none"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                       placeholder="Your full name"
                     />
                   </div>
@@ -673,7 +387,7 @@ const HomePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                     <input 
                       type="email" 
-                      className="w-full p-3 border border-gray-300 rounded-md focus:border-cyan-400 focus:outline-none"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                       placeholder="your@email.com"
                     />
                   </div>
@@ -684,14 +398,14 @@ const HomePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
                     <input 
                       type="tel" 
-                      className="w-full p-3 border border-gray-300 rounded-md focus:border-cyan-400 focus:outline-none"
-                      placeholder="(781) 654-5879"
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="(555) 555-5555"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-                    <select className="w-full p-3 border border-gray-300 rounded-md focus:border-cyan-400 focus:outline-none">
-                      <option value="">Select property type</option>
+                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
+                      <option value="">Select type</option>
                       <option value="existing">Existing Home</option>
                       <option value="new">New Construction</option>
                     </select>
@@ -699,93 +413,36 @@ const HomePage = () => {
                 </div>
                 
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Property Address</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
                   <input 
                     type="text" 
-                    className="w-full p-3 border border-gray-300 rounded-md focus:border-cyan-400 focus:outline-none"
-                    placeholder="123 Main St, City, State, ZIP"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                    placeholder="City, State"
                   />
                 </div>
-                
+
                 <div>
-                  <label className="block text-sm font-medium text-gray-700 mb-1">Additional Information</label>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Questions or Comments</label>
                   <textarea 
-                    className="w-full p-3 border border-gray-300 rounded-md focus:border-cyan-400 focus:outline-none resize-none"
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none"
                     rows="3"
-                    placeholder="Tell us about your project, current heating system, or any specific questions..."
+                    placeholder="Tell us about your project..."
                   />
-                </div>
-                
-                <div className="bg-cyan-50 p-4 rounded-lg">
-                  <h4 className="font-semibold text-cyan-800 mb-2">What You'll Receive:</h4>
-                  <ul className="text-sm text-cyan-700 space-y-1">
-                    <li>• Comprehensive site evaluation</li>
-                    <li>• Custom system design and sizing</li>
-                    <li>• Detailed cost estimates</li>
-                    <li>• Financing and incentive guidance</li>
-                    <li>• No obligation consultation</li>
-                  </ul>
                 </div>
                 
                 <div className="flex gap-4 pt-4">
                   <Button 
-                    className="flex-1 bg-cyan-600 hover:bg-cyan-700 text-white"
-                    onClick={async () => {
-                      // Collect form data
-                      const formData = {
-                        name: document.querySelector('input[placeholder="Your full name"]').value,
-                        email: document.querySelector('input[placeholder="your@email.com"]').value,
-                        phone: document.querySelector('input[placeholder="(781) 654-5879"]').value,
-                        propertyType: document.querySelector('select').value,
-                        address: document.querySelector('input[placeholder="123 Main St, City, State, ZIP"]').value,
-                        additionalInfo: document.querySelector('textarea').value,
-                        submissionDate: new Date().toLocaleDateString(),
-                        submissionTime: new Date().toLocaleTimeString()
-                      }
-                      
-                      // Validate required fields
-                      if (!formData.name || !formData.email || !formData.phone) {
-                        alert('Please fill in all required fields (Name, Email, Phone)')
-                        return
-                      }
-                      
-                      // Import and use the report service
-                      try {
-                        const { generateAndSendReport } = await import('../../services/reportService.js')
-                        const result = await generateAndSendReport(formData, 'general')
-                        
-                        if (result.success) {
-                          alert(`Thank you ${formData.name}! 
-
-Your comprehensive geothermal assessment report has been generated and sent to:
-📧 Customer: ${formData.email}
-📧 CC: info@geopioneer.com
-
-Report ID: ${result.reportId}
-
-The report includes:
-✅ Available rebates and incentives (up to $30,000 total)
-✅ Step-by-step installation process (6-12 week timeline)
-✅ Financing options and next steps
-✅ Your specific property assessment details
-
-We'll contact you within 24 hours to schedule your on-site evaluation.`)
-                        } else {
-                          alert(`Error: ${result.message}. Please try again or contact us directly at (781) 654-5879.`)
-                        }
-                      } catch (error) {
-                        console.error('Report generation error:', error)
-                        alert('There was an issue generating your report. Please try again or contact us directly at (781) 654-5879.')
-                      }
-                      
+                    className="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white py-3 font-semibold"
+                    onClick={() => {
+                      alert('Thank you! We\'ll contact you within 24 hours.')
                       setShowAssessment(false)
                     }}
                   >
-                    Generate Report & Submit
+                    Submit Request
                   </Button>
                   <Button 
                     variant="outline" 
-                    className="flex-1"
+                    className="flex-1 py-3"
                     onClick={() => setShowAssessment(false)}
                   >
                     Cancel
@@ -796,121 +453,6 @@ We'll contact you within 24 hours to schedule your on-site evaluation.`)
           </div>
         </div>
       )}
-
-      {/* Blog Section */}
-      <BlogSection />
-
-      {/* Our Story & Team Section */}
-      <section className="py-20 bg-gradient-to-br from-green-50 to-blue-50">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-6">
-              Our Story & Expertise
-            </h2>
-            <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              GeoPioneer brings together decades of combined expertise in drilling, engineering, and sustainable energy solutions
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
-            <div>
-              <Card className="p-8 bg-white/80 backdrop-blur-sm border-green-200">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-green-800">Leadership & Execution Team</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-gray-900">Managing Director</h4>
-                        <p className="text-gray-700">Master's Degree in Engineering, Certified Designer and Installer for Ground Source Heat Pumps (IGSHPA)</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-gray-900">Operations Executive</h4>
-                        <p className="text-gray-700">More than half a decade of operations experience with effective project management and support from start to finish</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <CheckCircle className="h-6 w-6 text-green-600 mt-1 flex-shrink-0" />
-                      <div>
-                        <h4 className="font-semibold text-gray-900">Drilling Team</h4>
-                        <p className="text-gray-700">Top-notch drilling teams using high-tech Comacchio rigs, proven track record of over one million feet drilled worldwide</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-
-            <div>
-              <Card className="p-8 bg-white/80 backdrop-blur-sm border-blue-200">
-                <CardHeader>
-                  <CardTitle className="text-2xl text-blue-800">Professional Credentials</CardTitle>
-                </CardHeader>
-                <CardContent className="space-y-6">
-                  <div className="space-y-4">
-                    <div className="flex items-start space-x-3">
-                      <Badge className="bg-blue-100 text-blue-800 border-blue-200">Licensed</Badge>
-                      <div>
-                        <p className="text-gray-700">Drilling licenses in Massachusetts, Rhode Island, Maine, Connecticut, New York, and through the National Ground Water Association (NGWA)</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <Badge className="bg-green-100 text-green-800 border-green-200">Certified</Badge>
-                      <div>
-                        <p className="text-gray-700">Certified ground source heat pump designer with Master's degree in Reservoir Engineering</p>
-                      </div>
-                    </div>
-                    <div className="flex items-start space-x-3">
-                      <Badge className="bg-cyan-100 text-cyan-800 border-cyan-200">Proven</Badge>
-                      <div>
-                        <p className="text-gray-700">Over one million feet of successful drilling worldwide with high-tech European equipment</p>
-                      </div>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-          </div>
-
-          {/* Contact Information */}
-          <div className="mt-16 text-center">
-            <Card className="max-w-2xl mx-auto p-8 bg-gradient-to-br from-blue-50 to-cyan-50 border-blue-200">
-              <CardHeader>
-                <CardTitle className="text-2xl text-blue-800">Ready to Transform Your Home?</CardTitle>
-                <CardDescription className="text-lg text-blue-700">
-                  Contact our expert team for your free geothermal assessment
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <div className="flex flex-col sm:flex-row gap-4 justify-center items-center">
-                  <a 
-                    href="tel:+17816545879" 
-                    className="inline-flex items-center gap-2 px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white rounded-lg font-medium transition-colors"
-                  >
-                    <Phone className="h-5 w-5" />
-                    Call (781) 654-5879
-                  </a>
-                  <a 
-                    href="mailto:info@geopioneer.com" 
-                    className="inline-flex items-center gap-2 px-6 py-3 border border-blue-600 text-blue-600 hover:bg-blue-50 rounded-lg font-medium transition-colors"
-                  >
-                    <FileText className="h-5 w-5" />
-                    info@geopioneer.com
-                  </a>
-                </div>
-                <p className="mt-4 text-sm text-gray-600">
-                  Serving Massachusetts, Rhode Island, Maine, Connecticut, and New York
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
     </div>
   )
 }
