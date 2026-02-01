@@ -163,14 +163,16 @@ const BlogPage = () => {
                         <span>{post.readTime}</span>
                       </div>
                       
-                      <Button 
-                        variant="ghost" 
-                        size="sm"
-                        className="group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"
-                      >
-                        Read More
-                        <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                      </Button>
+                      <Link to={`/blog/${post.slug}`}>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          className="group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"
+                        >
+                          Read More
+                          <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </Button>
+                      </Link>
                     </div>
                   </CardContent>
                 </Card>

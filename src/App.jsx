@@ -6,6 +6,7 @@ import ExistingHomesPage from './components/pages/ExistingHomesPage'
 import NewConstructionPage from './components/pages/NewConstructionPage'
 import CalculatorPage from './components/pages/CalculatorPage'
 import BlogPage from './components/pages/BlogPage'
+import BlogPostPage from './components/pages/BlogPostPage'
 import AboutPage from './components/pages/AboutPage'
 import ContactPage from './components/pages/ContactPage'
 import './App.css'
@@ -20,6 +21,7 @@ function App() {
           <Route path="/new-construction" element={<NewConstructionPage />} />
           <Route path="/calculator" element={<CalculatorPage />} />
           <Route path="/blog" element={<BlogPage />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
         </Routes>
