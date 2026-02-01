@@ -11,19 +11,19 @@ const AboutPage = () => {
       name: "Managing Director",
       title: "Engineering Leadership",
       experience: "Master's Degree in Engineering, Certified Designer and Installer for Ground Source Heat Pumps (IGSHPA)",
-      certifications: ["IGSHPA Designer", "IGSHPA Installer", "Master's Engineering", "Mass Licensed"]
+      certifications: ["IGSHPA Certified", "Master's Engineering", "Multi-State Licensed"]
     },
     {
       name: "Operations Executive",
       title: "Project Management",
-      experience: "More than half a decade of operations experience with effective project management and support from start to finish",
-      certifications: ["Project Management Professional", "Customer Relations Certified", "Operations Management"]
+      experience: "More than half a decade of operations experience with effective project management and support",
+      certifications: ["Project Management", "Customer Relations", "Operations"]
     },
     {
-      name: "Installation Manager",
-      title: "Field Operations",
-      experience: "10+ years drilling and installation expertise",
-      certifications: ["Drilling Certified", "Safety Trained", "Equipment Specialist"]
+      name: "Drilling & Installation",
+      title: "Field Crews (10+ Professionals)",
+      experience: "Expert drilling teams with over 1 million feet drilled worldwide using high-tech Comacchio equipment",
+      certifications: ["NGWA Certified", "Safety Trained", "Equipment Specialists"]
     }
   ]
 
@@ -118,9 +118,9 @@ const AboutPage = () => {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Expert Team</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Team</h2>
             <p className="text-lg text-gray-600">
-              Certified professionals with decades of combined experience
+              5 core team members + 10+ field professionals delivering expert geothermal solutions
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
