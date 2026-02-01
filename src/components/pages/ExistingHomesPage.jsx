@@ -445,9 +445,18 @@ const ExistingHomesPage = () => {
             <p className="text-gray-600">Recent geothermal installations in Massachusetts</p>
           </div>
           <div className="grid md:grid-cols-3 gap-6">
-            <img src="/geo-drilling-closeup.jpg" alt="Drilling closeup" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
-            <img src="/geo-aerial-boston.jpg" alt="Aerial view of installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
-            <img src="/geo-cedar-house.jpg" alt="Completed installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
+            <div className="space-y-2">
+              <img src="/geo-drilling-backyard.jpg" alt="Project 1 - Residential drilling" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow w-full h-64 object-cover" />
+              <p className="text-center text-sm text-gray-600 font-medium">Colonial Home Retrofit</p>
+            </div>
+            <div className="space-y-2">
+              <img src="/geo-drilling-closeup.jpg" alt="Project 2 - Drilling operation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow w-full h-64 object-cover" />
+              <p className="text-center text-sm text-gray-600 font-medium">Suburban Installation</p>
+            </div>
+            <div className="space-y-2">
+              <img src="/geo-cedar-house.jpg" alt="Project 3 - Cedar house with solar" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow w-full h-64 object-cover" />
+              <p className="text-center text-sm text-gray-600 font-medium">NetZero Home Package</p>
+            </div>
           </div>
         </div>
       </section>
