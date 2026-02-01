@@ -258,110 +258,142 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Two-Tier Offers Section */}
+      {/* Three-Tier Offers Section */}
       <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
             <Badge className="mb-4 bg-green-400/20 text-green-400 border-green-400/30 text-lg px-6 py-2">
-              New: Two-Tier Energy Program
+              New: Energy Freedom Program
             </Badge>
             <h2 className="text-3xl lg:text-5xl font-bold mb-4">
               Your Path to <span className="text-green-400">Energy Freedom</span>
             </h2>
             <p className="text-xl text-gray-300 max-w-3xl mx-auto">
-              Start with free battery storage, upgrade to complete NetZero when you're ready
+              Three options to fit your goals: Free battery, Energy-as-a-Service, or buy and own
             </p>
           </div>
 
-          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+          <div className="grid lg:grid-cols-3 gap-6 mb-12">
             {/* Tier 1 Card */}
             <Card className="bg-gradient-to-br from-green-900/50 to-green-800/30 border-green-500/50 text-white overflow-hidden">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-green-500 text-white">Tier 1</Badge>
-                  <span className="text-3xl font-bold text-green-400">FREE</span>
+                  <span className="text-2xl font-bold text-green-400">FREE</span>
                 </div>
-                <CardTitle className="text-2xl text-white flex items-center gap-3">
-                  <Battery className="h-8 w-8 text-green-400" />
+                <CardTitle className="text-xl text-white flex items-center gap-3">
+                  <Battery className="h-7 w-7 text-green-400" />
                   Battery Storage
                 </CardTitle>
-                <CardDescription className="text-gray-300 text-base">
-                  Premium backup power with zero upfront cost
+                <CardDescription className="text-gray-300 text-sm">
+                  Backup power, zero upfront cost
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">No money down, no installation fees</span>
+              <CardContent className="space-y-3">
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">No money down</span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">Backup power during outages</span>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">Backup during outages</span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">Peak shaving energy savings</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
-                    <span className="text-gray-200">Priority upgrade path to Tier 2</span>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">Peak shaving savings</span>
                   </li>
                 </ul>
                 <Link to="/offers">
-                  <Button className="w-full mt-4 bg-green-500 hover:bg-green-600 text-white">
+                  <Button className="w-full mt-3 bg-green-500 hover:bg-green-600 text-white">
                     Get Free Battery
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* EaaS Card */}
+            <Card className="bg-gradient-to-br from-purple-900/50 to-purple-800/30 border-purple-400/50 text-white overflow-hidden relative">
+              <div className="absolute top-2 right-2">
+                <Badge className="bg-yellow-400 text-gray-900 text-xs">⭐ POPULAR</Badge>
+              </div>
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-purple-500 text-white">EaaS</Badge>
+                  <span className="text-lg font-bold text-purple-300">$0 Down</span>
+                </div>
+                <CardTitle className="text-xl text-white flex items-center gap-3">
+                  <div className="flex -space-x-1">
+                    <Battery className="h-6 w-6 text-green-400" />
+                    <Sun className="h-6 w-6 text-yellow-400" />
+                    <Zap className="h-6 w-6 text-purple-300" />
+                  </div>
+                  Energy Service
+                </CardTitle>
+                <CardDescription className="text-purple-200 text-sm">
+                  Pay less than current bills, own after 6 yrs
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-3">
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-purple-300 flex-shrink-0" />
+                    <span className="text-gray-200">5-10% instant savings</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-purple-300 flex-shrink-0" />
+                    <span className="text-gray-200">Full NetZero system</span>
+                  </li>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-purple-300 flex-shrink-0" />
+                    <span className="text-gray-200">Maintenance included</span>
+                  </li>
+                </ul>
+                <Link to="/offers#eaas">
+                  <Button className="w-full mt-3 bg-purple-500 hover:bg-purple-600 text-white">
+                    Learn About EaaS
                   </Button>
                 </Link>
               </CardContent>
             </Card>
 
             {/* Tier 2 Card */}
-            <Card className="bg-gradient-to-br from-blue-900/50 to-cyan-800/30 border-cyan-500/50 text-white overflow-hidden relative">
-              <div className="absolute top-4 right-4">
-                <Badge className="bg-cyan-500 text-white">Most Popular</Badge>
-              </div>
+            <Card className="bg-gradient-to-br from-blue-900/50 to-cyan-800/30 border-cyan-500/50 text-white overflow-hidden">
               <CardHeader className="pb-4">
                 <div className="flex items-center justify-between">
                   <Badge className="bg-blue-500 text-white">Tier 2</Badge>
-                  <span className="text-lg font-semibold text-cyan-400">Save $3-5K+/year</span>
+                  <span className="text-lg font-bold text-cyan-400">Buy & Own</span>
                 </div>
-                <CardTitle className="text-2xl text-white flex items-center gap-3">
+                <CardTitle className="text-xl text-white flex items-center gap-3">
                   <div className="flex -space-x-1">
-                    <Battery className="h-7 w-7 text-green-400" />
-                    <Sun className="h-7 w-7 text-yellow-400" />
-                    <Zap className="h-7 w-7 text-cyan-400" />
+                    <Battery className="h-6 w-6 text-green-400" />
+                    <Sun className="h-6 w-6 text-yellow-400" />
+                    <Zap className="h-6 w-6 text-cyan-400" />
                   </div>
-                  Complete NetZero
+                  NetZero Purchase
                 </CardTitle>
-                <CardDescription className="text-gray-300 text-base">
-                  Battery + Solar + Geothermal = Energy independence
+                <CardDescription className="text-gray-300 text-sm">
+                  Own outright, max tax credits
                 </CardDescription>
               </CardHeader>
-              <CardContent className="space-y-4">
-                <ul className="space-y-3">
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">Everything in Tier 1, plus...</span>
+              <CardContent className="space-y-3">
+                <ul className="space-y-2 text-sm">
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">40-50% incentive offset</span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">Solar panels for clean electricity</span>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">$3-5K+ annual savings</span>
                   </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">Geothermal heating & cooling (400%+ efficiency)</span>
-                  </li>
-                  <li className="flex items-center gap-3">
-                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
-                    <span className="text-gray-200">40-50% cost offset with incentives</span>
+                  <li className="flex items-center gap-2">
+                    <CheckCircle className="h-4 w-4 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">5-8 year payback</span>
                   </li>
                 </ul>
-                <Link to="/offers">
-                  <Button className="w-full mt-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
-                    Go NetZero
-                    <ArrowRight className="h-4 w-4 ml-2" />
+                <Link to="/offers#tier2">
+                  <Button className="w-full mt-3 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
+                    Calculate Savings
                   </Button>
                 </Link>
               </CardContent>
@@ -370,8 +402,8 @@ const HomePage = () => {
 
           <div className="text-center">
             <Link to="/offers">
-              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
-                Compare Both Tiers
+              <Button size="lg" className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 font-bold">
+                Compare All Options
                 <ArrowRight className="h-5 w-5 ml-2" />
               </Button>
             </Link>
@@ -595,8 +627,7 @@ const HomePage = () => {
             <a href="tel:+17816545879">
               <Button 
                 size="lg" 
-                variant="outline" 
-                className="border-white text-white bg-green-600/20 hover:bg-green-600 px-8 py-3 font-bold"
+                className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-3 font-bold"
               >
                 <Phone className="h-5 w-5 mr-2" />
                 Call (781) 654-5879

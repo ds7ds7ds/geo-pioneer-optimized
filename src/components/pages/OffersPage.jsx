@@ -17,7 +17,11 @@ import {
   Clock,
   Star,
   ChevronDown,
-  ChevronUp
+  ChevronUp,
+  TrendingDown,
+  Calendar,
+  Lock,
+  Percent
 } from 'lucide-react'
 
 const OffersPage = () => {
@@ -89,19 +93,51 @@ const OffersPage = () => {
     }
   ]
 
+  const eaasFeatures = [
+    {
+      icon: <TrendingDown className="h-6 w-6" />,
+      title: "Immediate 5-10% Savings",
+      description: "Pay less than your current energy bills from day one—guaranteed savings"
+    },
+    {
+      icon: <DollarSign className="h-6 w-6" />,
+      title: "Zero Upfront Cost",
+      description: "Complete NetZero installation with no money down—we cover everything"
+    },
+    {
+      icon: <Lock className="h-6 w-6" />,
+      title: "Price Protection",
+      description: "Lock in predictable payments—no more volatile oil, propane, or electricity spikes"
+    },
+    {
+      icon: <Percent className="h-6 w-6" />,
+      title: "2.5% Annual Adjustment",
+      description: "Modest inflation adjustment vs. unpredictable 10-20% fuel price swings"
+    },
+    {
+      icon: <Calendar className="h-6 w-6" />,
+      title: "6-Year Buyout Option",
+      description: "Purchase the system at fair market value after 6 years and own it outright"
+    },
+    {
+      icon: <Shield className="h-6 w-6" />,
+      title: "Full Service Included",
+      description: "Maintenance, monitoring, and repairs included throughout the agreement"
+    }
+  ]
+
   const comparisonData = [
-    { feature: "Battery Storage", tier1: true, tier2: true },
-    { feature: "Backup Power", tier1: true, tier2: true },
-    { feature: "Peak Shaving Savings", tier1: true, tier2: true },
-    { feature: "Grid Support Credits", tier1: true, tier2: true },
-    { feature: "Solar Panels", tier1: false, tier2: true },
-    { feature: "Geothermal Heating & Cooling", tier1: false, tier2: true },
-    { feature: "Hot Water Generation", tier1: false, tier2: true },
-    { feature: "NetZero Energy Status", tier1: false, tier2: true },
-    { feature: "Eliminate Heating Fuel Costs", tier1: false, tier2: true },
-    { feature: "30% Federal Tax Credit", tier1: false, tier2: true },
-    { feature: "Priority Tier 2 Upgrade", tier1: true, tier2: "—" },
-    { feature: "Upfront Cost", tier1: "$0", tier2: "Varies*" }
+    { feature: "Battery Storage", tier1: true, tier2: true, eaas: true },
+    { feature: "Backup Power", tier1: true, tier2: true, eaas: true },
+    { feature: "Peak Shaving Savings", tier1: true, tier2: true, eaas: true },
+    { feature: "Solar Panels", tier1: false, tier2: true, eaas: true },
+    { feature: "Geothermal Heating & Cooling", tier1: false, tier2: true, eaas: true },
+    { feature: "Hot Water Generation", tier1: false, tier2: true, eaas: true },
+    { feature: "NetZero Energy Status", tier1: false, tier2: true, eaas: true },
+    { feature: "Maintenance Included", tier1: false, tier2: false, eaas: true },
+    { feature: "Price Protection", tier1: false, tier2: false, eaas: true },
+    { feature: "Upfront Cost", tier1: "$0", tier2: "Varies*", eaas: "$0" },
+    { feature: "Own the System", tier1: "—", tier2: "Yes", eaas: "After 6 yrs" }
   ]
 
   const faqs = [
@@ -114,28 +150,32 @@ const OffersPage = () => {
       answer: "Your battery automatically kicks in within milliseconds, keeping your essential circuits powered. Depending on your usage and battery size, you can typically run lights, refrigerator, WiFi, phone chargers, and selected outlets for 8-12 hours or more. The transition is seamless—you might not even notice the grid went down."
     },
     {
-      question: "Can I upgrade from Tier 1 to Tier 2 later?",
-      answer: "Absolutely! That's exactly how we designed it. Tier 1 customers get priority scheduling for Tier 2 installations and exclusive discounts. When you're ready, we'll add solar and geothermal to your existing battery system, creating a fully integrated NetZero home."
+      question: "How does Energy-as-a-Service (EaaS) work exactly?",
+      answer: "We calculate your current annual energy costs (electricity + heating fuel like oil or propane). Then we discount that by 5-10% and offer you a fixed monthly payment at that lower rate. We install the complete NetZero system at no cost to you. You pay the discounted rate monthly, saving money immediately while we maintain the system. After 6 years, you can purchase the system at fair market value and own it outright."
     },
     {
-      question: "What are the requirements for Tier 1?",
-      answer: "Your home should be 2,000+ square feet, built before 2005, have central air conditioning, and currently heat with oil, propane, electric, or baseboard systems. You should also own your home and have a suitable outdoor location for the battery unit. We'll verify eligibility during your free assessment."
+      question: "Why would GeoPioneer offer EaaS at a discount?",
+      answer: "The economics work because geothermal and solar are dramatically cheaper to operate than fossil fuels. Your old $5,000/year energy bill might cost us only $500-1,000/year to deliver with NetZero technology. We make money on the spread while you save money compared to your old bills. After 6 years, you can buy the system and keep all the savings yourself."
     },
     {
-      question: "How much can I really save with Tier 2?",
-      answer: "Most Massachusetts homeowners save $3,000-$5,000+ annually with the complete Tier 2 package. You'll eliminate heating fuel costs entirely (often $2,000-$3,500/year for oil/propane), dramatically reduce electricity bills through solar generation, and potentially earn credits from excess energy sent to the grid. After incentives, most systems pay for themselves in 5-8 years."
+      question: "What's the 2.5% annual adjustment in EaaS?",
+      answer: "Your monthly payment increases by 2.5% each year to account for inflation. This is far more predictable than traditional energy costs—oil and propane can swing 10-30% year over year based on global markets. With EaaS, you know exactly what you'll pay for the next 6 years, with only modest, predictable increases."
     },
     {
-      question: "What incentives are available for Tier 2?",
-      answer: "Tier 2 qualifies for substantial incentives: 30% Federal Tax Credit on both geothermal and solar (no cap), up to $15,000 MassSave rebate for geothermal, SMART solar incentive payments over 10 years, and 0% HEAT Loan financing. Combined, these can offset 40-50% of your total investment."
+      question: "Can I upgrade from Tier 1 to EaaS or Tier 2 later?",
+      answer: "Absolutely! That's exactly how we designed it. Tier 1 customers get priority scheduling for upgrades and exclusive discounts. Your existing battery integrates seamlessly with the full NetZero system. Many customers start with Tier 1 to experience the benefits before committing to the complete package."
     },
     {
-      question: "How long does installation take?",
-      answer: "Tier 1 battery installation typically takes just 1-2 days. Tier 2 is more comprehensive: geothermal drilling takes 1-2 weeks, interior work another 1-2 weeks, and solar installation 2-3 days. Total Tier 2 timeline is usually 4-8 weeks, though most of that time your home remains fully functional."
+      question: "What are the requirements for these programs?",
+      answer: "Your home should be 2,000+ square feet, built before 2005, have central air conditioning, and currently heat with oil, propane, electric, or baseboard systems. You should also own your home and have a suitable outdoor location for equipment. We'll verify eligibility during your free assessment."
+    },
+    {
+      question: "What incentives are available if I buy Tier 2 outright?",
+      answer: "Tier 2 purchase qualifies for substantial incentives: 30% Federal Tax Credit on both geothermal and solar (no cap), up to $15,000 MassSave rebate for geothermal, SMART solar incentive payments over 10 years, and 0% HEAT Loan financing. Combined, these can offset 40-50% of your total investment."
     },
     {
       question: "What's the warranty coverage?",
-      answer: "Tier 1 batteries come with 10-year manufacturer warranties. Tier 2 systems include 25-year solar panel warranties, 10-year inverter warranties, 10-year heat pump warranties, and 50-year ground loop warranties (it's underground with no moving parts). We also provide a 10-year workmanship warranty on all our installations."
+      answer: "Tier 1 batteries come with 10-year manufacturer warranties. Tier 2/EaaS systems include 25-year solar panel warranties, 10-year inverter warranties, 10-year heat pump warranties, and 50-year ground loop warranties (it's underground with no moving parts). We also provide a 10-year workmanship warranty on all our installations. EaaS includes full maintenance throughout the agreement."
     }
   ]
 
@@ -147,10 +187,10 @@ const OffersPage = () => {
       savings: "$4,200/year"
     },
     {
-      quote: "The Tier 1 program was a no-brainer—free battery, free installation, and we've already saved money on peak electricity. Now we're planning our Tier 2 upgrade for next spring.",
+      quote: "The EaaS program was perfect for us. We're paying $300/month less than our old oil + electric bills, and we didn't pay a dime upfront. In 6 years, we'll own the whole system.",
       author: "James & Linda T.",
       location: "Newton, MA",
-      savings: "$800/year (Tier 1)"
+      savings: "$3,600/year"
     },
     {
       quote: "We went straight to Tier 2. The incentives made it affordable, and now we produce more energy than we use. Last month, the utility paid us. It's incredible.",
@@ -159,6 +199,17 @@ const OffersPage = () => {
       savings: "$5,100/year"
     }
   ]
+
+  // Example calculation for EaaS
+  const exampleCalc = {
+    currentElectric: 2400,
+    currentHeating: 3600,
+    totalCurrent: 6000,
+    discount: 10,
+    newAnnual: 5400,
+    newMonthly: 450,
+    yearlyIncrease: 2.5
+  }
 
   return (
     <div className="min-h-screen">
@@ -176,7 +227,7 @@ const OffersPage = () => {
             </h1>
             <p className="text-xl lg:text-2xl text-gray-300 mb-8 leading-relaxed">
               Start with free battery storage. Upgrade to complete NetZero when you're ready.
-              Two tiers, one mission: eliminate your energy bills forever.
+              Or let us handle everything with Energy-as-a-Service.
             </p>
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
@@ -189,12 +240,11 @@ const OffersPage = () => {
               </Button>
               <Button 
                 size="lg"
-                variant="outline"
-                className="border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 px-8 py-4 text-lg"
-                onClick={() => document.getElementById('tier2').scrollIntoView({ behavior: 'smooth' })}
+                className="bg-gradient-to-r from-purple-500 to-pink-500 hover:from-purple-600 hover:to-pink-600 text-white px-8 py-4 text-lg"
+                onClick={() => document.getElementById('eaas').scrollIntoView({ behavior: 'smooth' })}
               >
                 <Zap className="h-5 w-5 mr-2" />
-                Go NetZero with Tier 2
+                Energy-as-a-Service
               </Button>
             </div>
           </div>
@@ -271,39 +321,154 @@ const OffersPage = () => {
         </div>
       </section>
 
-      {/* Upgrade Arrow */}
-      <div className="bg-gradient-to-r from-green-500 via-cyan-500 to-blue-500 py-8">
-        <div className="max-w-4xl mx-auto px-4 text-center text-white">
-          <div className="flex items-center justify-center gap-4">
-            <div className="hidden sm:block h-px bg-white/30 flex-1"></div>
-            <div className="flex items-center gap-3">
-              <Battery className="h-8 w-8" />
-              <ArrowRight className="h-6 w-6" />
-              <Sun className="h-8 w-8" />
-              <ArrowRight className="h-6 w-6" />
-              <Zap className="h-8 w-8" />
-            </div>
-            <div className="hidden sm:block h-px bg-white/30 flex-1"></div>
+      {/* EaaS Section - Energy as a Service */}
+      <section id="eaas" className="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-purple-400/20 text-purple-200 border-purple-400/30 text-lg px-6 py-2">
+              ⭐ Most Popular Option
+            </Badge>
+            <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+              Energy-as-a-Service
+            </h2>
+            <p className="text-xl text-purple-200 max-w-3xl mx-auto">
+              Complete NetZero upgrade with <span className="text-white font-bold">zero upfront cost</span>. 
+              Pay less than your current energy bills. Own the system after 6 years.
+            </p>
           </div>
-          <p className="mt-4 text-lg font-medium">
-            Ready for more? Upgrade to Tier 2 anytime for complete energy independence.
-          </p>
+
+          {/* How It Works */}
+          <div className="max-w-5xl mx-auto mb-16">
+            <Card className="bg-white/10 border-purple-400/30 backdrop-blur-sm">
+              <CardHeader>
+                <CardTitle className="text-2xl text-white text-center">How It Works</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="grid md:grid-cols-4 gap-6 text-center">
+                  <div className="space-y-3">
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">1</div>
+                    <h4 className="font-semibold text-white">We Calculate</h4>
+                    <p className="text-purple-200 text-sm">Your current annual energy costs (electric + oil/propane)</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">2</div>
+                    <h4 className="font-semibold text-white">We Discount</h4>
+                    <p className="text-purple-200 text-sm">5-10% off your current costs becomes your new payment</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">3</div>
+                    <h4 className="font-semibold text-white">We Install</h4>
+                    <p className="text-purple-200 text-sm">Complete NetZero system (battery + solar + geothermal) for FREE</p>
+                  </div>
+                  <div className="space-y-3">
+                    <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">4</div>
+                    <h4 className="font-semibold text-white">You Own</h4>
+                    <p className="text-purple-200 text-sm">After 6 years, buy the system and keep all the savings</p>
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* Example Calculation */}
+          <div className="max-w-4xl mx-auto mb-16">
+            <Card className="bg-white text-gray-900 shadow-2xl">
+              <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-t-lg">
+                <CardTitle className="text-2xl text-center">Example: Your Savings</CardTitle>
+              </CardHeader>
+              <CardContent className="p-8">
+                <div className="grid md:grid-cols-2 gap-8">
+                  {/* Current Costs */}
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-lg text-gray-900 border-b pb-2">Your Current Annual Costs</h4>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Electricity</span>
+                      <span className="font-semibold">${exampleCalc.currentElectric.toLocaleString()}/yr</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Heating (Oil/Propane)</span>
+                      <span className="font-semibold">${exampleCalc.currentHeating.toLocaleString()}/yr</span>
+                    </div>
+                    <div className="flex justify-between text-lg border-t pt-2">
+                      <span className="font-bold text-red-600">Total Energy Costs</span>
+                      <span className="font-bold text-red-600">${exampleCalc.totalCurrent.toLocaleString()}/yr</span>
+                    </div>
+                  </div>
+
+                  {/* EaaS Costs */}
+                  <div className="space-y-4">
+                    <h4 className="font-bold text-lg text-gray-900 border-b pb-2">With Energy-as-a-Service</h4>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">Your Discount</span>
+                      <span className="font-semibold text-green-600">{exampleCalc.discount}% OFF</span>
+                    </div>
+                    <div className="flex justify-between">
+                      <span className="text-gray-600">New Annual Payment</span>
+                      <span className="font-semibold">${exampleCalc.newAnnual.toLocaleString()}/yr</span>
+                    </div>
+                    <div className="flex justify-between text-lg border-t pt-2">
+                      <span className="font-bold text-green-600">Monthly Payment</span>
+                      <span className="font-bold text-green-600">${exampleCalc.newMonthly}/mo</span>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl text-center">
+                  <div className="text-sm text-gray-600 mb-2">Your Year-1 Savings</div>
+                  <div className="text-4xl font-bold text-green-600">${(exampleCalc.totalCurrent - exampleCalc.newAnnual).toLocaleString()}</div>
+                  <div className="text-sm text-gray-500 mt-2">
+                    Plus: 2.5% annual adjustment vs. unpredictable 10-30% fuel price swings
+                  </div>
+                </div>
+              </CardContent>
+            </Card>
+          </div>
+
+          {/* EaaS Features */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+            {eaasFeatures.map((feature, index) => (
+              <Card key={index} className="bg-white/10 border-purple-400/30 hover:bg-white/20 transition-colors">
+                <CardHeader>
+                  <div className="flex items-center gap-4">
+                    <div className="bg-purple-500/30 p-3 rounded-full text-purple-200">
+                      {feature.icon}
+                    </div>
+                    <CardTitle className="text-lg text-white">{feature.title}</CardTitle>
+                  </div>
+                </CardHeader>
+                <CardContent>
+                  <p className="text-purple-200">{feature.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+
+          {/* CTA */}
+          <div className="text-center">
+            <Link to="/contact">
+              <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100 px-12 py-4 text-lg font-bold">
+                Get Your EaaS Quote
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
+            <p className="text-purple-300 mt-4">We'll calculate your exact savings based on your current energy bills</p>
+          </div>
         </div>
-      </div>
+      </section>
 
       {/* Tier 2 Section */}
       <section id="tier2" className="py-20 bg-gradient-to-br from-blue-50 to-cyan-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <Badge className="mb-4 bg-blue-100 text-blue-800 border-blue-300 text-lg px-6 py-2">
-              Tier 2
+              Tier 2 Purchase
             </Badge>
             <h2 className="text-3xl lg:text-5xl font-bold text-gray-900 mb-4">
-              Complete NetZero Package
+              Buy Your NetZero System
             </h2>
             <p className="text-xl text-gray-600 max-w-3xl mx-auto">
-              Battery + Solar + Geothermal = Total energy independence.
-              Eliminate your utility bills and heating fuel costs forever.
+              Prefer to own outright? Purchase the complete NetZero package and maximize 
+              federal tax credits and state incentives.
             </p>
           </div>
 
@@ -380,13 +545,13 @@ const OffersPage = () => {
 
       {/* Comparison Table */}
       <section className="py-20 bg-white">
-        <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
             <h2 className="text-3xl lg:text-4xl font-bold text-gray-900 mb-4">
               Compare Your Options
             </h2>
             <p className="text-xl text-gray-600">
-              Start with Tier 1 for free, upgrade to Tier 2 when you're ready
+              Three paths to energy freedom—choose what works for you
             </p>
           </div>
 
@@ -397,12 +562,17 @@ const OffersPage = () => {
                   <th className="text-left py-4 px-4 font-semibold text-gray-900">Feature</th>
                   <th className="text-center py-4 px-4">
                     <div className="bg-green-100 text-green-800 rounded-lg py-2 px-4 font-bold">
-                      Tier 1
+                      Tier 1<br/><span className="font-normal text-sm">Free Battery</span>
+                    </div>
+                  </th>
+                  <th className="text-center py-4 px-4">
+                    <div className="bg-purple-100 text-purple-800 rounded-lg py-2 px-4 font-bold">
+                      EaaS<br/><span className="font-normal text-sm">Energy Service</span>
                     </div>
                   </th>
                   <th className="text-center py-4 px-4">
                     <div className="bg-blue-100 text-blue-800 rounded-lg py-2 px-4 font-bold">
-                      Tier 2
+                      Tier 2<br/><span className="font-normal text-sm">Purchase</span>
                     </div>
                   </th>
                 </tr>
@@ -421,6 +591,15 @@ const OffersPage = () => {
                       )}
                     </td>
                     <td className="py-4 px-4 text-center">
+                      {row.eaas === true ? (
+                        <CheckCircle className="h-6 w-6 text-purple-500 mx-auto" />
+                      ) : row.eaas === false ? (
+                        <span className="text-gray-300">—</span>
+                      ) : (
+                        <span className="font-semibold text-purple-600">{row.eaas}</span>
+                      )}
+                    </td>
+                    <td className="py-4 px-4 text-center">
                       {row.tier2 === true ? (
                         <CheckCircle className="h-6 w-6 text-blue-500 mx-auto" />
                       ) : row.tier2 === false ? (
@@ -435,7 +614,7 @@ const OffersPage = () => {
             </table>
           </div>
           <p className="text-sm text-gray-500 mt-4 text-center">
-            *Tier 2 costs vary based on home size, system configuration, and available incentives. 
+            *Tier 2 purchase costs vary based on home size, system configuration, and available incentives. 
             After incentives, typical net cost is $25,000-$45,000 with $3,000-$5,000+ annual savings.
           </p>
         </div>
@@ -512,24 +691,24 @@ const OffersPage = () => {
       </section>
 
       {/* Final CTA */}
-      <section className="py-20 bg-gradient-to-r from-green-600 via-cyan-600 to-blue-600 text-white">
+      <section className="py-20 bg-gradient-to-r from-green-600 via-purple-600 to-blue-600 text-white">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
           <h2 className="text-3xl lg:text-4xl font-bold mb-6">
             Ready to Start Your Energy Freedom Journey?
           </h2>
           <p className="text-xl text-white/90 mb-8">
-            Begin with free Tier 1 battery storage, or jump straight to NetZero with Tier 2.
-            Either way, your path to energy independence starts today.
+            Free battery with Tier 1. Zero upfront with EaaS. Maximum incentives with Tier 2.
+            Whatever path you choose, your energy independence starts today.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Link to="/contact">
-              <Button size="lg" className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg">
+              <Button size="lg" className="bg-white text-purple-700 hover:bg-gray-100 px-8 py-4 text-lg font-bold">
                 <Battery className="h-5 w-5 mr-2" />
-                Get Free Tier 1 Assessment
+                Get Free Assessment
               </Button>
             </Link>
             <a href="tel:+17816545879">
-              <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-8 py-4 text-lg">
+              <Button size="lg" className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-4 text-lg font-bold">
                 <Phone className="h-5 w-5 mr-2" />
                 Call (781) 654-5879
               </Button>
