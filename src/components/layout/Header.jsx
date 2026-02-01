@@ -30,12 +30,15 @@ const Header = () => {
         <div className="flex justify-between items-center h-16">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <Link to="/" className="flex items-center">
+            <Link to="/" className="flex items-center gap-2">
               <img 
                 src="/geopioneer-logo.png" 
-                alt="GeoPioneer - Net Zero Homes" 
-                className="h-12 w-auto"
+                alt="GeoPioneer" 
+                className="h-10 w-auto"
               />
+              <span className="text-xl font-bold hidden sm:block">
+                <span className="text-green-600">Geo</span><span className="text-blue-600">Pioneer</span>
+              </span>
             </Link>
           </div>
 
