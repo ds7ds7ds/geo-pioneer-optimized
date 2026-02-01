@@ -331,7 +331,7 @@ const HomePage = () => {
                   Energy Service
                 </CardTitle>
                 <CardDescription className="text-purple-200 text-sm">
-                  Pay less than current bills, own after 6 yrs
+                  20-yr contract, 10-yr free maintenance
                 </CardDescription>
               </CardHeader>
               <CardContent className="space-y-3">

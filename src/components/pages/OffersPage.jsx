@@ -105,24 +105,24 @@ const OffersPage = () => {
       description: "Complete NetZero installation with no money down—we cover everything"
     },
     {
-      icon: <Lock className="h-6 w-6" />,
-      title: "Price Protection",
-      description: "Lock in predictable payments—no more volatile oil, propane, or electricity spikes"
+      icon: <Calendar className="h-6 w-6" />,
+      title: "20-Year Agreement",
+      description: "Long-term price stability with predictable payments for two decades"
+    },
+    {
+      icon: <Shield className="h-6 w-6" />,
+      title: "10 Years Free Maintenance",
+      description: "Full warranty and maintenance coverage included for the first 10 years"
     },
     {
       icon: <Percent className="h-6 w-6" />,
       title: "2.5% Annual Adjustment",
-      description: "Modest inflation adjustment vs. unpredictable 10-20% fuel price swings"
+      description: "Modest inflation adjustment vs. unpredictable 10-30% fuel price swings"
     },
     {
-      icon: <Calendar className="h-6 w-6" />,
+      icon: <Lock className="h-6 w-6" />,
       title: "6-Year Buyout Option",
       description: "Purchase the system at fair market value after 6 years and own it outright"
-    },
-    {
-      icon: <Shield className="h-6 w-6" />,
-      title: "Full Service Included",
-      description: "Maintenance, monitoring, and repairs included throughout the agreement"
     }
   ]
 
@@ -134,7 +134,8 @@ const OffersPage = () => {
     { feature: "Geothermal Heating & Cooling", tier1: false, tier2: true, eaas: true },
     { feature: "Hot Water Generation", tier1: false, tier2: true, eaas: true },
     { feature: "NetZero Energy Status", tier1: false, tier2: true, eaas: true },
-    { feature: "Maintenance Included", tier1: false, tier2: false, eaas: true },
+    { feature: "Free Maintenance (10 yrs)", tier1: false, tier2: false, eaas: true },
+    { feature: "Contract Length", tier1: "—", tier2: "—", eaas: "20 years" },
     { feature: "Price Protection", tier1: false, tier2: false, eaas: true },
     { feature: "Upfront Cost", tier1: "$0", tier2: "Varies*", eaas: "$0" },
     { feature: "Own the System", tier1: "—", tier2: "Yes", eaas: "After 6 yrs" }
@@ -151,7 +152,7 @@ const OffersPage = () => {
     },
     {
       question: "How does Energy-as-a-Service (EaaS) work exactly?",
-      answer: "We calculate your current annual energy costs (electricity + heating fuel like oil or propane). Then we discount that by 5-10% and offer you a fixed monthly payment at that lower rate. We install the complete NetZero system at no cost to you. You pay the discounted rate monthly, saving money immediately while we maintain the system. After 6 years, you can purchase the system at fair market value and own it outright."
+      answer: "We calculate your current annual energy costs (electricity + heating fuel like oil or propane). Then we discount that by 5-10% and offer you a fixed monthly payment at that lower rate. We install the complete NetZero system at no cost to you. It's a 20-year agreement where you pay the discounted rate monthly, saving money immediately. The first 10 years include full maintenance and warranty coverage at no extra cost. After 6 years, you have the option to purchase the system at fair market value and own it outright."
     },
     {
       question: "Why would GeoPioneer offer EaaS at a discount?",
@@ -174,8 +175,8 @@ const OffersPage = () => {
       answer: "Tier 2 purchase qualifies for substantial incentives: 30% Federal Tax Credit on both geothermal and solar (no cap), up to $15,000 MassSave rebate for geothermal, SMART solar incentive payments over 10 years, and 0% HEAT Loan financing. Combined, these can offset 40-50% of your total investment."
     },
     {
-      question: "What's the warranty coverage?",
-      answer: "Tier 1 batteries come with 10-year manufacturer warranties. Tier 2/EaaS systems include 25-year solar panel warranties, 10-year inverter warranties, 10-year heat pump warranties, and 50-year ground loop warranties (it's underground with no moving parts). We also provide a 10-year workmanship warranty on all our installations. EaaS includes full maintenance throughout the agreement."
+      question: "What's the warranty and maintenance coverage?",
+      answer: "Tier 1 batteries come with 10-year manufacturer warranties. Tier 2 purchase includes 25-year solar panel warranties, 10-year inverter warranties, 10-year heat pump warranties, and 50-year ground loop warranties. For EaaS, the first 10 years include complete maintenance and warranty coverage at no additional cost—we handle everything. Years 11-20 of the EaaS agreement may include optional maintenance packages. We also provide a 10-year workmanship warranty on all installations."
     }
   ]
 
@@ -362,8 +363,8 @@ const OffersPage = () => {
                   </div>
                   <div className="space-y-3">
                     <div className="w-12 h-12 bg-purple-500 rounded-full flex items-center justify-center mx-auto text-xl font-bold">4</div>
-                    <h4 className="font-semibold text-white">You Own</h4>
-                    <p className="text-purple-200 text-sm">After 6 years, buy the system and keep all the savings</p>
+                    <h4 className="font-semibold text-white">You Choose</h4>
+                    <p className="text-purple-200 text-sm">20-year agreement with buyout option after 6 years</p>
                   </div>
                 </div>
               </CardContent>
