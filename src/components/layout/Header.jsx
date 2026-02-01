@@ -12,7 +12,6 @@ const Header = () => {
     { name: 'Offers', href: '/offers', highlight: true },
     { name: 'Existing Homes', href: '/existing-homes' },
     { name: 'New Construction', href: '/new-construction' },
-    { name: 'Calculator', href: '/calculator' },
     { name: 'Blog', href: '/blog' },
     { name: 'About', href: '/about' },
     { name: 'Contact', href: '/contact' }
@@ -45,12 +44,12 @@ const Header = () => {
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden lg:flex items-center space-x-1">
+          <nav className="hidden lg:flex items-center space-x-2">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
+                className={`px-2 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
                   item.highlight 
                     ? 'text-green-600 font-bold hover:text-green-700'
                     : isActive(item.href)
