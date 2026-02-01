@@ -269,8 +269,8 @@ const ExistingHomesPage = () => {
             </div>
             <div>
               <img 
-                src="/44265.jpg" 
-                alt="Geothermal heat pump indoor unit" 
+                src="/geothermal-netzero-diagram.jpg" 
+                alt="GeoPioneer Net Zero Solution - House with solar panels and underground geothermal loops" 
                 className="rounded-2xl shadow-xl"
               />
             </div>
