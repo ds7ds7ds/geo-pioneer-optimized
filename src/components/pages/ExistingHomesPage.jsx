@@ -143,8 +143,7 @@ const ExistingHomesPage = () => {
                 <Link to="/calculator">
                   <Button 
                     size="lg" 
-                    variant="outline" 
-                    className="border-white/30 text-white hover:bg-white/10 px-8 py-4 text-lg"
+                    className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 text-lg font-semibold shadow-lg"
                   >
                     Calculate Savings
                   </Button>
