@@ -247,14 +247,13 @@ const OffersPage = () => {
           </div>
 
           <div className="text-center mt-8">
-            <Button 
-              size="lg"
-              className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold px-8"
+            <button 
+              className="inline-flex items-center px-8 py-3 bg-gradient-to-r from-yellow-400 to-orange-500 hover:from-yellow-500 hover:to-orange-600 text-gray-900 font-bold text-lg rounded-lg shadow-lg transition-all"
               onClick={() => document.getElementById('compare').scrollIntoView({ behavior: 'smooth' })}
             >
               Compare All Options
-              <ArrowRight className="h-4 w-4 ml-2" />
-            </Button>
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </button>
           </div>
         </div>
       </section>
