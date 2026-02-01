@@ -50,14 +50,18 @@ const AboutPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            About <span className="text-blue-600">GeoPioneer</span>
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-20 lg:py-28">
+        <div className="absolute inset-0 bg-[url('/geo-drilling-backyard.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <Badge className="mb-6 bg-blue-500/20 text-blue-400 border-blue-400/30 text-sm px-4 py-1">
+            Massachusetts Geothermal Experts
+          </Badge>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            About <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">GeoPioneer</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
             Massachusetts' leading geothermal installation company, pioneering clean energy solutions 
             for homes and businesses across New England.
           </p>
@@ -82,15 +86,15 @@ const AboutPage = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Over 500 successful installations</span>
+                  <span className="text-gray-700">Over 1 million feet drilled worldwide</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">15+ years of geothermal expertise</span>
+                  <span className="text-gray-700">IGSHPA certified designers and installers</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Licensed and insured in Massachusetts</span>
+                  <span className="text-gray-700">Licensed in MA, RI, ME, CT, NY, and NGWA</span>
                 </div>
               </div>
             </div>
@@ -221,13 +225,13 @@ const AboutPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <a href="tel:+17816545879">
-              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 font-bold">
+              <Button size="lg" className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-3 font-bold shadow-lg">
                 <Phone className="h-5 w-5 mr-2" />
                 Call (781) 654-5879
               </Button>
             </a>
             <Link to="/contact">
-              <Button size="lg" variant="outline" className="border-blue-600 text-blue-600 hover:bg-blue-50 px-8 py-3">
+              <Button size="lg" className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3 font-semibold">
                 Request Consultation
               </Button>
             </Link>

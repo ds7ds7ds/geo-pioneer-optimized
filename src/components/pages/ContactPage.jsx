@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
+import { Badge } from '@/components/ui/badge.jsx'
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
@@ -90,14 +91,18 @@ const ContactPage = () => {
   ]
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-blue-50 to-white">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="py-20 px-4 sm:px-6 lg:px-8">
-        <div className="max-w-4xl mx-auto text-center">
-          <h1 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-            Contact <span className="text-blue-600">GeoPioneer</span>
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-20 lg:py-28">
+        <div className="absolute inset-0 bg-[url('/geo-aerial-boston.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="relative max-w-4xl mx-auto text-center px-4 sm:px-6 lg:px-8">
+          <Badge className="mb-6 bg-green-500/20 text-green-400 border-green-400/30 text-sm px-4 py-1">
+            Get Started Today
+          </Badge>
+          <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6">
+            Contact <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent">GeoPioneer</span>
           </h1>
-          <p className="text-xl text-gray-600 mb-8">
+          <p className="text-xl text-gray-300 mb-8 leading-relaxed">
             Ready to start your geothermal journey? Get in touch with Massachusetts' 
             leading geothermal installation experts.
           </p>
@@ -309,13 +314,15 @@ const ContactPage = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row gap-4">
-                  <Button type="submit" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white">
+                  <Button type="submit" size="lg" className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white font-semibold shadow-lg">
                     Submit Request
                   </Button>
-                  <Button type="button" size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
-                    <Phone className="h-4 w-4 mr-2" />
-                    Call Instead: (781) 654-5879
-                  </Button>
+                  <a href="tel:+17816545879">
+                    <Button type="button" size="lg" className="bg-blue-600 hover:bg-blue-700 text-white font-semibold">
+                      <Phone className="h-4 w-4 mr-2" />
+                      Call: (781) 654-5879
+                    </Button>
+                  </a>
                 </div>
               </form>
             </CardContent>
