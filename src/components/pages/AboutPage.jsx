@@ -10,19 +10,19 @@ const AboutPage = () => {
     {
       name: "Managing Director",
       title: "Engineering Leadership",
-      experience: "Master's Degree in Engineering, Certified Designer and Installer for Ground Source Heat Pumps (IGSHPA)",
+      experience: "Master's Degree in Reservoir Engineering, IGSHPA Certified Designer and Installer for Ground Source Heat Pumps",
       certifications: ["IGSHPA Certified", "Master's Engineering", "Multi-State Licensed"]
     },
     {
       name: "Operations Executive",
       title: "Project Management",
-      experience: "More than half a decade of operations experience with effective project management and support",
+      experience: "More than half a decade of operations experience with effective project management and customer support",
       certifications: ["Project Management", "Customer Relations", "Operations"]
     },
     {
-      name: "Drilling & Installation",
-      title: "Field Crews (10+ Professionals)",
-      experience: "Expert drilling teams with over 1 million feet drilled worldwide using high-tech Comacchio equipment",
+      name: "Drilling Team",
+      title: "Field Operations",
+      experience: "Expert crews with over 1 million feet drilled worldwide using high-tech Comacchio rigs",
       certifications: ["NGWA Certified", "Safety Trained", "Equipment Specialists"]
     }
   ]
@@ -86,7 +86,7 @@ const AboutPage = () => {
               <div className="space-y-3">
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Over 1 million feet drilled worldwide</span>
+                  <span className="text-gray-700">10+ years combined geothermal experience</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
@@ -118,9 +118,9 @@ const AboutPage = () => {
       <section className="py-16 px-4 sm:px-6 lg:px-8 bg-gray-50">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Team</h2>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Our Expert Team</h2>
             <p className="text-lg text-gray-600">
-              5 core team members + 10+ field professionals delivering expert geothermal solutions
+              Certified professionals with 10+ years of combined geothermal experience
             </p>
           </div>
           <div className="grid md:grid-cols-3 gap-8">
