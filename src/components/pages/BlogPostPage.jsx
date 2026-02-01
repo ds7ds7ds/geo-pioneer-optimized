@@ -57,9 +57,9 @@ const blogPosts = {
       },
       {
         type: "image",
-        src: "https://images.unsplash.com/photo-1504307651254-35680f356dfd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-        alt: "Professional technician working on HVAC system",
-        caption: "Certified technicians ensure your geothermal system is installed to the highest standards."
+        src: "/geo-drilling-closeup.jpg",
+        alt: "GeoPioneer drilling crew at work",
+        caption: "Our IGSHPA-certified crew drilling vertical bores - precision equipment and experienced technicians make all the difference."
       },
       {
         type: "paragraph",
@@ -226,9 +226,9 @@ const blogPosts = {
       },
       {
         type: "image",
-        src: "https://images.unsplash.com/photo-1558618666-fcd25c85cd64?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-        alt: "Underground pipe installation",
-        caption: "Ground loops are installed in either horizontal trenches or vertical boreholes, depending on your property."
+        src: "/geo-drilling-closeup.jpg",
+        alt: "GeoPioneer vertical bore drilling",
+        caption: "Our crew drilling vertical bores for a ground loop installation. Notice the coiled HDPE pipe ready to go down the holes."
       },
       {
         type: "subheading",
@@ -390,11 +390,17 @@ const blogPosts = {
     readTime: "9 min read",
     category: "NetZero",
     tags: ["NetZero", "Renovation", "Sustainability", "Energy Independence", "Solar"],
-    heroImage: "https://images.unsplash.com/photo-1509391366360-2e959784a276?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    heroImage: "/geo-aerial-boston.jpg",
     sections: [
       {
         type: "intro",
         content: "What if your home could produce as much energy as it consumes? What if your utility bills dropped to near zero—or you actually received payments from the power company? This isn't a futuristic fantasy. Thousands of homeowners have already achieved NetZero status, and with today's technology and incentives, it's more achievable than ever before."
+      },
+      {
+        type: "image",
+        src: "/geo-aerial-boston.jpg",
+        alt: "GeoPioneer NetZero installation in Boston area",
+        caption: "A real GeoPioneer NetZero project in Greater Boston - solar panels paired with geothermal ground loop installation."
       },
       {
         type: "heading",
@@ -406,9 +412,9 @@ const blogPosts = {
       },
       {
         type: "image",
-        src: "https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-        alt: "Home with solar panels on roof",
-        caption: "Solar panels are a key component of most NetZero homes, generating clean electricity from sunlight."
+        src: "/geo-cedar-house.jpg",
+        alt: "Cedar shake home with solar and geothermal installation",
+        caption: "This classic New England cedar shake home is getting the full NetZero treatment: solar panels on the metal roof plus geothermal ground loops."
       },
       {
         type: "paragraph",
@@ -483,14 +489,18 @@ const blogPosts = {
         content: "Now comes the game-changer. Replacing your fossil fuel heating system with a geothermal heat pump typically reduces heating and cooling energy consumption by 50-70%. For homes that were previously heating with oil or propane, this single change often represents the largest carbon reduction of the entire project."
       },
       {
+        type: "image",
+        src: "/geo-drilling-closeup.jpg",
+        alt: "GeoPioneer drilling crew at work",
+        caption: "Our GeoPioneer crew drilling 400ft vertical bores - this is where the magic happens. The underground loop will last 50+ years."
+      },
+      {
         type: "paragraph",
         content: "Geothermal also simplifies your path to NetZero because it runs on electricity—which means it can be powered by solar panels. A home running on oil heat and grid electricity requires two separate energy systems. A geothermal home runs entirely on electricity, which can come entirely from your roof."
       },
       {
-        type: "image",
-        src: "https://images.unsplash.com/photo-1585771724684-38269d6639fd?ixlib=rb-4.0.3&auto=format&fit=crop&w=1200&q=80",
-        alt: "Modern heat pump unit",
-        caption: "Geothermal heat pumps provide ultra-efficient heating and cooling using electricity—perfect for pairing with solar."
+        type: "paragraph",
+        content: "At GeoPioneer, we use high-quality 1.25\" PE4710 HDPE pipe rated for decades of reliable performance. Our typical residential installation includes 2x 400ft vertical bores, providing 800 linear feet of ground loop capacity - enough for most 2,500-4,000 sq ft homes."
       },
       {
         type: "subheading",
@@ -565,7 +575,7 @@ const blogPosts = {
     readTime: "8 min read",
     category: "Renewable Energy",
     tags: ["Incentives", "Rebates", "Tax Credits", "Massachusetts", "Savings"],
-    heroImage: "https://images.unsplash.com/photo-1554224155-8d04cb21cd6c?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80",
+    heroImage: "/geo-cedar-house.jpg",
     sections: [
       {
         type: "intro",
@@ -635,6 +645,12 @@ const blogPosts = {
         caption: "Massachusetts offers some of the best renewable energy incentives in the country."
       },
       {
+        type: "image",
+        src: "/geo-aerial-boston.jpg",
+        alt: "GeoPioneer installation in progress",
+        caption: "A real GeoPioneer installation in progress - this homeowner is taking advantage of combined federal and state incentives."
+      },
+      {
         type: "subheading",
         content: "Mass Save Heat Pump Rebates"
       },
@@ -645,7 +661,7 @@ const blogPosts = {
       {
         type: "list",
         items: [
-          "**Ground-source heat pumps**: Rebates up to $15,000 for whole-home geothermal systems",
+          "**Ground-source heat pumps**: Rebates up to $13,500 for whole-home geothermal systems",
           "**Additional incentives**: Enhanced rebates may be available for income-eligible households",
           "**Weatherization rebates**: Separate rebates for insulation and air sealing often stack with heat pump incentives"
         ]

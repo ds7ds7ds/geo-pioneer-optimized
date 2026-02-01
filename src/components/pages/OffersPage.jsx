@@ -83,8 +83,8 @@ const OffersPage = () => {
     },
     {
       icon: <DollarSign className="h-6 w-6" />,
-      title: "Maximum Incentives",
-      description: "Stack federal tax credits (30%), MassSave rebates, and SMART solar payments"
+      title: "State & Utility Incentives",
+      description: "Up to $13,500 MassSave geothermal rebate, SMART solar payments, 0% HEAT Loan financing"
     },
     {
       icon: <Leaf className="h-6 w-6" />,
@@ -94,6 +94,11 @@ const OffersPage = () => {
   ]
 
   const eaasFeatures = [
+    {
+      icon: <Percent className="h-6 w-6" />,
+      title: "Federal ITC Through TPO",
+      description: "We capture 30% commercial tax credits and pass savings to you—unavailable for direct residential purchase since 2026"
+    },
     {
       icon: <TrendingDown className="h-6 w-6" />,
       title: "Immediate 5-10% Savings",
@@ -172,7 +177,7 @@ const OffersPage = () => {
     },
     {
       question: "What incentives are available if I buy Tier 2 outright?",
-      answer: "Tier 2 purchase qualifies for substantial incentives: 30% Federal Tax Credit on both geothermal and solar (no cap), up to $15,000 MassSave rebate for geothermal, SMART solar incentive payments over 10 years, and 0% HEAT Loan financing. Combined, these can offset 40-50% of your total investment."
+      answer: "As of 2026, residential federal tax credits (Section 25D) have expired. However, Tier 2 purchase still qualifies for: up to $13,500 MassSave rebate for whole-home geothermal ($25,000 if income-eligible), SMART solar incentive payments over 10 years, and 0% HEAT Loan financing up to $25,000. For the full benefit of federal incentives, consider our EaaS program where we capture commercial tax credits through TPO and pass the savings to you."
     },
     {
       question: "What's the warranty and maintenance coverage?",
@@ -354,8 +359,8 @@ const OffersPage = () => {
       <section id="eaas" className="py-20 bg-gradient-to-br from-purple-900 via-purple-800 to-indigo-900 text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
-            <Badge className="mb-4 bg-purple-400/20 text-purple-200 border-purple-400/30 text-lg px-6 py-2">
-              ⭐ Most Popular Option
+            <Badge className="mb-4 bg-yellow-400/90 text-gray-900 border-yellow-400/30 text-lg px-6 py-2 font-bold">
+              🔥 NOW THE BEST DEAL — Federal Credits Still Apply!
             </Badge>
             <h2 className="text-3xl lg:text-5xl font-bold mb-4">
               Energy-as-a-Service
@@ -364,6 +369,12 @@ const OffersPage = () => {
               Complete NetZero upgrade with <span className="text-white font-bold">zero upfront cost</span>. 
               Pay less than your current energy bills. Own the system after 6 years.
             </p>
+            <div className="mt-6 p-4 bg-yellow-400/20 border border-yellow-400/50 rounded-xl max-w-2xl mx-auto">
+              <p className="text-yellow-200 text-sm">
+                <strong className="text-yellow-100">⚡ Important 2026 Update:</strong> Residential federal tax credits (30%) expired Dec 31, 2025. 
+                But through our <strong>TPO (Third-Party Ownership)</strong> model, GeoPioneer can still claim commercial ITC and pass the savings to you!
+              </p>
+            </div>
           </div>
 
           {/* How It Works */}
@@ -562,6 +573,17 @@ const OffersPage = () => {
             </p>
           </div>
 
+          {/* Notice about Federal Credits */}
+          <div className="max-w-4xl mx-auto mb-8">
+            <div className="bg-amber-50 border-2 border-amber-300 rounded-xl p-4 text-center">
+              <p className="text-amber-800">
+                <strong>📢 2026 Update:</strong> Residential federal tax credits expired Dec 31, 2025. 
+                Direct purchase now relies on <strong>MassSave rebates</strong> and <strong>0% HEAT Loans</strong>. 
+                For federal incentive benefits, consider <a href="#eaas" className="underline font-bold">Energy-as-a-Service</a> where we capture commercial ITC through TPO.
+              </p>
+            </div>
+          </div>
+
           {/* Savings Highlight */}
           <div className="max-w-4xl mx-auto mb-16">
             <Card className="border-4 border-blue-500 shadow-2xl overflow-hidden">
@@ -571,12 +593,12 @@ const OffersPage = () => {
                   <div className="text-blue-100">Annual Savings</div>
                 </div>
                 <div className="bg-gradient-to-br from-cyan-500 to-cyan-600 text-white p-8 text-center">
-                  <div className="text-5xl font-bold mb-2">40-50%</div>
-                  <div className="text-cyan-100">Incentive Offset</div>
+                  <div className="text-5xl font-bold mb-2">$13.5K+</div>
+                  <div className="text-cyan-100">MassSave Rebates</div>
                 </div>
                 <div className="bg-gradient-to-br from-green-500 to-green-600 text-white p-8 text-center">
-                  <div className="text-5xl font-bold mb-2">5-8 yr</div>
-                  <div className="text-green-100">Typical Payback</div>
+                  <div className="text-5xl font-bold mb-2">0%</div>
+                  <div className="text-green-100">HEAT Loan Rate</div>
                 </div>
               </div>
               <CardContent className="p-8">

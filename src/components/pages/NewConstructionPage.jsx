@@ -73,36 +73,36 @@ const BuilderQuoteForm = ({ onClose }) => {
                     <SelectValue placeholder="Select home type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tier1">Tier 1 (Standard Construction)</SelectItem>
-                    <SelectItem value="tier2">Tier 2 (High Performance)</SelectItem>
-                    <SelectItem value="passive">Passive House</SelectItem>
+                    <SelectItem value="base">Base (≥15% above code) - $16.5K total</SelectItem>
+                    <SelectItem value="energystar">ENERGY STAR (HERS ≤45) - $24K total</SelectItem>
+                    <SelectItem value="passive">Passive House (Phius/PHI) - $34K total</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
 
-              {/* HERS Rating (for Tier 1/2) */}
-              {(formData.homeType === 'tier1' || formData.homeType === 'tier2') && (
+              {/* HERS Rating (for Base/ENERGY STAR) */}
+              {(formData.homeType === 'base' || formData.homeType === 'energystar') && (
                 <div>
-                  <Label htmlFor="hersRating">HERS Rating</Label>
+                  <Label htmlFor="hersRating">Target HERS Rating</Label>
                   <Input
                     id="hersRating"
                     type="number"
-                    placeholder="e.g., 55"
+                    placeholder="e.g., 45 for ENERGY STAR"
                     value={formData.hersRating}
                     onChange={(e) => setFormData({...formData, hersRating: e.target.value})}
                   />
                 </div>
               )}
 
-              {/* Air Exchanges (for Tier 1/2) */}
-              {(formData.homeType === 'tier1' || formData.homeType === 'tier2') && (
+              {/* Air Exchanges (for ENERGY STAR) */}
+              {formData.homeType === 'energystar' && (
                 <div>
-                  <Label htmlFor="airExchanges">Air Exchanges per Hour</Label>
+                  <Label htmlFor="airExchanges">Air Exchanges (ACH50)</Label>
                   <Input
                     id="airExchanges"
                     type="number"
                     step="0.1"
-                    placeholder="e.g., 3.0"
+                    placeholder="Target: ≤1.5 ACH50"
                     value={formData.airExchanges}
                     onChange={(e) => setFormData({...formData, airExchanges: e.target.value})}
                   />
@@ -276,16 +276,16 @@ const ROICalculator = ({ onClose }) => {
   const calculateROI = () => {
     const size = parseInt(calcData.homeSize) || 2500
     
-    // New Construction MassSave Incentives (NOT replacement)
+    // New Construction MassSave Incentives (2026 rates)
     const massSaveNewConstruction = {
-      tier1: 9000,
-      tier2: 15000,
-      passive: 25000,
-      gshp: 9000 // Additional for GSHP
+      base: 7500,      // Base: ≥15% above code
+      energystar: 15000, // ENERGY STAR: HERS ≤45 or ≥30% savings
+      passive: 25000,  // Passive House: Phius or PHI certified
+      gshp: 9000       // Additional for ENERGY STAR certified GSHP
     }
     
     const totalIncentive = massSaveNewConstruction[calcData.homeType] + massSaveNewConstruction.gshp
-    const federalTaxCredit = 0.30 // 30% federal tax credit
+    const federalTaxCredit = 0.00 // Residential 30% credit expired Dec 2025 - available through EaaS/TPO only
     
     // Estimated costs (more realistic pricing)
     const geothermalCost = size * 22 // $22/sq ft estimate for new construction
@@ -364,9 +364,9 @@ const ROICalculator = ({ onClose }) => {
                     <SelectValue placeholder="Select home type" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="tier1">Tier 1 - $9K MassSave</SelectItem>
-                    <SelectItem value="tier2">Tier 2 - $15K MassSave</SelectItem>
-                    <SelectItem value="passive">Passive House - $25K MassSave</SelectItem>
+                    <SelectItem value="base">Base (≥15% above code) - $7.5K</SelectItem>
+                    <SelectItem value="energystar">ENERGY STAR (HERS ≤45) - $15K</SelectItem>
+                    <SelectItem value="passive">Passive House (Phius/PHI) - $25K</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -426,9 +426,9 @@ const ROICalculator = ({ onClose }) => {
                           <span>MassSave New Construction:</span>
                           <span>-${results.totalIncentive.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between text-green-600">
-                          <span>Federal Tax Credit (30%):</span>
-                          <span>-${results.federalCredit.toLocaleString()}</span>
+                        <div className="flex justify-between text-amber-600">
+                          <span>Federal ITC (via EaaS only):</span>
+                          <span className="text-xs">Contact for TPO pricing</span>
                         </div>
                         <div className="flex justify-between font-bold border-t pt-2">
                           <span>Net Cost:</span>
@@ -496,16 +496,16 @@ const NewConstructionPage = () => {
   const costComparison = [
     {
       system: "Geothermal",
-      netCost: "$37,600",
+      netCost: "$64,000",
       comparison: "Best Long-term Value",
       icon: <Leaf className="h-8 w-8 text-green-600" />,
       highlight: true,
-      details: "4000 sq ft Tier 2: $88K - $24K MassSave - $26.4K Fed Credit"
+      details: "4000 sq ft ENERGY STAR: $88K - $24K MassSave incentives"
     },
     {
       system: "Propane + AC",
       netCost: "$48,000",
-      comparison: "+28% vs Geo",
+      comparison: "Lower upfront, higher operating",
       icon: <Home className="h-8 w-8 text-orange-600" />,
       highlight: false,
       details: "4000 sq ft: Propane furnace + central AC"
@@ -513,7 +513,7 @@ const NewConstructionPage = () => {
     {
       system: "ASHP",
       netCost: "$60,000",
-      comparison: "+59% vs Geo",
+      comparison: "Cold climate performance gap",
       icon: <Zap className="h-8 w-8 text-blue-600" />,
       highlight: false,
       details: "4000 sq ft: Air source heat pump system"
@@ -522,25 +522,28 @@ const NewConstructionPage = () => {
 
   const newConstructionIncentives = [
     {
-      tier: "Tier 1",
-      massSave: "$9,000",
+      tier: "Base",
+      massSave: "$7,500",
       gshp: "$9,000",
-      total: "$18,000",
-      description: "Standard construction + GSHP bonus"
+      total: "$16,500",
+      description: "All-electric, ≥15% above code",
+      specs: "All-electric heating, water heating, cooking, clothes drying"
     },
     {
-      tier: "Tier 2", 
+      tier: "ENERGY STAR", 
       massSave: "$15,000",
       gshp: "$9,000",
       total: "$24,000",
-      description: "High performance + GSHP bonus"
+      description: "HERS ≤45 or ≥30% savings",
+      specs: "≤1.5 ACH50, ENERGY STAR SFNH v3.2 + NextGen certified"
     },
     {
       tier: "Passive House",
       massSave: "$25,000", 
       gshp: "$9,000",
       total: "$34,000",
-      description: "Passive house + GSHP bonus"
+      description: "Phius or PHI certified",
+      specs: "Full Passive House certification required"
     }
   ]
 
@@ -561,7 +564,10 @@ const NewConstructionPage = () => {
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
               Integrate geothermal into your new construction project and maximize incentives. 
-              Get up to $34,000 in MassSave rebates plus 30% federal tax credits.
+              Get up to $34,000 in MassSave rebates. Federal 30% ITC available through our EaaS/TPO model.
+            </p>
+            <p className="text-sm text-amber-300 max-w-2xl mx-auto">
+              📢 2026 Update: Residential federal tax credits expired Dec 2025. Through our Energy-as-a-Service (TPO) model, we can still capture commercial ITC and pass savings to you.
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -622,6 +628,11 @@ const NewConstructionPage = () => {
                       <span className="text-white font-semibold">Total:</span>
                       <span className="text-cyan-400 font-bold text-lg">{incentive.total}</span>
                     </div>
+                    {incentive.specs && (
+                      <p className="text-gray-400 text-xs mt-2 pt-2 border-t border-slate-600">
+                        {incentive.specs}
+                      </p>
+                    )}
                   </div>
                 </CardContent>
               </Card>

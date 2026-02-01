@@ -514,7 +514,7 @@ const CalculatorPage = () => {
 
     // System costs (estimates)
     const systemCostBase = sqft * 25 // $25 per sq ft base cost
-    const massSaveRebate = 15000
+    const massSaveRebate = 13500 // 2026 MassSave whole-home GSHP rebate
     const federalTaxCredit = systemCostBase * 0.30
     const netSystemCost = systemCostBase - massSaveRebate - federalTaxCredit
 
@@ -1475,7 +1475,7 @@ We'll contact you within 24 hours to schedule your on-site evaluation.`)
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
-                  Includes current MassSave $15K rebate and 30% federal tax credit calculations
+                  Includes current MassSave $13.5K rebate and 30% federal tax credit calculations
                 </p>
               </CardContent>
             </Card>

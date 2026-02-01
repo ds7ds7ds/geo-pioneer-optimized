@@ -29,25 +29,51 @@
 - **Status**: FIXED - Resolved jsPDF import issues
 - **Functionality**: Professional PDF reports with comprehensive data
 
+## ✅ RECENTLY COMPLETED (Feb 1, 2026)
+
+### Real Job Site Photos Added
+- **3 new photos** from Itnos GeoPioneer Project #3 added to website:
+  - `geo-drilling-closeup.jpg` - Close-up of drilling operation (2x 400ft bores, 1.25" PE4710)
+  - `geo-aerial-boston.jpg` - Aerial drone shot with Boston skyline
+  - `geo-cedar-house.jpg` - Cedar shake house with solar + geothermal install
+
+### Homepage Carousel Updated ✅
+- Added all 3 new real photos to carousel (now shows first)
+- Captions updated with real project details
+
+### Blog Posts Updated with Real Photos ✅
+- **Blog #1** (Skeptic to Believer): Added drilling crew photo
+- **Blog #2** (Geothermal 101): Added ground loop drilling photo
+- **Blog #3** (NetZero): Added aerial shot + cedar house + drilling photos (3 images total)
+- **Blog #4** (Incentives): Changed hero image + added aerial installation photo
+
+### 2026 Incentive Updates ✅
+- **CRITICAL**: Federal residential tax credits (Section 25D) expired Dec 31, 2025
+- Updated all pages to reflect new incentive landscape:
+  - **OffersPage**: Highlighted EaaS/TPO as the way to capture 30% ITC
+  - **HomePage**: Updated incentives section ($13,500 MassSave, 0% HEAT Loan, 30% via EaaS)
+  - **ExistingHomesPage**: Updated incentives box with new numbers
+  - **NewConstructionPage**: Added notice about federal credit expiration, updated calculator
+- **Mass Save 2026 Geothermal Rebates**:
+  - Whole-Home: $13,500
+  - Partial-Home: $2,000/ton up to $13,500
+  - Income-Eligible Enhanced: Up to $25,000
+- **EaaS/TPO Model**: Now the ONLY way for homeowners to access federal ITC (commercial credit)
+
+## ✅ NEW CONSTRUCTION PAGE UPDATED (Feb 1, 2026)
+
+### Mass Save New Construction Tiers (2026 Correct Numbers)
+- **Base**: $7,500 + $9K GSHP = **$16,500** (≥15% above code, all-electric)
+- **ENERGY STAR**: $15,000 + $9K GSHP = **$24,000** (HERS ≤45 or ≥30% savings, ≤1.5 ACH50)
+- **Passive House**: $25,000 + $9K GSHP = **$34,000** (Phius or PHI certified)
+
+### Updates Made:
+- Fixed tier names (was "Tier 1/Tier 2", now "Base/ENERGY STAR/Passive House")
+- Updated incentive amounts in cards, calculator, and forms
+- Added specs/requirements to each tier card
+- Full research saved to `memory/masssave-2026-research.md`
+
 ## ❌ REMAINING ISSUES TO FIX
-
-### 1. Blog Post #3 - Remove ALL Images
-- **Issue**: Blog Post #3 (Financial Incentives) still has image references
-- **Required**: Remove ALL images from this post (no pictures at all)
-- **Location**: `BlogPage.jsx` - Blog Post #3 content section
-
-### 2. Blog Post #4 - Add Proper Images & Expand Content
-- **Issue**: Blog Post #4 is too small and needs proper visuals
-- **Required**: 
-  - Add winter/summer heating cooling diagram OR
-  - Add carousel of drilling rig pictures (like main page)
-  - Expand content significantly (currently ~500 words, needs 2500+ words)
-
-### 3. Commercial Page - Massachusetts New Construction Program
-- **Issue**: Shows fixed $15k amount instead of efficiency tiers
-- **Required**: Update with correct Massachusetts New Construction program
-- **Details**: Program is based on efficiency tiers, not fixed amounts
-- **Location**: `src/components/pages/NewConstructionPage.jsx`
 
 ## 📁 PROJECT FILES STRUCTURE
 
@@ -70,6 +96,9 @@ geopioneer-complete-project/
 │   │   └── reportService.js ✅ (PDF generation fixed)
 │   └── App.jsx ✅ (routing updated)
 ├── public/
+│   ├── geo-drilling-closeup.jpg ✅ (NEW - real job site photo)
+│   ├── geo-aerial-boston.jpg ✅ (NEW - drone shot with Boston skyline)
+│   ├── geo-cedar-house.jpg ✅ (NEW - cedar house install)
 │   ├── 211118-AdobeStock_17893488-sm.jpg ✅
 │   ├── 1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg ✅
 │   └── comacchio-geo-600_a.2048x0.jpg ✅

@@ -314,18 +314,26 @@ const ExistingHomesPage = () => {
           
           {/* Incentives Highlight */}
           <div className="mt-12 bg-blue-50 rounded-lg p-8 text-center">
-            <h3 className="text-2xl font-bold text-gray-900 mb-4">Substantial Incentives</h3>
+            <h3 className="text-2xl font-bold text-gray-900 mb-4">2026 Incentives</h3>
             <div className="flex flex-col sm:flex-row justify-center items-center space-y-4 sm:space-y-0 sm:space-x-8">
               <div className="text-center">
-                <div className="text-3xl font-bold text-blue-600">30%</div>
-                <div className="text-gray-700">Federal Tax Credit</div>
+                <div className="text-3xl font-bold text-green-600">$13.5K</div>
+                <div className="text-gray-700">MassSave Rebate</div>
+                <div className="text-xs text-gray-500">(up to $25K income-eligible)</div>
               </div>
               <div className="text-2xl text-gray-400">+</div>
               <div className="text-center">
-                <div className="text-3xl font-bold text-green-600">$15K</div>
-                <div className="text-gray-700">MassSave Rebate</div>
+                <div className="text-3xl font-bold text-blue-600">0%</div>
+                <div className="text-gray-700">HEAT Loan up to $25K</div>
+              </div>
+              <div className="text-2xl text-gray-400">+</div>
+              <div className="text-center">
+                <div className="text-3xl font-bold text-purple-600">30%</div>
+                <div className="text-gray-700">ITC via EaaS</div>
+                <div className="text-xs text-gray-500">(TPO model)</div>
               </div>
             </div>
+            <p className="text-sm text-gray-500 mt-4">Note: Residential federal tax credits expired Dec 2025. EaaS captures commercial ITC through third-party ownership.</p>
           </div>
         </div>
       </section>

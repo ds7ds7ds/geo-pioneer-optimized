@@ -21,6 +21,21 @@ const GeothermalImageCarousel = () => {
   
   const images = [
     {
+      src: '/geo-aerial-boston.jpg',
+      alt: "GeoPioneer Installation - Boston Area",
+      caption: "Active GeoPioneer installation in Greater Boston - solar + geothermal NetZero project"
+    },
+    {
+      src: '/geo-drilling-closeup.jpg',
+      alt: "Vertical Bore Drilling in Progress",
+      caption: "Our crew drilling 400ft vertical bores with 1.25\" PE4710 HDPE pipe"
+    },
+    {
+      src: '/geo-cedar-house.jpg',
+      alt: "Cedar Shake Home Geothermal Install",
+      caption: "Classic New England cedar shake home - solar panels + geothermal ground loop installation"
+    },
+    {
       src: geothermalHomeDiagram,
       alt: "Geothermal Home Installation Diagram",
       caption: "How geothermal works in your home - heating and cooling"
@@ -31,19 +46,9 @@ const GeothermalImageCarousel = () => {
       caption: "Underground pipe system for year-round comfort"
     },
     {
-      src: '/211118-AdobeStock_17893488-sm.jpg',
-      alt: "Beautiful New England Home",
-      caption: "Classic New England home perfect for geothermal installation"
-    },
-    {
       src: '/1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg',
       alt: "Comacchio GEO 601 Drilling Rig",
       caption: "Professional Comacchio GEO 601 drilling rig - precision and efficiency"
-    },
-    {
-      src: '/comacchio-geo-600_a.2048x0.jpg',
-      alt: "Comacchio GEO 600 in Action",
-      caption: "Comacchio GEO 600 drilling system - minimal site disruption"
     },
     {
       src: geothermalOriginal,
@@ -169,19 +174,19 @@ const HomePage = () => {
 
   const incentives = [
     {
-      amount: "$15,000",
+      amount: "$13,500",
       title: "MassSave Rebate",
-      description: "State rebate for geothermal installations"
+      description: "Whole-home geothermal (up to $25K income-eligible)"
     },
     {
       amount: "30%",
-      title: "Federal Tax Credit",
-      description: "IRA tax credit on total system cost"
+      title: "Federal ITC via EaaS",
+      description: "Through TPO model—residential credit expired 2025"
     },
     {
       amount: "0%",
       title: "HEAT Loan",
-      description: "7-year financing at 0% interest"
+      description: "Up to $25K financing at 0% interest"
     }
   ]
 
