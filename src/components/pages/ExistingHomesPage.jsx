@@ -284,8 +284,8 @@ const ExistingHomesPage = () => {
           <div className="grid lg:grid-cols-2 gap-16 items-center">
             <div className="order-2 lg:order-1">
               <img 
-                src="/comacchio-geo-600_a.2048x0.jpg" 
-                alt="Compact geothermal drilling equipment" 
+                src="/geo-drilling-backyard.jpg" 
+                alt="Compact geothermal drilling in residential backyard" 
                 className="rounded-2xl shadow-xl"
               />
             </div>
@@ -444,10 +444,11 @@ const ExistingHomesPage = () => {
             </h2>
             <p className="text-gray-600">Recent geothermal installations in Massachusetts</p>
           </div>
-          <div className="grid md:grid-cols-3 gap-6">
+          <div className="grid md:grid-cols-4 gap-6">
+            <img src="/geo-drilling-backyard.jpg" alt="Backyard drilling with compact rig" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
             <img src="/geo-drilling-closeup.jpg" alt="Drilling closeup" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
             <img src="/geo-aerial-boston.jpg" alt="Aerial view of installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
-            <img src="/44267.jpg" alt="Indoor equipment installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
+            <img src="/geo-cedar-house.jpg" alt="Completed installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
           </div>
         </div>
       </section>
