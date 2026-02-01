@@ -225,14 +225,16 @@ const HomePage = () => {
               <Badge className="mb-4 bg-cyan-400/20 text-cyan-400 hover:bg-cyan-400/30 border border-cyan-400/30">
                 Massachusetts Geothermal Pioneers
               </Badge>
-              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
-                Transform Your Home with
-                <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent block py-2 leading-tight">Clean Geothermal Energy</span>
+              <h1 className="text-4xl lg:text-6xl font-bold text-white mb-4">
+                Set the temperature.
+                <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent block py-2 leading-tight">Forget the bills.</span>
               </h1>
-              <p className="text-xl text-gray-300 mb-8 mt-9 leading-relaxed">
-                Say goodbye to expensive oil, propane, and inefficient air conditioning forever. 
-                Our compact European-style drilling and innovative financing make complete 
-                geothermal heating and cooling affordable for every Massachusetts homeowner.
+              <p className="text-xl text-cyan-200 mb-6 font-medium">
+                Net-zero homes designed for full comfort and predictable costs.
+              </p>
+              <p className="text-lg text-gray-400 mb-8 leading-relaxed">
+                In many parts of the world, comfort is assumed. In the U.S., comfort often comes with anxiety.
+                <span className="text-gray-300 block mt-2">Net-zero homes change that. You set the temperature once — and stop worrying about energy prices forever.</span>
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
