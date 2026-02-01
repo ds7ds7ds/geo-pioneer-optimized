@@ -209,8 +209,36 @@ const OffersPage = () => {
     discount: 10,
     newAnnual: 5400,
     newMonthly: 450,
-    yearlyIncrease: 2.5
+    yearlyIncrease: 2.5,
+    systemValue: 65000,
+    systemLifespan: "25-50"
   }
+
+  // Calculate 20-year projections
+  const calculate20YearSavings = () => {
+    let traditionalTotal = 0
+    let eaasTotal = 0
+    let eaasPayment = exampleCalc.newAnnual
+    const fuelInflation = 0.05 // 5% average fuel cost increase
+    let currentEnergyCost = exampleCalc.totalCurrent
+
+    for (let year = 1; year <= 20; year++) {
+      traditionalTotal += currentEnergyCost
+      eaasTotal += eaasPayment
+      
+      // Apply inflation for next year
+      currentEnergyCost *= (1 + fuelInflation)
+      eaasPayment *= (1 + exampleCalc.yearlyIncrease / 100)
+    }
+
+    return {
+      traditionalTotal: Math.round(traditionalTotal),
+      eaasTotal: Math.round(eaasTotal),
+      totalSavings: Math.round(traditionalTotal - eaasTotal)
+    }
+  }
+
+  const twentyYearCalc = calculate20YearSavings()
 
   return (
     <div className="min-h-screen">
@@ -372,13 +400,33 @@ const OffersPage = () => {
           </div>
 
           {/* Example Calculation */}
-          <div className="max-w-4xl mx-auto mb-16">
+          <div className="max-w-5xl mx-auto mb-16">
             <Card className="bg-white text-gray-900 shadow-2xl">
               <CardHeader className="bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-t-lg">
-                <CardTitle className="text-2xl text-center">Example: Your Savings</CardTitle>
+                <CardTitle className="text-2xl text-center">Example: Your 20-Year Savings</CardTitle>
               </CardHeader>
               <CardContent className="p-8">
-                <div className="grid md:grid-cols-2 gap-8">
+                {/* System Value Banner */}
+                <div className="mb-8 p-4 bg-gradient-to-r from-purple-100 to-indigo-100 rounded-xl border-2 border-purple-300">
+                  <div className="flex flex-col md:flex-row items-center justify-between gap-4">
+                    <div className="text-center md:text-left">
+                      <div className="text-sm text-purple-700 font-medium">Complete NetZero System Value</div>
+                      <div className="text-3xl font-bold text-purple-800">${exampleCalc.systemValue.toLocaleString()}</div>
+                      <div className="text-sm text-purple-600">Battery + Solar + Geothermal</div>
+                    </div>
+                    <div className="text-center">
+                      <div className="text-4xl font-bold text-green-600">$0</div>
+                      <div className="text-sm text-gray-600">Your Upfront Cost</div>
+                    </div>
+                    <div className="text-center md:text-right">
+                      <div className="text-sm text-purple-700 font-medium">System Lifespan</div>
+                      <div className="text-2xl font-bold text-purple-800">{exampleCalc.systemLifespan} years</div>
+                      <div className="text-sm text-purple-600">Long after contract ends!</div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-8 mb-8">
                   {/* Current Costs */}
                   <div className="space-y-4">
                     <h4 className="font-bold text-lg text-gray-900 border-b pb-2">Your Current Annual Costs</h4>
@@ -391,8 +439,11 @@ const OffersPage = () => {
                       <span className="font-semibold">${exampleCalc.currentHeating.toLocaleString()}/yr</span>
                     </div>
                     <div className="flex justify-between text-lg border-t pt-2">
-                      <span className="font-bold text-red-600">Total Energy Costs</span>
+                      <span className="font-bold text-red-600">Total Year-1 Cost</span>
                       <span className="font-bold text-red-600">${exampleCalc.totalCurrent.toLocaleString()}/yr</span>
+                    </div>
+                    <div className="text-sm text-red-500 italic">
+                      * Fuel costs typically increase 5-10% per year
                     </div>
                   </div>
 
@@ -401,24 +452,62 @@ const OffersPage = () => {
                     <h4 className="font-bold text-lg text-gray-900 border-b pb-2">With Energy-as-a-Service</h4>
                     <div className="flex justify-between">
                       <span className="text-gray-600">Your Discount</span>
-                      <span className="font-semibold text-green-600">{exampleCalc.discount}% OFF</span>
+                      <span className="font-semibold text-green-600">{exampleCalc.discount}% OFF current costs</span>
                     </div>
                     <div className="flex justify-between">
-                      <span className="text-gray-600">New Annual Payment</span>
+                      <span className="text-gray-600">Year-1 Payment</span>
                       <span className="font-semibold">${exampleCalc.newAnnual.toLocaleString()}/yr</span>
                     </div>
                     <div className="flex justify-between text-lg border-t pt-2">
                       <span className="font-bold text-green-600">Monthly Payment</span>
                       <span className="font-bold text-green-600">${exampleCalc.newMonthly}/mo</span>
                     </div>
+                    <div className="text-sm text-green-600 italic">
+                      * Only 2.5% annual increase (predictable!)
+                    </div>
                   </div>
                 </div>
 
-                <div className="mt-8 p-6 bg-gradient-to-r from-green-50 to-emerald-50 rounded-xl text-center">
-                  <div className="text-sm text-gray-600 mb-2">Your Year-1 Savings</div>
-                  <div className="text-4xl font-bold text-green-600">${(exampleCalc.totalCurrent - exampleCalc.newAnnual).toLocaleString()}</div>
-                  <div className="text-sm text-gray-500 mt-2">
-                    Plus: 2.5% annual adjustment vs. unpredictable 10-30% fuel price swings
+                {/* 20-Year Comparison */}
+                <div className="bg-gray-50 rounded-xl p-6 mb-6">
+                  <h4 className="font-bold text-lg text-gray-900 mb-4 text-center">20-Year Cost Comparison</h4>
+                  <div className="grid md:grid-cols-3 gap-6">
+                    <div className="text-center p-4 bg-red-50 rounded-lg">
+                      <div className="text-sm text-gray-600 mb-1">Traditional Energy</div>
+                      <div className="text-sm text-gray-500">(5% annual increase)</div>
+                      <div className="text-3xl font-bold text-red-600 mt-2">${twentyYearCalc.traditionalTotal.toLocaleString()}</div>
+                    </div>
+                    <div className="text-center p-4 bg-green-50 rounded-lg">
+                      <div className="text-sm text-gray-600 mb-1">EaaS Payments</div>
+                      <div className="text-sm text-gray-500">(2.5% annual increase)</div>
+                      <div className="text-3xl font-bold text-green-600 mt-2">${twentyYearCalc.eaasTotal.toLocaleString()}</div>
+                    </div>
+                    <div className="text-center p-4 bg-purple-100 rounded-lg border-2 border-purple-400">
+                      <div className="text-sm text-purple-700 mb-1 font-medium">Your 20-Year Savings</div>
+                      <div className="text-sm text-purple-600">(+ free $65K system!)</div>
+                      <div className="text-4xl font-bold text-purple-700 mt-2">${twentyYearCalc.totalSavings.toLocaleString()}</div>
+                    </div>
+                  </div>
+                </div>
+
+                {/* Final Value Prop */}
+                <div className="bg-gradient-to-r from-green-500 to-emerald-500 rounded-xl p-6 text-white text-center">
+                  <div className="text-lg mb-2">After 20 Years, You Get:</div>
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div>
+                      <div className="text-3xl font-bold">${twentyYearCalc.totalSavings.toLocaleString()}</div>
+                      <div className="text-green-100 text-sm">Total Savings</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold">+</div>
+                    </div>
+                    <div>
+                      <div className="text-3xl font-bold">${exampleCalc.systemValue.toLocaleString()}</div>
+                      <div className="text-green-100 text-sm">System You Own</div>
+                    </div>
+                  </div>
+                  <div className="mt-4 pt-4 border-t border-white/30">
+                    <div className="text-sm text-green-100">System still has 5-30 years of life remaining = FREE energy for decades!</div>
                   </div>
                 </div>
               </CardContent>
