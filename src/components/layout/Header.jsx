@@ -32,20 +32,25 @@ const Header = () => {
           {/* Logo */}
           <div className="flex-shrink-0">
             <Link to="/" className="flex items-center">
-              <div className="bg-blue-600 text-white p-2 rounded-lg mr-3">
-                <div className="w-6 h-6 flex items-center justify-center font-bold text-sm">GP</div>
+              <div className="bg-gradient-to-br from-blue-600 to-green-500 text-white p-2 rounded-lg mr-2 shadow-md">
+                <svg className="w-6 h-6" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                  <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2" fill="none"/>
+                  <path d="M12 2C12 2 12 8 12 12C12 16 8 18 8 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <path d="M12 2C12 2 12 8 12 12C12 16 16 18 16 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round"/>
+                  <circle cx="12" cy="12" r="3" fill="currentColor"/>
+                </svg>
               </div>
-              <span className="text-xl font-bold text-gray-900">GeoPioneer</span>
+              <span className="text-xl font-bold text-gray-900">Geo<span className="text-blue-600">Pioneer</span></span>
             </Link>
           </div>
 
           {/* Desktop Navigation */}
-          <nav className="hidden md:flex space-x-8">
+          <nav className="hidden lg:flex items-center space-x-1">
             {navigation.map((item) => (
               <Link
                 key={item.name}
                 to={item.href}
-                className={`px-3 py-2 text-sm font-medium transition-colors ${
+                className={`px-3 py-2 text-sm font-medium transition-colors whitespace-nowrap ${
                   item.highlight 
                     ? 'text-green-600 font-bold hover:text-green-700'
                     : isActive(item.href)
@@ -60,7 +65,7 @@ const Header = () => {
           </nav>
 
           {/* Desktop CTA Buttons */}
-          <div className="hidden md:flex items-center space-x-4">
+          <div className="hidden lg:flex items-center space-x-3">
             <Button
               variant="outline"
               size="sm"
@@ -85,7 +90,7 @@ const Header = () => {
           </div>
 
           {/* Mobile menu button */}
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <button
               onClick={() => setIsMenuOpen(!isMenuOpen)}
               className="text-gray-700 hover:text-blue-600 p-2"
@@ -101,7 +106,7 @@ const Header = () => {
 
         {/* Mobile Navigation */}
         {isMenuOpen && (
-          <div className="md:hidden">
+          <div className="lg:hidden">
             <div className="px-2 pt-2 pb-3 space-y-1 bg-white border-t">
               {navigation.map((item) => (
                 <Link
