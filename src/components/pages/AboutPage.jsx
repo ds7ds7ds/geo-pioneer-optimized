@@ -31,7 +31,7 @@ const AboutPage = () => {
     "AEE Certified GeoExchange Designer (CGD)",
     "IGSHPA Accredited Installer (AI)",
     "HIC Registration - Home Improvement Contractor",
-    "Drilling Licenses - MA, RI, ME, CT, NY",
+    "Drilling Licenses - MA, CT, RI, ME, NY (NJ & NH pending)",
     "NGWA - National Ground Water Association",
     "OSHA Safety Certification",
     "MassSave Partner",
@@ -92,7 +92,7 @@ const AboutPage = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">Licensed in MA, RI, ME, CT, NY, and NGWA</span>
+                  <span className="text-gray-700">Licensed in MA, CT, RI, ME, NY (NJ & NH pending)</span>
                 </div>
               </div>
             </div>
