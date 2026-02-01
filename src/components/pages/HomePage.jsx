@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { CheckCircle, DollarSign, Home, Leaf, Zap, Phone, ArrowRight, Calculator, FileText } from 'lucide-react'
+import { CheckCircle, DollarSign, Home, Leaf, Zap, Phone, ArrowRight, Calculator, FileText, Battery, Sun } from 'lucide-react'
 import BlogSection from '../BlogSection.jsx'
 
 // Import images - using high-quality presentation images
@@ -254,6 +254,127 @@ const HomePage = () => {
             <div className="flex justify-center">
               <GeothermalImageCarousel />
             </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Two-Tier Offers Section */}
+      <section className="py-20 px-4 sm:px-6 lg:px-8 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900 text-white">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <Badge className="mb-4 bg-green-400/20 text-green-400 border-green-400/30 text-lg px-6 py-2">
+              New: Two-Tier Energy Program
+            </Badge>
+            <h2 className="text-3xl lg:text-5xl font-bold mb-4">
+              Your Path to <span className="text-green-400">Energy Freedom</span>
+            </h2>
+            <p className="text-xl text-gray-300 max-w-3xl mx-auto">
+              Start with free battery storage, upgrade to complete NetZero when you're ready
+            </p>
+          </div>
+
+          <div className="grid lg:grid-cols-2 gap-8 mb-12">
+            {/* Tier 1 Card */}
+            <Card className="bg-gradient-to-br from-green-900/50 to-green-800/30 border-green-500/50 text-white overflow-hidden">
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-green-500 text-white">Tier 1</Badge>
+                  <span className="text-3xl font-bold text-green-400">FREE</span>
+                </div>
+                <CardTitle className="text-2xl text-white flex items-center gap-3">
+                  <Battery className="h-8 w-8 text-green-400" />
+                  Battery Storage
+                </CardTitle>
+                <CardDescription className="text-gray-300 text-base">
+                  Premium backup power with zero upfront cost
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">No money down, no installation fees</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">Backup power during outages</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">Peak shaving energy savings</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-400 flex-shrink-0" />
+                    <span className="text-gray-200">Priority upgrade path to Tier 2</span>
+                  </li>
+                </ul>
+                <Link to="/offers">
+                  <Button className="w-full mt-4 bg-green-500 hover:bg-green-600 text-white">
+                    Get Free Battery
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+
+            {/* Tier 2 Card */}
+            <Card className="bg-gradient-to-br from-blue-900/50 to-cyan-800/30 border-cyan-500/50 text-white overflow-hidden relative">
+              <div className="absolute top-4 right-4">
+                <Badge className="bg-cyan-500 text-white">Most Popular</Badge>
+              </div>
+              <CardHeader className="pb-4">
+                <div className="flex items-center justify-between">
+                  <Badge className="bg-blue-500 text-white">Tier 2</Badge>
+                  <span className="text-lg font-semibold text-cyan-400">Save $3-5K+/year</span>
+                </div>
+                <CardTitle className="text-2xl text-white flex items-center gap-3">
+                  <div className="flex -space-x-1">
+                    <Battery className="h-7 w-7 text-green-400" />
+                    <Sun className="h-7 w-7 text-yellow-400" />
+                    <Zap className="h-7 w-7 text-cyan-400" />
+                  </div>
+                  Complete NetZero
+                </CardTitle>
+                <CardDescription className="text-gray-300 text-base">
+                  Battery + Solar + Geothermal = Energy independence
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="space-y-4">
+                <ul className="space-y-3">
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">Everything in Tier 1, plus...</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">Solar panels for clean electricity</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">Geothermal heating & cooling (400%+ efficiency)</span>
+                  </li>
+                  <li className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-cyan-400 flex-shrink-0" />
+                    <span className="text-gray-200">40-50% cost offset with incentives</span>
+                  </li>
+                </ul>
+                <Link to="/offers">
+                  <Button className="w-full mt-4 bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white">
+                    Go NetZero
+                    <ArrowRight className="h-4 w-4 ml-2" />
+                  </Button>
+                </Link>
+              </CardContent>
+            </Card>
+          </div>
+
+          <div className="text-center">
+            <Link to="/offers">
+              <Button variant="outline" size="lg" className="border-white text-white hover:bg-white/10">
+                Compare Both Tiers
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

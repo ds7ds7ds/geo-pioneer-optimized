@@ -7,6 +7,7 @@ import NewConstructionPage from './components/pages/NewConstructionPage'
 import CalculatorPage from './components/pages/CalculatorPage'
 import BlogPage from './components/pages/BlogPage'
 import BlogPostPage from './components/pages/BlogPostPage'
+import OffersPage from './components/pages/OffersPage'
 import AboutPage from './components/pages/AboutPage'
 import ContactPage from './components/pages/ContactPage'
 import './App.css'
@@ -24,6 +25,7 @@ function App() {
           <Route path="/blog/:slug" element={<BlogPostPage />} />
           <Route path="/about" element={<AboutPage />} />
           <Route path="/contact" element={<ContactPage />} />
+          <Route path="/offers" element={<OffersPage />} />
         </Routes>
       </Layout>
     </Router>

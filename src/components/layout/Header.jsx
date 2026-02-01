@@ -9,6 +9,7 @@ const Header = () => {
 
   const navigation = [
     { name: 'Home', href: '/' },
+    { name: 'Offers', href: '/offers', highlight: true },
     { name: 'Existing Homes', href: '/existing-homes' },
     { name: 'New Construction', href: '/new-construction' },
     { name: 'Calculator', href: '/calculator' },
@@ -45,11 +46,14 @@ const Header = () => {
                 key={item.name}
                 to={item.href}
                 className={`px-3 py-2 text-sm font-medium transition-colors ${
-                  isActive(item.href)
-                    ? 'text-blue-600 border-b-2 border-blue-600'
-                    : 'text-gray-700 hover:text-blue-600'
+                  item.highlight 
+                    ? 'text-green-600 font-bold hover:text-green-700'
+                    : isActive(item.href)
+                      ? 'text-blue-600 border-b-2 border-blue-600'
+                      : 'text-gray-700 hover:text-blue-600'
                 }`}
               >
+                {item.highlight && <span className="mr-1">🔋</span>}
                 {item.name}
               </Link>
             ))}
