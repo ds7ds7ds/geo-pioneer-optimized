@@ -1,638 +1,178 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { Input } from '@/components/ui/input.jsx'
-import { Label } from '@/components/ui/label.jsx'
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.jsx'
-import { Textarea } from '@/components/ui/textarea.jsx'
-import { CheckCircle, DollarSign, Home, Leaf, Zap, TrendingUp, Building, Calculator, Shield, X, Phone } from 'lucide-react'
-
-// Import images
-import geothermalHomeDiagram from '../../assets/geothermal-home-diagram.png'
-
-// Builder Quote Form Component
-const BuilderQuoteForm = ({ onClose }) => {
-  const [formData, setFormData] = useState({
-    homeSize: '',
-    homeType: '',
-    hersRating: '',
-    airExchanges: '',
-    plannedFuelType: '',
-    city: '',
-    timeframe: '',
-    financingType: '',
-    upfrontBudget: '',
-    bridgeFinancing: '',
-    gasAvailable: '',
-    builderName: '',
-    builderContact: '',
-    projectAddress: '',
-    additionalNotes: ''
-  })
-
-  const handleSubmit = (e) => {
-    e.preventDefault()
-    console.log('Builder Quote Form Data:', formData)
-    // Handle form submission
-    alert('Builder quote request submitted! We will contact you within 24 hours.')
-    onClose()
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">Get Builder Quote</h2>
-            <Button variant="ghost" onClick={onClose}>
-              <X className="h-6 w-6" />
-            </Button>
-          </div>
-          
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              {/* Home Size */}
-              <div>
-                <Label htmlFor="homeSize">Home Size (sq ft)</Label>
-                <Input
-                  id="homeSize"
-                  type="number"
-                  placeholder="e.g., 2500"
-                  value={formData.homeSize}
-                  onChange={(e) => setFormData({...formData, homeSize: e.target.value})}
-                  required
-                />
-              </div>
-
-              {/* Home Type */}
-              <div>
-                <Label htmlFor="homeType">Home Type</Label>
-                <Select onValueChange={(value) => setFormData({...formData, homeType: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select home type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="base">Base (≥15% above code) - $16.5K total</SelectItem>
-                    <SelectItem value="energystar">ENERGY STAR (HERS ≤45) - $24K total</SelectItem>
-                    <SelectItem value="passive">Passive House (Phius/PHI) - $34K total</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* HERS Rating (for Base/ENERGY STAR) */}
-              {(formData.homeType === 'base' || formData.homeType === 'energystar') && (
-                <div>
-                  <Label htmlFor="hersRating">Target HERS Rating</Label>
-                  <Input
-                    id="hersRating"
-                    type="number"
-                    placeholder="e.g., 45 for ENERGY STAR"
-                    value={formData.hersRating}
-                    onChange={(e) => setFormData({...formData, hersRating: e.target.value})}
-                  />
-                </div>
-              )}
-
-              {/* Air Exchanges (for ENERGY STAR) */}
-              {formData.homeType === 'energystar' && (
-                <div>
-                  <Label htmlFor="airExchanges">Air Exchanges (ACH50)</Label>
-                  <Input
-                    id="airExchanges"
-                    type="number"
-                    step="0.1"
-                    placeholder="Target: ≤1.5 ACH50"
-                    value={formData.airExchanges}
-                    onChange={(e) => setFormData({...formData, airExchanges: e.target.value})}
-                  />
-                </div>
-              )}
-
-              {/* Planned Fuel Type */}
-              <div>
-                <Label htmlFor="plannedFuelType">Planned Fuel Type (Alternative)</Label>
-                <Select onValueChange={(value) => setFormData({...formData, plannedFuelType: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select fuel type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="propane">Propane</SelectItem>
-                    <SelectItem value="natural-gas">Natural Gas</SelectItem>
-                    <SelectItem value="oil">Oil</SelectItem>
-                    <SelectItem value="electric">Electric</SelectItem>
-                    <SelectItem value="ashp">Air Source Heat Pump</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* City */}
-              <div>
-                <Label htmlFor="city">City/Town</Label>
-                <Input
-                  id="city"
-                  placeholder="e.g., Boston, MA"
-                  value={formData.city}
-                  onChange={(e) => setFormData({...formData, city: e.target.value})}
-                  required
-                />
-              </div>
-
-              {/* Timeframe */}
-              <div>
-                <Label htmlFor="timeframe">Project Timeframe</Label>
-                <Select onValueChange={(value) => setFormData({...formData, timeframe: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select timeframe" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="immediate">Immediate (0-3 months)</SelectItem>
-                    <SelectItem value="short">Short term (3-6 months)</SelectItem>
-                    <SelectItem value="medium">Medium term (6-12 months)</SelectItem>
-                    <SelectItem value="long">Long term (12+ months)</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Financing Type */}
-              <div>
-                <Label htmlFor="financingType">Financing Preference</Label>
-                <Select onValueChange={(value) => setFormData({...formData, financingType: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select financing type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="upfront">Upfront Payment</SelectItem>
-                    <SelectItem value="bridge">Bridge Financing</SelectItem>
-                    <SelectItem value="construction-loan">Construction Loan Integration</SelectItem>
-                    <SelectItem value="other">Other</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Upfront Budget */}
-              <div>
-                <Label htmlFor="upfrontBudget">Upfront Budget Range</Label>
-                <Select onValueChange={(value) => setFormData({...formData, upfrontBudget: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select budget range" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="under-30k">Under $30,000</SelectItem>
-                    <SelectItem value="30-50k">$30,000 - $50,000</SelectItem>
-                    <SelectItem value="50-75k">$50,000 - $75,000</SelectItem>
-                    <SelectItem value="over-75k">Over $75,000</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Gas Available */}
-              <div>
-                <Label htmlFor="gasAvailable">Natural Gas Available</Label>
-                <Select onValueChange={(value) => setFormData({...formData, gasAvailable: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Gas availability" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="yes">Yes</SelectItem>
-                    <SelectItem value="no">No</SelectItem>
-                    <SelectItem value="unknown">Unknown</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              {/* Builder Information */}
-              <div>
-                <Label htmlFor="builderName">Builder/Contractor Name</Label>
-                <Input
-                  id="builderName"
-                  placeholder="Builder company name"
-                  value={formData.builderName}
-                  onChange={(e) => setFormData({...formData, builderName: e.target.value})}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="builderContact">Builder Contact</Label>
-                <Input
-                  id="builderContact"
-                  placeholder="Phone or email"
-                  value={formData.builderContact}
-                  onChange={(e) => setFormData({...formData, builderContact: e.target.value})}
-                />
-              </div>
-
-              {/* Project Address */}
-              <div className="md:col-span-2">
-                <Label htmlFor="projectAddress">Project Address</Label>
-                <Input
-                  id="projectAddress"
-                  placeholder="Full project address"
-                  value={formData.projectAddress}
-                  onChange={(e) => setFormData({...formData, projectAddress: e.target.value})}
-                />
-              </div>
-
-              {/* Additional Notes */}
-              <div className="md:col-span-2">
-                <Label htmlFor="additionalNotes">Additional Notes</Label>
-                <Textarea
-                  id="additionalNotes"
-                  placeholder="Any additional project details, special requirements, or questions..."
-                  value={formData.additionalNotes}
-                  onChange={(e) => setFormData({...formData, additionalNotes: e.target.value})}
-                  rows={4}
-                />
-              </div>
-            </div>
-
-            <div className="flex justify-end space-x-4">
-              <Button type="button" variant="outline" onClick={onClose}>
-                Cancel
-              </Button>
-              <Button type="submit" className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600">
-                Submit Quote Request
-              </Button>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
-  )
-}
-
-// ROI Calculator Component
-const ROICalculator = ({ onClose }) => {
-  const [calcData, setCalcData] = useState({
-    homeSize: '',
-    homeType: '',
-    plannedFuelType: '',
-    city: '',
-    electricRate: '0.35'
-  })
-  
-  const [results, setResults] = useState(null)
-
-  const calculateROI = () => {
-    const size = parseInt(calcData.homeSize) || 2500
-    
-    // New Construction MassSave Incentives (2026 rates)
-    const massSaveNewConstruction = {
-      base: 7500,      // Base: ≥15% above code
-      energystar: 15000, // ENERGY STAR: HERS ≤45 or ≥30% savings
-      passive: 25000,  // Passive House: Phius or PHI certified
-      gshp: 9000       // Additional for ENERGY STAR certified GSHP
-    }
-    
-    const totalIncentive = massSaveNewConstruction[calcData.homeType] + massSaveNewConstruction.gshp
-    const federalTaxCredit = 0.30 // 30% ITC available for builders as commercial project
-    
-    // Estimated costs (more realistic pricing)
-    const geothermalCost = size * 22 // $22/sq ft estimate for new construction
-    const netGeothermalCost = geothermalCost - totalIncentive - (geothermalCost * federalTaxCredit)
-    
-    // Alternative system costs (more realistic for new construction)
-    const alternativeCosts = {
-      'propane': size * 12, // Propane furnace + AC
-      'natural-gas': size * 10, // Gas furnace + AC  
-      'oil': size * 14, // Oil furnace + AC
-      'electric': size * 8, // Electric heat + AC
-      'ashp': size * 15 // Air source heat pump (was too high at $20)
-    }
-    
-    const alternativeCost = alternativeCosts[calcData.plannedFuelType] || alternativeCosts['propane']
-    
-    // Annual operating costs (estimates)
-    const geothermalAnnual = size * 1.9 // Very efficient
-    const alternativeAnnual = {
-      'propane': size * 3.8,
-      'natural-gas': size * 2.8,
-      'oil': size * 4.2,
-      'electric': size * 4.5,
-      'ashp': size * 3.2
-    }
-    
-    const altAnnual = alternativeAnnual[calcData.plannedFuelType] || alternativeAnnual['propane']
-    const annualSavings = altAnnual - geothermalAnnual
-    const paybackYears = Math.max(0, (netGeothermalCost - alternativeCost) / annualSavings)
-    
-    setResults({
-      geothermalCost,
-      totalIncentive,
-      federalCredit: geothermalCost * federalTaxCredit,
-      netGeothermalCost,
-      alternativeCost,
-      costDifference: netGeothermalCost - alternativeCost,
-      annualSavings,
-      paybackYears,
-      tenYearSavings: (annualSavings * 10) - Math.max(0, netGeothermalCost - alternativeCost),
-      twentyYearSavings: (annualSavings * 20) - Math.max(0, netGeothermalCost - alternativeCost)
-    })
-  }
-
-  return (
-    <div className="fixed inset-0 bg-black/50 flex items-center justify-center p-4 z-50">
-      <div className="bg-white rounded-lg max-w-4xl w-full max-h-[90vh] overflow-y-auto">
-        <div className="p-6">
-          <div className="flex justify-between items-center mb-6">
-            <h2 className="text-2xl font-bold text-gray-900">New Construction ROI Calculator</h2>
-            <Button variant="ghost" onClick={onClose}>
-              <X className="h-6 w-6" />
-            </Button>
-          </div>
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {/* Input Form */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">Project Details</h3>
-              
-              <div>
-                <Label htmlFor="calc-homeSize">Home Size (sq ft)</Label>
-                <Input
-                  id="calc-homeSize"
-                  type="number"
-                  placeholder="e.g., 2500"
-                  value={calcData.homeSize}
-                  onChange={(e) => setCalcData({...calcData, homeSize: e.target.value})}
-                />
-              </div>
-
-              <div>
-                <Label htmlFor="calc-homeType">Home Type</Label>
-                <Select onValueChange={(value) => setCalcData({...calcData, homeType: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select home type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="base">Base (≥15% above code) - $7.5K</SelectItem>
-                    <SelectItem value="energystar">ENERGY STAR (HERS ≤45) - $15K</SelectItem>
-                    <SelectItem value="passive">Passive House (Phius/PHI) - $25K</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="calc-fuelType">Alternative Fuel Type</Label>
-                <Select onValueChange={(value) => setCalcData({...calcData, plannedFuelType: value})}>
-                  <SelectTrigger>
-                    <SelectValue placeholder="Select fuel type" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="propane">Propane</SelectItem>
-                    <SelectItem value="natural-gas">Natural Gas</SelectItem>
-                    <SelectItem value="oil">Oil</SelectItem>
-                    <SelectItem value="electric">Electric</SelectItem>
-                    <SelectItem value="ashp">Air Source Heat Pump</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-
-              <div>
-                <Label htmlFor="calc-city">City/Town</Label>
-                <Input
-                  id="calc-city"
-                  placeholder="e.g., Boston, MA"
-                  value={calcData.city}
-                  onChange={(e) => setCalcData({...calcData, city: e.target.value})}
-                />
-              </div>
-
-              <Button 
-                onClick={calculateROI}
-                className="w-full bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600"
-                disabled={!calcData.homeSize || !calcData.homeType || !calcData.plannedFuelType}
-              >
-                Calculate ROI
-              </Button>
-            </div>
-
-            {/* Results */}
-            <div className="space-y-4">
-              <h3 className="text-lg font-semibold">ROI Analysis</h3>
-              
-              {results ? (
-                <div className="space-y-4">
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-green-600">Geothermal Investment</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span>System Cost:</span>
-                          <span>${results.geothermalCost.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between text-green-600">
-                          <span>MassSave New Construction:</span>
-                          <span>-${results.totalIncentive.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between text-green-600">
-                          <span>Federal ITC (30%):</span>
-                          <span>-${results.federalCredit.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between font-bold border-t pt-2">
-                          <span>Net Cost:</span>
-                          <span>${results.netGeothermalCost.toLocaleString()}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle>Alternative System</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="flex justify-between">
-                        <span>System Cost:</span>
-                        <span>${results.alternativeCost.toLocaleString()}</span>
-                      </div>
-                    </CardContent>
-                  </Card>
-
-                  <Card>
-                    <CardHeader>
-                      <CardTitle className="text-blue-600">Financial Returns</CardTitle>
-                    </CardHeader>
-                    <CardContent>
-                      <div className="space-y-2">
-                        <div className="flex justify-between">
-                          <span>Annual Savings:</span>
-                          <span className="text-green-600">${results.annualSavings.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>Payback Period:</span>
-                          <span>{results.paybackYears.toFixed(1)} years</span>
-                        </div>
-                        <div className="flex justify-between">
-                          <span>10-Year Net Savings:</span>
-                          <span className="text-green-600">${results.tenYearSavings.toLocaleString()}</span>
-                        </div>
-                        <div className="flex justify-between font-bold">
-                          <span>20-Year Net Savings:</span>
-                          <span className="text-green-600">${results.twentyYearSavings.toLocaleString()}</span>
-                        </div>
-                      </div>
-                    </CardContent>
-                  </Card>
-                </div>
-              ) : (
-                <div className="text-center text-gray-500 py-8">
-                  Fill in the project details and click "Calculate ROI" to see your analysis
-                </div>
-              )}
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-  )
-}
+import { CheckCircle, DollarSign, Home, Leaf, Zap, Building, Calculator, Phone, ArrowRight } from 'lucide-react'
 
 const NewConstructionPage = () => {
-  const [showQuoteForm, setShowQuoteForm] = useState(false)
-  const [showROICalculator, setShowROICalculator] = useState(false)
+  const [showAssessment, setShowAssessment] = useState(false)
 
-  const costComparison = [
+  const benefits = [
     {
-      system: "Geothermal",
-      netCost: "$64,000",
-      comparison: "Best Long-term Value",
-      icon: <Leaf className="h-8 w-8 text-green-600" />,
-      highlight: true,
-      details: "4000 sq ft ENERGY STAR: $88K - $24K MassSave incentives"
+      icon: <DollarSign className="h-6 w-6" />,
+      title: "Maximum Incentives",
+      description: "Up to $34,000 in MassSave rebates + 30% Federal ITC for builders"
     },
     {
-      system: "Propane + AC",
-      netCost: "$48,000",
-      comparison: "Lower upfront, higher operating",
-      icon: <Home className="h-8 w-8 text-orange-600" />,
-      highlight: false,
-      details: "4000 sq ft: Propane furnace + central AC"
+      icon: <Zap className="h-6 w-6" />,
+      title: "Lower Operating Costs",
+      description: "400-600% efficiency means minimal monthly energy bills from day one"
     },
     {
-      system: "ASHP",
-      netCost: "$60,000",
-      comparison: "Cold climate performance gap",
-      icon: <Zap className="h-8 w-8 text-blue-600" />,
-      highlight: false,
-      details: "4000 sq ft: Air source heat pump system"
+      icon: <Home className="h-6 w-6" />,
+      title: "5-8% Home Value Bonus",
+      description: "High-tech energy systems increase property value and marketability"
+    },
+    {
+      icon: <Leaf className="h-6 w-6" />,
+      title: "Net Zero Ready",
+      description: "Pair with solar for a complete net-zero energy home"
     }
   ]
 
-  const newConstructionIncentives = [
+  const incentiveTiers = [
     {
       tier: "Base",
       massSave: "$7,500",
       gshp: "$9,000",
       total: "$16,500",
-      description: "All-electric, ≥15% above code",
-      specs: "All-electric heating, water heating, cooking, clothes drying"
+      description: "All-electric, ≥15% above code"
     },
     {
-      tier: "ENERGY STAR", 
+      tier: "ENERGY STAR",
       massSave: "$15,000",
       gshp: "$9,000",
       total: "$24,000",
       description: "HERS ≤45 or ≥30% savings",
-      specs: "≤1.5 ACH50, ENERGY STAR SFNH v3.2 + NextGen certified"
+      popular: true
     },
     {
       tier: "Passive House",
-      massSave: "$25,000", 
+      massSave: "$25,000",
       gshp: "$9,000",
       total: "$34,000",
-      description: "Phius or PHI certified",
-      specs: "Full Passive House certification required"
+      description: "Phius or PHI certified"
     }
   ]
 
+  const processSteps = [
+    { step: "1", title: "Design Review", description: "We review plans and coordinate with your builder" },
+    { step: "2", title: "System Design", description: "Custom geothermal sizing for your home" },
+    { step: "3", title: "Loop Installation", description: "Drilling during construction phase" },
+    { step: "4", title: "HVAC Connection", description: "Heat pump install and commissioning" }
+  ]
+
   return (
-    <div className="min-h-screen bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
+    <div className="min-h-screen">
       {/* Hero Section */}
-      <section className="relative py-20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-16">
-            <Badge className="mb-4 bg-cyan-400/20 text-cyan-400 hover:bg-cyan-400/30 border border-cyan-400/30">
-              New Construction Specialists
-            </Badge>
-            <h1 className="text-4xl lg:text-6xl font-bold text-white mb-6">
-              Build Smart with
-              <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-500 bg-clip-text text-transparent block py-2 leading-tight">
-                Geothermal from Day One
-              </span>
-            </h1>
-            <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
-              Integrate geothermal into your new construction project and maximize incentives. 
-              Get up to $34,000 in MassSave rebates plus 30% Federal ITC for builders.
-            </p>
-            <p className="text-sm text-green-300 max-w-2xl mx-auto">
-              💡 Builders benefit: MassSave New Construction + 30% Federal ITC (commercial) + 5-8% building value bonus for high-tech energy systems
-            </p>
-            
-            <div className="flex flex-col sm:flex-row gap-4 justify-center">
-              <Button 
-                size="lg" 
-                className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 text-lg"
-                onClick={() => setShowQuoteForm(true)}
-              >
-                <Building className="h-5 w-5 mr-2" />
-                Get Builder Quote
-              </Button>
-              <Button 
-                size="lg" 
-                variant="outline"
-                className="border-cyan-400 text-cyan-400 hover:bg-cyan-400/10 px-8 py-4 text-lg"
-                onClick={() => setShowROICalculator(true)}
-              >
-                <Calculator className="h-5 w-5 mr-2" />
-                Calculate ROI
-              </Button>
+      <section className="relative bg-gradient-to-br from-slate-900 via-blue-900 to-slate-900 text-white py-20 lg:py-28">
+        <div className="absolute inset-0 bg-[url('/geo-drilling-closeup.jpg')] bg-cover bg-center opacity-20"></div>
+        <div className="relative max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge className="mb-6 bg-cyan-500/20 text-cyan-400 border-cyan-400/30 text-sm px-4 py-1">
+                New Construction
+              </Badge>
+              <h1 className="text-4xl lg:text-5xl font-bold mb-6">
+                Build Smart with
+                <span className="bg-gradient-to-r from-green-400 to-cyan-400 bg-clip-text text-transparent block mt-2">Geothermal from Day One</span>
+              </h1>
+              <p className="text-xl text-gray-300 mb-6 leading-relaxed">
+                Integrate geothermal into your new construction project and maximize incentives. 
+              </p>
+              <p className="text-green-300 mb-8">
+                💡 MassSave + 30% Federal ITC + 5-8% building value bonus
+              </p>
+              <div className="flex flex-col sm:flex-row gap-4">
+                <Button 
+                  size="lg" 
+                  className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 text-lg font-semibold"
+                  onClick={() => setShowAssessment(true)}
+                >
+                  <Building className="h-5 w-5 mr-2" />
+                  Get Builder Quote
+                </Button>
+                <Link to="/calculator">
+                  <Button 
+                    size="lg" 
+                    className="bg-white/10 hover:bg-white/20 text-white border border-white/30 px-8 py-4 text-lg"
+                  >
+                    <Calculator className="h-5 w-5 mr-2" />
+                    Calculate ROI
+                  </Button>
+                </Link>
+              </div>
+            </div>
+            <div className="hidden lg:block">
+              <img 
+                src="/geo-drilling-closeup.jpg" 
+                alt="Geothermal drilling for new construction" 
+                className="rounded-2xl shadow-2xl border border-white/10"
+              />
             </div>
           </div>
         </div>
       </section>
 
-      {/* New Construction Incentives */}
-      <section className="py-16 bg-slate-800/50">
+      {/* Benefits */}
+      <section className="py-16 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              New Construction MassSave Incentives
-            </h2>
-            <p className="text-gray-300 text-lg">
-              Maximize your rebates with new construction programs
-            </p>
+            <h2 className="text-3xl font-bold text-gray-900 mb-4">Why Build with Geothermal?</h2>
+            <p className="text-lg text-gray-600">Advantages for builders and homeowners</p>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {newConstructionIncentives.map((incentive, index) => (
-              <Card key={index} className="bg-slate-700/50 border-slate-600">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {benefits.map((benefit, index) => (
+              <Card key={index} className="text-center hover:shadow-lg transition-shadow">
                 <CardHeader>
-                  <CardTitle className="text-cyan-400">{incentive.tier}</CardTitle>
-                  <CardDescription className="text-gray-300">
-                    {incentive.description}
-                  </CardDescription>
+                  <div className="bg-green-100 w-12 h-12 rounded-full flex items-center justify-center mx-auto mb-4 text-green-600">
+                    {benefit.icon}
+                  </div>
+                  <CardTitle className="text-lg">{benefit.title}</CardTitle>
                 </CardHeader>
                 <CardContent>
-                  <div className="space-y-3">
-                    <div className="flex justify-between">
+                  <p className="text-gray-600 text-sm">{benefit.description}</p>
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Incentives */}
+      <section className="py-16 bg-gradient-to-br from-slate-900 to-blue-900 text-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="text-center mb-12">
+            <h2 className="text-3xl font-bold mb-4">MassSave New Construction Incentives</h2>
+            <p className="text-gray-300">Plus 30% Federal ITC for commercial builders</p>
+          </div>
+          <div className="grid md:grid-cols-3 gap-6 max-w-4xl mx-auto">
+            {incentiveTiers.map((tier, index) => (
+              <Card key={index} className={`bg-white/10 border-white/20 ${tier.popular ? 'ring-2 ring-green-400' : ''}`}>
+                {tier.popular && (
+                  <div className="bg-green-500 text-white text-center text-sm font-semibold py-1">
+                    MOST POPULAR
+                  </div>
+                )}
+                <CardHeader className="text-center">
+                  <CardTitle className="text-white text-xl">{tier.tier}</CardTitle>
+                  <CardDescription className="text-gray-300">{tier.description}</CardDescription>
+                </CardHeader>
+                <CardContent className="text-center">
+                  <div className="space-y-2 mb-4">
+                    <div className="flex justify-between text-sm">
                       <span className="text-gray-300">MassSave:</span>
-                      <span className="text-green-400 font-semibold">{incentive.massSave}</span>
+                      <span className="text-green-400">{tier.massSave}</span>
                     </div>
-                    <div className="flex justify-between">
+                    <div className="flex justify-between text-sm">
                       <span className="text-gray-300">GSHP Bonus:</span>
-                      <span className="text-green-400 font-semibold">{incentive.gshp}</span>
+                      <span className="text-green-400">{tier.gshp}</span>
                     </div>
-                    <div className="flex justify-between border-t border-slate-600 pt-3">
-                      <span className="text-white font-semibold">Total:</span>
-                      <span className="text-cyan-400 font-bold text-lg">{incentive.total}</span>
-                    </div>
-                    {incentive.specs && (
-                      <p className="text-gray-400 text-xs mt-2 pt-2 border-t border-slate-600">
-                        {incentive.specs}
-                      </p>
-                    )}
+                  </div>
+                  <div className="border-t border-white/20 pt-4">
+                    <div className="text-3xl font-bold text-cyan-400">{tier.total}</div>
+                    <div className="text-gray-400 text-sm">Total Rebates</div>
                   </div>
                 </CardContent>
               </Card>
@@ -641,43 +181,73 @@ const NewConstructionPage = () => {
         </div>
       </section>
 
-      {/* Cost Comparison */}
-      <section className="py-16">
+      {/* Process */}
+      <section className="py-16 bg-gray-50">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="text-center mb-12">
-            <h2 className="text-3xl font-bold text-white mb-4">
-              New Construction Cost Comparison
-            </h2>
-            <p className="text-gray-300 text-lg">
-              Example: Tier 2 house, 4000 sq ft in Massachusetts - see how geothermal compares
-            </p>
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div>
+              <Badge className="mb-4 bg-blue-100 text-blue-800">Simple Process</Badge>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">How It Works</h2>
+              <p className="text-gray-600 mb-8">
+                We coordinate directly with your builder to integrate geothermal seamlessly into the construction timeline.
+              </p>
+              <div className="space-y-4">
+                {processSteps.map((step, index) => (
+                  <div key={index} className="flex items-start gap-4">
+                    <div className="bg-blue-600 text-white w-8 h-8 rounded-full flex items-center justify-center flex-shrink-0 font-bold">
+                      {step.step}
+                    </div>
+                    <div>
+                      <h4 className="font-semibold text-gray-900">{step.title}</h4>
+                      <p className="text-gray-600 text-sm">{step.description}</p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+            <div>
+              <img 
+                src="/geothermal-netzero-diagram.jpg" 
+                alt="Net Zero Home with Geothermal" 
+                className="rounded-2xl shadow-xl"
+              />
+            </div>
           </div>
-          
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {costComparison.map((system, index) => (
-              <Card key={index} className={`${system.highlight ? 'bg-gradient-to-br from-green-900/50 to-cyan-900/50 border-green-500' : 'bg-slate-700/50 border-slate-600'}`}>
-                <CardHeader className="text-center">
-                  <div className="flex justify-center mb-4">
-                    {system.icon}
+        </div>
+      </section>
+
+      {/* Why Geothermal for New Construction */}
+      <section className="py-16 bg-white">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="grid lg:grid-cols-2 gap-12 items-center">
+            <div className="order-2 lg:order-1">
+              <img 
+                src="/1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg" 
+                alt="Comacchio Drilling Rig" 
+                className="rounded-2xl shadow-xl"
+              />
+            </div>
+            <div className="order-1 lg:order-2">
+              <Badge className="mb-4 bg-green-100 text-green-800">Minimal Disruption</Badge>
+              <h2 className="text-3xl font-bold text-gray-900 mb-6">Perfect Timing</h2>
+              <p className="text-gray-600 mb-6">
+                Installing geothermal during new construction is the most cost-effective approach. The ground loop goes in before landscaping, and the system integrates directly with new ductwork.
+              </p>
+              <div className="space-y-3">
+                {[
+                  "Drilling during construction minimizes site impact",
+                  "Lower installation costs vs. retrofit",
+                  "System designed for your exact home specs",
+                  "No existing equipment to remove",
+                  "Qualify for maximum incentives"
+                ].map((item, i) => (
+                  <div key={i} className="flex items-center gap-3">
+                    <CheckCircle className="h-5 w-5 text-green-600 flex-shrink-0" />
+                    <span className="text-gray-700">{item}</span>
                   </div>
-                  <CardTitle className="text-white">{system.system}</CardTitle>
-                  <CardDescription className={system.highlight ? 'text-green-400' : 'text-gray-300'}>
-                    {system.comparison}
-                  </CardDescription>
-                </CardHeader>
-                <CardContent className="text-center">
-                  <div className={`text-3xl font-bold ${system.highlight ? 'text-green-400' : 'text-white'}`}>
-                    {system.netCost}
-                  </div>
-                  <p className="text-gray-400 text-sm mt-2">Net installed cost</p>
-                  {system.details && (
-                    <p className="text-gray-500 text-xs mt-3 leading-relaxed">
-                      {system.details}
-                    </p>
-                  )}
-                </CardContent>
-              </Card>
-            ))}
+                ))}
+              </div>
+            </div>
           </div>
         </div>
       </section>
@@ -689,13 +259,13 @@ const NewConstructionPage = () => {
             Ready to Build with Geothermal?
           </h2>
           <p className="text-xl text-green-100 mb-8">
-            Get a custom quote for your new construction project. We work directly with builders and homeowners.
+            Get a custom quote for your new construction project
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
               size="lg" 
               className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg font-bold"
-              onClick={() => setShowQuoteForm(true)}
+              onClick={() => setShowAssessment(true)}
             >
               <Building className="h-5 w-5 mr-2" />
               Get Builder Quote
@@ -713,9 +283,135 @@ const NewConstructionPage = () => {
         </div>
       </section>
 
-      {/* Forms */}
-      {showQuoteForm && <BuilderQuoteForm onClose={() => setShowQuoteForm(false)} />}
-      {showROICalculator && <ROICalculator onClose={() => setShowROICalculator(false)} />}
+      {/* Assessment Modal */}
+      {showAssessment && (
+        <div className="fixed inset-0 bg-black/60 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div className="p-6 lg:p-8">
+              <div className="flex justify-between items-center mb-6">
+                <div>
+                  <h2 className="text-2xl font-bold text-gray-900">Builder Quote Request</h2>
+                  <p className="text-gray-600">New construction project</p>
+                </div>
+                <button 
+                  onClick={() => setShowAssessment(false)}
+                  className="text-gray-400 hover:text-gray-600 text-3xl leading-none"
+                >
+                  ×
+                </button>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Contact Name *</label>
+                    <input 
+                      type="text" 
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="Your name"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Company/Builder</label>
+                    <input 
+                      type="text" 
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="Builder company name"
+                    />
+                  </div>
+                </div>
+                
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
+                    <input 
+                      type="email" 
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="your@email.com"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
+                    <input 
+                      type="tel" 
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="(555) 555-5555"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Home Size (sq ft)</label>
+                    <input 
+                      type="number" 
+                      className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                      placeholder="2500"
+                    />
+                  </div>
+                  <div>
+                    <label className="block text-sm font-medium text-gray-700 mb-1">Project Timeline</label>
+                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
+                      <option value="">Select timeline</option>
+                      <option value="0-3">0-3 months</option>
+                      <option value="3-6">3-6 months</option>
+                      <option value="6-12">6-12 months</option>
+                      <option value="12+">12+ months</option>
+                    </select>
+                  </div>
+                </div>
+                
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Project Location</label>
+                  <input 
+                    type="text" 
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
+                    placeholder="City, State"
+                  />
+                </div>
+
+                <div>
+                  <label className="block text-sm font-medium text-gray-700 mb-1">Project Details</label>
+                  <textarea 
+                    className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none"
+                    rows="3"
+                    placeholder="Number of units, building type, energy goals..."
+                  />
+                </div>
+                
+                <div className="bg-green-50 p-4 rounded-xl">
+                  <h4 className="font-semibold text-green-900 mb-2">What You'll Receive:</h4>
+                  <ul className="text-sm text-green-800 space-y-1">
+                    <li>✓ Custom system design and sizing</li>
+                    <li>✓ Detailed cost estimate with incentives</li>
+                    <li>✓ Construction timeline coordination</li>
+                    <li>✓ ROI analysis vs. conventional systems</li>
+                  </ul>
+                </div>
+                
+                <div className="flex gap-4 pt-4">
+                  <Button 
+                    className="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white py-3 font-semibold"
+                    onClick={() => {
+                      alert('Thank you! We\'ll contact you within 24 hours.')
+                      setShowAssessment(false)
+                    }}
+                  >
+                    Submit Request
+                  </Button>
+                  <Button 
+                    variant="outline" 
+                    className="flex-1 py-3"
+                    onClick={() => setShowAssessment(false)}
+                  >
+                    Cancel
+                  </Button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }
