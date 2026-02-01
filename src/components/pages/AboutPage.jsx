@@ -10,8 +10,8 @@ const AboutPage = () => {
     {
       name: "Managing Director",
       title: "Engineering Leadership",
-      experience: "Master's Degree in Reservoir Engineering, IGSHPA Certified Designer and Installer for Ground Source Heat Pumps",
-      certifications: ["IGSHPA Certified", "Master's Engineering", "Multi-State Licensed"]
+      experience: "Master's Degree in Reservoir Engineering, AEE Certified GeoExchange Designer (CGD), IGSHPA Accredited Installer (AI)",
+      certifications: ["AEE CGD", "IGSHPA AI", "Master's Engineering"]
     },
     {
       name: "Operations Executive",
@@ -28,16 +28,14 @@ const AboutPage = () => {
   ]
 
   const certifications = [
-    "IGSHPA Designer Certification",
-    "IGSHPA Installer Certification",
-    "Electrical License - Massachusetts",
+    "AEE Certified GeoExchange Designer (CGD)",
+    "IGSHPA Accredited Installer (AI)",
     "HIC Registration - Home Improvement Contractor",
-    "Drilling Licenses - Geothermal Boring",
-    "EPA Section 608 Certified Technicians",
-    "OSHA 30-Hour Safety Certification",
-    "MassSave Partner (Pending Approval)",
-    "Mass Climate Bank ESHLP Approved",
-    "Better Business Bureau A+ Rating"
+    "Drilling Licenses - MA, RI, ME, CT, NY",
+    "NGWA - National Ground Water Association",
+    "OSHA Safety Certification",
+    "MassSave Partner",
+    "Mass Climate Bank ESHLP Approved"
   ]
 
   const serviceAreas = [
@@ -90,7 +88,7 @@ const AboutPage = () => {
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
-                  <span className="text-gray-700">IGSHPA certified designers and installers</span>
+                  <span className="text-gray-700">IGSHPA Accredited Installers & AEE Certified GeoExchange Designers</span>
                 </div>
                 <div className="flex items-center space-x-3">
                   <CheckCircle className="h-5 w-5 text-green-600" />
