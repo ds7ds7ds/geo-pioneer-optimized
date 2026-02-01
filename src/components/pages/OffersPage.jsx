@@ -200,56 +200,56 @@ const OffersPage = () => {
 
           {/* Quick Option Cards */}
           <div className="grid md:grid-cols-3 gap-6 max-w-5xl mx-auto mt-12">
-            {/* Tier 1 Card */}
+            {/* Tier 1 Card - GREEN */}
             <Card 
-              className="bg-white/10 border-green-400/30 backdrop-blur-sm cursor-pointer hover:bg-white/20 transition-all"
+              className="bg-green-600/20 border-2 border-green-400 backdrop-blur-sm cursor-pointer hover:bg-green-500/30 transition-all"
               onClick={() => document.getElementById('tier1').scrollIntoView({ behavior: 'smooth' })}
             >
               <CardContent className="pt-6 text-center">
-                <Badge className="mb-3 bg-green-500 text-white">Tier 1</Badge>
+                <Badge className="mb-3 bg-green-500 text-white font-bold">Tier 1</Badge>
                 <h3 className="text-xl font-bold text-white mb-2">Free Battery</h3>
                 <p className="text-green-200 text-sm mb-4">Backup power + savings</p>
-                <div className="text-3xl font-bold text-green-400">FREE</div>
-                <p className="text-gray-400 text-xs mt-1">Zero upfront cost</p>
+                <div className="text-4xl font-bold text-green-400">FREE</div>
+                <p className="text-green-200/70 text-xs mt-1">Zero upfront cost</p>
               </CardContent>
             </Card>
 
-            {/* Tier 2 Own Card */}
+            {/* Tier 2 Own Card - BLUE */}
             <Card 
-              className="bg-white/10 border-blue-400/30 backdrop-blur-sm cursor-pointer hover:bg-white/20 transition-all"
+              className="bg-blue-600/20 border-2 border-blue-400 backdrop-blur-sm cursor-pointer hover:bg-blue-500/30 transition-all"
               onClick={() => document.getElementById('tier2').scrollIntoView({ behavior: 'smooth' })}
             >
               <CardContent className="pt-6 text-center">
-                <Badge className="mb-3 bg-blue-500 text-white">Tier 2 (Own)</Badge>
+                <Badge className="mb-3 bg-blue-500 text-white font-bold">Tier 2 (Own)</Badge>
                 <h3 className="text-xl font-bold text-white mb-2">Purchase & Own</h3>
                 <p className="text-blue-200 text-sm mb-4">Own outright, max state incentives</p>
-                <div className="text-3xl font-bold text-blue-400">40-50%</div>
-                <p className="text-gray-400 text-xs mt-1">incentive offset</p>
+                <div className="text-4xl font-bold text-blue-400">40-50%</div>
+                <p className="text-blue-200/70 text-xs mt-1">incentive offset</p>
               </CardContent>
             </Card>
 
-            {/* Tier 2 EaaS Card */}
+            {/* Tier 2 EaaS Card - PURPLE */}
             <Card 
-              className="bg-white/10 border-purple-400/50 backdrop-blur-sm cursor-pointer hover:bg-white/20 transition-all relative"
+              className="bg-purple-600/20 border-2 border-purple-400 backdrop-blur-sm cursor-pointer hover:bg-purple-500/30 transition-all relative"
               onClick={() => document.getElementById('tier2').scrollIntoView({ behavior: 'smooth' })}
             >
               <div className="absolute -top-3 left-1/2 -translate-x-1/2">
-                <Badge className="bg-yellow-400 text-gray-900 font-bold">⭐ POPULAR</Badge>
+                <Badge className="bg-yellow-400 text-gray-900 font-bold px-3">⭐ POPULAR</Badge>
               </div>
               <CardContent className="pt-6 text-center">
-                <Badge className="mb-3 bg-purple-500 text-white">Tier 2 (EaaS)</Badge>
+                <Badge className="mb-3 bg-purple-500 text-white font-bold">Tier 2 (EaaS)</Badge>
                 <h3 className="text-xl font-bold text-white mb-2">Energy Service</h3>
                 <p className="text-purple-200 text-sm mb-4">$0 down + buyback option</p>
-                <div className="text-3xl font-bold text-purple-400">$0 Down</div>
-                <p className="text-gray-400 text-xs mt-1">5-10% instant savings</p>
+                <div className="text-4xl font-bold text-purple-400">$0 Down</div>
+                <p className="text-purple-200/70 text-xs mt-1">5-10% instant savings</p>
               </CardContent>
             </Card>
           </div>
 
           <div className="text-center mt-8">
             <Button 
-              variant="outline"
-              className="border-white/30 text-white hover:bg-white/10"
+              size="lg"
+              className="bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold px-8"
               onClick={() => document.getElementById('compare').scrollIntoView({ behavior: 'smooth' })}
             >
               Compare All Options
