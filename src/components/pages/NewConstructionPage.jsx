@@ -6,7 +6,7 @@ import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.jsx'
 import { Textarea } from '@/components/ui/textarea.jsx'
-import { CheckCircle, DollarSign, Home, Leaf, Zap, TrendingUp, Building, Calculator, Shield, X } from 'lucide-react'
+import { CheckCircle, DollarSign, Home, Leaf, Zap, TrendingUp, Building, Calculator, Shield, X, Phone } from 'lucide-react'
 
 // Import images
 import geothermalHomeDiagram from '../../assets/geothermal-home-diagram.png'
@@ -285,7 +285,7 @@ const ROICalculator = ({ onClose }) => {
     }
     
     const totalIncentive = massSaveNewConstruction[calcData.homeType] + massSaveNewConstruction.gshp
-    const federalTaxCredit = 0.00 // Residential 30% credit expired Dec 2025 - available through EaaS/TPO only
+    const federalTaxCredit = 0.30 // 30% ITC available for builders as commercial project
     
     // Estimated costs (more realistic pricing)
     const geothermalCost = size * 22 // $22/sq ft estimate for new construction
@@ -426,9 +426,9 @@ const ROICalculator = ({ onClose }) => {
                           <span>MassSave New Construction:</span>
                           <span>-${results.totalIncentive.toLocaleString()}</span>
                         </div>
-                        <div className="flex justify-between text-amber-600">
-                          <span>Federal ITC (via EaaS only):</span>
-                          <span className="text-xs">Contact for TPO pricing</span>
+                        <div className="flex justify-between text-green-600">
+                          <span>Federal ITC (30%):</span>
+                          <span>-${results.federalCredit.toLocaleString()}</span>
                         </div>
                         <div className="flex justify-between font-bold border-t pt-2">
                           <span>Net Cost:</span>
@@ -564,10 +564,10 @@ const NewConstructionPage = () => {
             </h1>
             <p className="text-xl text-gray-300 mb-8 max-w-3xl mx-auto leading-relaxed">
               Integrate geothermal into your new construction project and maximize incentives. 
-              Get up to $34,000 in MassSave rebates. Federal 30% ITC available through our EaaS/TPO model.
+              Get up to $34,000 in MassSave rebates plus 30% Federal ITC for builders.
             </p>
-            <p className="text-sm text-amber-300 max-w-2xl mx-auto">
-              📢 2026 Update: Residential federal tax credits expired Dec 2025. Through our Energy-as-a-Service (TPO) model, we can still capture commercial ITC and pass savings to you.
+            <p className="text-sm text-green-300 max-w-2xl mx-auto">
+              💡 Builders benefit: MassSave New Construction + 30% Federal ITC (commercial) + 5-8% building value bonus for high-tech energy systems
             </p>
             
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
@@ -678,6 +678,37 @@ const NewConstructionPage = () => {
                 </CardContent>
               </Card>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* CTA Section */}
+      <section className="py-20 bg-gradient-to-r from-green-600 to-cyan-600">
+        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+          <h2 className="text-3xl lg:text-4xl font-bold text-white mb-6">
+            Ready to Build with Geothermal?
+          </h2>
+          <p className="text-xl text-green-100 mb-8">
+            Get a custom quote for your new construction project. We work directly with builders and homeowners.
+          </p>
+          <div className="flex flex-col sm:flex-row gap-4 justify-center">
+            <Button 
+              size="lg" 
+              className="bg-white text-green-600 hover:bg-gray-100 px-8 py-4 text-lg font-bold"
+              onClick={() => setShowQuoteForm(true)}
+            >
+              <Building className="h-5 w-5 mr-2" />
+              Get Builder Quote
+            </Button>
+            <a href="tel:+17816545879">
+              <Button 
+                size="lg" 
+                className="bg-yellow-400 text-gray-900 hover:bg-yellow-300 px-8 py-4 text-lg font-bold"
+              >
+                <Phone className="h-5 w-5 mr-2" />
+                (781) 654-5879
+              </Button>
+            </a>
           </div>
         </div>
       </section>
