@@ -444,8 +444,7 @@ const ExistingHomesPage = () => {
             </h2>
             <p className="text-gray-600">Recent geothermal installations in Massachusetts</p>
           </div>
-          <div className="grid md:grid-cols-4 gap-6">
-            <img src="/geo-drilling-backyard.jpg" alt="Backyard drilling with compact rig" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
+          <div className="grid md:grid-cols-3 gap-6">
             <img src="/geo-drilling-closeup.jpg" alt="Drilling closeup" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
             <img src="/geo-aerial-boston.jpg" alt="Aerial view of installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
             <img src="/geo-cedar-house.jpg" alt="Completed installation" className="rounded-xl shadow-lg hover:shadow-xl transition-shadow" />
