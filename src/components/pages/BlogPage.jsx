@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Button } from '@/components/ui/button.jsx'
@@ -189,20 +190,24 @@ const BlogPage = () => {
             Get a free assessment and discover how much you can save with Massachusetts' most efficient heating and cooling solution
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
-            <Button 
-              size="lg"
-              className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3"
-            >
-              Calculate Your Savings
-              <ArrowRight className="h-5 w-5 ml-2" />
-            </Button>
-            <Button 
-              size="lg"
-              variant="outline"
-              className="border-white text-white hover:bg-white/10 px-8 py-3"
-            >
-              Contact Us
-            </Button>
+            <Link to="/calculator">
+              <Button 
+                size="lg"
+                className="bg-white text-green-600 hover:bg-gray-100 px-8 py-3"
+              >
+                Calculate Your Savings
+                <ArrowRight className="h-5 w-5 ml-2" />
+              </Button>
+            </Link>
+            <Link to="/contact">
+              <Button 
+                size="lg"
+                variant="outline"
+                className="border-white text-white hover:bg-white/10 px-8 py-3"
+              >
+                Contact Us
+              </Button>
+            </Link>
           </div>
         </div>
       </section>

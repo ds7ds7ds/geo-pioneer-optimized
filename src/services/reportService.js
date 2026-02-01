@@ -216,7 +216,7 @@ const generatePDF = async (reportContent) => {
   pdf.setFontSize(8)
   pdf.setFont('helvetica', 'normal')
   pdf.text('GeoPioneer - Your Geothermal Energy Partner', pageWidth / 2, footerY, { align: 'center' })
-  pdf.text('Contact: info@geopioneer.com | (555) 123-4567', pageWidth / 2, footerY + 4, { align: 'center' })
+  pdf.text('Contact: info@geopioneer.com | (781) 654-5879', pageWidth / 2, footerY + 4, { align: 'center' })
   
   return pdf.output('blob')
 }
@@ -290,7 +290,7 @@ const generateEmailHTML = (formData, reportContent) => {
           <p>Best regards,<br>
           The GeoPioneer Team<br>
           <a href="mailto:info@geopioneer.com">info@geopioneer.com</a><br>
-          (555) 123-4567</p>
+          (781) 654-5879</p>
           
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
           <p style="font-size: 12px; color: #666;">

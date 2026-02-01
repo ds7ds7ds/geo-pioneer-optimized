@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Input } from '@/components/ui/input.jsx'
@@ -38,7 +39,7 @@ const ContactPage = () => {
     {
       icon: <Phone className="h-6 w-6 text-blue-600" />,
       title: "Phone",
-      value: "(555) 123-4567",
+      value: "(781) 654-5879",
       description: "Call us for immediate assistance"
     },
     {
@@ -67,21 +68,24 @@ const ContactPage = () => {
       description: "Get instant estimates for your home",
       icon: <Calculator className="h-8 w-8 text-blue-600" />,
       action: "calculator",
-      buttonText: "Use Calculator"
+      buttonText: "Use Calculator",
+      link: "/calculator"
     },
     {
       title: "Schedule Assessment",
       description: "Book a free on-site evaluation",
       icon: <FileText className="h-8 w-8 text-green-600" />,
       action: "assessment",
-      buttonText: "Schedule Now"
+      buttonText: "Schedule Now",
+      link: "#contact-form"
     },
     {
       title: "Emergency Service",
       description: "24/7 support for existing customers",
       icon: <Phone className="h-8 w-8 text-red-600" />,
       action: "emergency",
-      buttonText: "Call Emergency"
+      buttonText: "Call Emergency",
+      link: "tel:+17816545879"
     }
   ]
 
@@ -142,12 +146,25 @@ const ContactPage = () => {
                   <CardDescription>{action.description}</CardDescription>
                 </CardHeader>
                 <CardContent>
-                  <Button 
-                    className="w-full"
-                    variant={action.action === 'emergency' ? 'destructive' : 'default'}
-                  >
-                    {action.buttonText}
-                  </Button>
+                  {action.link.startsWith('/') ? (
+                    <Link to={action.link}>
+                      <Button 
+                        className="w-full"
+                        variant={action.action === 'emergency' ? 'destructive' : 'default'}
+                      >
+                        {action.buttonText}
+                      </Button>
+                    </Link>
+                  ) : (
+                    <a href={action.link}>
+                      <Button 
+                        className="w-full"
+                        variant={action.action === 'emergency' ? 'destructive' : 'default'}
+                      >
+                        {action.buttonText}
+                      </Button>
+                    </a>
+                  )}
                 </CardContent>
               </Card>
             ))}
@@ -156,7 +173,7 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Form */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="contact-form" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Get Your Free Consultation</h2>
@@ -210,7 +227,7 @@ const ContactPage = () => {
                       required
                       value={formData.phone}
                       onChange={(e) => handleInputChange('phone', e.target.value)}
-                      placeholder="(555) 123-4567"
+                      placeholder="(781) 654-5879"
                     />
                   </div>
                   <div>
@@ -297,7 +314,7 @@ const ContactPage = () => {
                   </Button>
                   <Button type="button" size="lg" variant="outline" className="border-green-600 text-green-600 hover:bg-green-50">
                     <Phone className="h-4 w-4 mr-2" />
-                    Call Instead: (555) 123-4567
+                    Call Instead: (781) 654-5879
                   </Button>
                 </div>
               </form>

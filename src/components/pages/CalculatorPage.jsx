@@ -1118,7 +1118,7 @@ const CalculatorPage = () => {
                 <Label htmlFor="phone">Phone Number *</Label>
                 <Input
                   id="phone"
-                  placeholder="(555) 123-4567"
+                  placeholder="(781) 654-5879"
                   value={calculatorData.phone}
                   onChange={(e) => handleInputChange('phone', e.target.value)}
                   className="border-cyan-200 focus:border-cyan-400"
@@ -1346,7 +1346,7 @@ const CalculatorPage = () => {
                       <Label htmlFor="reportPhone">Phone Number *</Label>
                       <Input
                         id="reportPhone"
-                        placeholder="(555) 123-4567"
+                        placeholder="(781) 654-5879"
                         value={assessmentData.phone}
                         onChange={(e) => handleAssessmentChange('phone', e.target.value)}
                         className="border-green-200 focus:border-green-400"
@@ -1414,11 +1414,11 @@ CC: info@geopioneer.com
 
 We'll contact you within 24 hours to schedule your on-site evaluation.`)
                           } else {
-                            alert(`Error: ${result.message}. Please try again or contact us directly at (555) 123-4567.`)
+                            alert(`Error: ${result.message}. Please try again or contact us directly at (781) 654-5879.`)
                           }
                         } catch (error) {
                           console.error('Report generation error:', error)
-                          alert('There was an issue generating your report. Please try again or contact us directly at (555) 123-4567.')
+                          alert('There was an issue generating your report. Please try again or contact us directly at (781) 654-5879.')
                         }
                       }}
                       className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"

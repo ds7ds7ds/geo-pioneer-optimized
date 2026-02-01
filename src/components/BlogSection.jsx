@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router-dom'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
 import { Button } from '@/components/ui/button.jsx'
@@ -100,14 +101,16 @@ const BlogSection = () => {
                     <span>{post.readTime}</span>
                   </div>
                   
-                  <Button 
-                    variant="ghost" 
-                    size="sm"
-                    className="group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"
-                  >
-                    Read More
-                    <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                  </Button>
+                  <Link to="/blog">
+                    <Button 
+                      variant="ghost" 
+                      size="sm"
+                      className="group-hover:bg-blue-50 group-hover:text-blue-600 transition-colors"
+                    >
+                      Read More
+                      <ArrowRight className="h-4 w-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                    </Button>
+                  </Link>
                 </div>
               </CardContent>
             </Card>
@@ -115,13 +118,15 @@ const BlogSection = () => {
         </div>
 
         <div className="text-center mt-12">
-          <Button 
-            size="lg"
-            className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
-          >
-            View All Articles
-            <ArrowRight className="h-5 w-5 ml-2" />
-          </Button>
+          <Link to="/blog">
+            <Button 
+              size="lg"
+              className="bg-blue-600 hover:bg-blue-700 text-white px-8 py-3"
+            >
+              View All Articles
+              <ArrowRight className="h-5 w-5 ml-2" />
+            </Button>
+          </Link>
         </div>
       </div>
     </section>

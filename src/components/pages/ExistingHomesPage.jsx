@@ -393,13 +393,13 @@ const ExistingHomesPage = () => {
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
 
-            <a href="tel:+15551234567">
+            <a href="tel:+17816545879">
               <Button 
                 size="lg" 
                 variant="outline" 
                 className="border-white text-white bg-blue-600/20 hover:bg-blue-600 px-8 py-3 font-bold"
               >
-                Call (555) 123-4567
+                Call (781) 654-5879
               </Button>
             </a>
           </div>
@@ -447,7 +447,7 @@ const ExistingHomesPage = () => {
                     <input 
                       type="tel" 
                       className="w-full p-3 border border-gray-300 rounded-md focus:border-blue-400 focus:outline-none"
-                      placeholder="(555) 123-4567"
+                      placeholder="(781) 654-5879"
                     />
                   </div>
                   <div>
@@ -510,7 +510,7 @@ const ExistingHomesPage = () => {
                       const formData = {
                         name: document.querySelector('input[placeholder="Your full name"]').value,
                         email: document.querySelector('input[placeholder="your@email.com"]').value,
-                        phone: document.querySelector('input[placeholder="(555) 123-4567"]').value,
+                        phone: document.querySelector('input[placeholder="(781) 654-5879"]').value,
                         currentSystem: document.querySelector('select').value,
                         squareFootage: document.querySelector('input[placeholder="2500"]').value,
                         address: document.querySelector('input[placeholder="123 Main St, City, State, ZIP"]').value,
@@ -550,11 +550,11 @@ The retrofit report includes:
 
 We'll contact you within 24 hours to schedule your comprehensive home evaluation.`)
                         } else {
-                          alert(`Error: ${result.message}. Please try again or contact us directly at (555) 123-4567.`)
+                          alert(`Error: ${result.message}. Please try again or contact us directly at (781) 654-5879.`)
                         }
                       } catch (error) {
                         console.error('Report generation error:', error)
-                        alert('There was an issue generating your report. Please try again or contact us directly at (555) 123-4567.')
+                        alert('There was an issue generating your report. Please try again or contact us directly at (781) 654-5879.')
                       }
                       
                       setShowAssessment(false)

@@ -71,9 +71,12 @@ const Header = () => {
             <Button
               size="sm"
               className="bg-blue-600 hover:bg-blue-700 text-white"
+              asChild
             >
-              <Phone className="h-4 w-4 mr-2" />
-              (781) 654-5879
+              <a href="tel:+17816545879">
+                <Phone className="h-4 w-4 mr-2" />
+                (781) 654-5879
+              </a>
             </Button>
           </div>
 
@@ -125,9 +128,12 @@ const Header = () => {
                 <Button
                   size="sm"
                   className="w-full bg-blue-600 hover:bg-blue-700 text-white"
+                  asChild
                 >
-                  <Phone className="h-4 w-4 mr-2" />
-                  (781) 654-5879
+                  <a href="tel:+17816545879">
+                    <Phone className="h-4 w-4 mr-2" />
+                    (781) 654-5879
+                  </a>
                 </Button>
               </div>
             </div>
