@@ -67,9 +67,8 @@ const Header = () => {
           {/* Desktop CTA Buttons */}
           <div className="hidden lg:flex items-center space-x-3">
             <Button
-              variant="outline"
               size="sm"
-              className="border-blue-600 text-blue-600 hover:bg-blue-50"
+              className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white font-semibold shadow-md"
               asChild
             >
               <Link to="/calculator">
@@ -79,7 +78,7 @@ const Header = () => {
             </Button>
             <Button
               size="sm"
-              className="bg-blue-600 hover:bg-blue-700 text-white"
+              className="bg-blue-600 hover:bg-blue-700 text-white font-semibold"
               asChild
             >
               <a href="tel:+17816545879">
@@ -124,9 +123,8 @@ const Header = () => {
               ))}
               <div className="pt-4 space-y-2">
                 <Button
-                  variant="outline"
                   size="sm"
-                  className="w-full border-blue-600 text-blue-600 hover:bg-blue-50"
+                  className="w-full bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white font-semibold"
                   asChild
                 >
                   <Link to="/calculator" onClick={() => setIsMenuOpen(false)}>
