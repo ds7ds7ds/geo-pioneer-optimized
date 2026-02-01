@@ -1,9 +1,67 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { Link } from 'react-router-dom'
 import { Button } from '@/components/ui/button.jsx'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card.jsx'
 import { Badge } from '@/components/ui/badge.jsx'
-import { CheckCircle, DollarSign, Home, Leaf, Zap, Phone, ArrowRight, Calculator, FileText, Battery, Sun } from 'lucide-react'
+import { CheckCircle, DollarSign, Home, Leaf, Zap, Phone, ArrowRight, Calculator, FileText, Battery, Sun, ChevronLeft, ChevronRight } from 'lucide-react'
+
+// Image Carousel Component
+const ImageCarousel = () => {
+  const [currentIndex, setCurrentIndex] = useState(0)
+  
+  const images = [
+    { src: '/geo-aerial-boston.jpg', caption: 'GeoPioneer Installation - Greater Boston' },
+    { src: '/geo-drilling-closeup.jpg', caption: 'Vertical Bore Drilling in Progress' },
+    { src: '/geo-indoor-unit.jpg', caption: 'ClimateMaster Heat Pump Installation' },
+    { src: '/geo-cedar-house.jpg', caption: 'Solar + Geothermal NetZero Home' },
+    { src: '/1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg', caption: 'Comacchio GEO 601 Drilling Rig' }
+  ]
+
+  useEffect(() => {
+    const timer = setInterval(() => {
+      setCurrentIndex((prev) => (prev + 1) % images.length)
+    }, 4000)
+    return () => clearInterval(timer)
+  }, [images.length])
+
+  const goTo = (index) => setCurrentIndex(index)
+  const prev = () => setCurrentIndex((currentIndex - 1 + images.length) % images.length)
+  const next = () => setCurrentIndex((currentIndex + 1) % images.length)
+
+  return (
+    <div className="relative rounded-2xl overflow-hidden shadow-2xl border border-white/10">
+      <div className="relative h-80 lg:h-96">
+        <img 
+          src={images[currentIndex].src}
+          alt={images[currentIndex].caption}
+          className="w-full h-full object-cover transition-opacity duration-500"
+        />
+        <div className="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/80 to-transparent p-4">
+          <p className="text-white font-medium">{images[currentIndex].caption}</p>
+        </div>
+        
+        {/* Arrows */}
+        <button onClick={prev} className="absolute left-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full">
+          <ChevronLeft className="h-5 w-5" />
+        </button>
+        <button onClick={next} className="absolute right-2 top-1/2 -translate-y-1/2 bg-black/50 hover:bg-black/70 text-white p-2 rounded-full">
+          <ChevronRight className="h-5 w-5" />
+        </button>
+      </div>
+      
+      {/* Dots */}
+      <div className="absolute bottom-16 left-1/2 -translate-x-1/2 flex gap-2">
+        {images.map((_, index) => (
+          <button
+            key={index}
+            onClick={() => goTo(index)}
+            className={`w-2 h-2 rounded-full transition-all ${index === currentIndex ? 'bg-white w-4' : 'bg-white/50'}`}
+          />
+        ))}
+      </div>
+    </div>
+  )
+}
 
 const HomePage = () => {
   const [showAssessment, setShowAssessment] = useState(false)
@@ -94,11 +152,7 @@ const HomePage = () => {
               </div>
             </div>
             <div className="hidden lg:block">
-              <img 
-                src="/geothermal-netzero-diagram.jpg" 
-                alt="GeoPioneer Net Zero Home" 
-                className="rounded-2xl shadow-2xl border border-white/10"
-              />
+              <ImageCarousel />
             </div>
           </div>
         </div>
