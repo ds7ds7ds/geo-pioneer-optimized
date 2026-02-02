@@ -6,61 +6,134 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs.j
 import { Input } from '@/components/ui/input.jsx'
 import { Label } from '@/components/ui/label.jsx'
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '@/components/ui/select.jsx'
-import { Calculator, Home, Building, DollarSign, Zap, Leaf, TrendingUp, BarChart3 } from 'lucide-react'
+import { Calculator, Home, Building, DollarSign, Zap, Leaf, TrendingUp, BarChart3, Battery, Shield, CheckCircle2, Clock } from 'lucide-react'
 
 // Chart Components
 const CapexComparisonChart = ({ data }) => {
   const systems = Object.entries(data).sort(([,a], [,b]) => a - b)
   const maxCost = Math.max(...Object.values(data))
+  const minCost = Math.min(...Object.values(data))
+  
+  // SVG dimensions for horizontal bar chart
+  const svgWidth = 400
+  const svgHeight = 220
+  const barHeight = 40
+  const barGap = 15
+  const labelWidth = 80
+  const valueWidth = 60
   
   return (
     <div className="space-y-6">
       <h4 className="font-semibold text-gray-900">System Cost Comparison</h4>
       
-      {/* Bar Chart */}
-      <div className="relative h-64 bg-gray-50 rounded-lg p-4">
-        <div className="flex items-end justify-between h-full space-x-2">
+      {/* Horizontal Bar Chart */}
+      <div className="bg-gray-50 rounded-lg p-4">
+        <svg viewBox={`0 0 ${svgWidth} ${svgHeight}`} className="w-full">
           {systems.map(([system, cost], index) => {
-            const height = (cost / maxCost) * 100
+            const barWidth = ((cost / maxCost) * (svgWidth - labelWidth - valueWidth - 40)) + 40 // Min 40px
+            const y = index * (barHeight + barGap) + 20
             const isGeothermal = system === 'Geothermal'
             const shortName = system.replace(' + AC', '').replace('Natural Gas', 'Gas')
             
             return (
-              <div key={system} className="flex-1 flex flex-col items-center">
-                <div className="w-full flex flex-col items-center mb-2">
-                  <span className={`text-xs font-bold mb-1 ${isGeothermal ? 'text-green-600' : 'text-gray-700'}`}>
-                    ${Math.round(cost / 1000)}K
-                  </span>
-                  <div 
-                    className={`w-full rounded-t-lg transition-all duration-1000 ${
-                      isGeothermal 
-                        ? 'bg-gradient-to-t from-green-500 to-green-400' 
-                        : 'bg-gradient-to-t from-gray-400 to-gray-300'
-                    }`}
-                    style={{ height: `${height}%`, minHeight: '20px' }}
-                  />
-                </div>
-                <span className="text-xs font-medium text-center leading-tight">
+              <g key={system}>
+                {/* System label */}
+                <text
+                  x={labelWidth - 5}
+                  y={y + barHeight / 2 + 5}
+                  textAnchor="end"
+                  className="text-xs font-medium"
+                  fill="#374151"
+                >
                   {shortName}
-                </span>
-              </div>
+                </text>
+                
+                {/* Bar background */}
+                <rect
+                  x={labelWidth}
+                  y={y}
+                  width={svgWidth - labelWidth - valueWidth - 20}
+                  height={barHeight}
+                  rx="6"
+                  fill="#e5e7eb"
+                />
+                
+                {/* Colored bar */}
+                <rect
+                  x={labelWidth}
+                  y={y}
+                  width={barWidth}
+                  height={barHeight}
+                  rx="6"
+                  fill={isGeothermal ? "url(#geoGradient)" : "url(#altGradient)"}
+                  style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
+                />
+                
+                {/* Cost value */}
+                <text
+                  x={labelWidth + barWidth + 10}
+                  y={y + barHeight / 2 + 5}
+                  textAnchor="start"
+                  className="text-sm font-bold"
+                  fill={isGeothermal ? "#059669" : "#4b5563"}
+                >
+                  ${Math.round(cost / 1000)}K
+                </text>
+                
+                {/* Best value badge for lowest cost */}
+                {index === 0 && (
+                  <g>
+                    <rect
+                      x={labelWidth + barWidth - 70}
+                      y={y + 8}
+                      width={60}
+                      height={24}
+                      rx="12"
+                      fill={isGeothermal ? "#dcfce7" : "#f3f4f6"}
+                      stroke={isGeothermal ? "#22c55e" : "#9ca3af"}
+                      strokeWidth="1"
+                    />
+                    <text
+                      x={labelWidth + barWidth - 40}
+                      y={y + 24}
+                      textAnchor="middle"
+                      className="text-xs font-semibold"
+                      fill={isGeothermal ? "#15803d" : "#4b5563"}
+                    >
+                      BEST
+                    </text>
+                  </g>
+                )}
+              </g>
             )
           })}
-        </div>
+          
+          {/* Gradient definitions */}
+          <defs>
+            <linearGradient id="geoGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#22c55e" />
+              <stop offset="100%" stopColor="#4ade80" />
+            </linearGradient>
+            <linearGradient id="altGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <stop offset="0%" stopColor="#6b7280" />
+              <stop offset="100%" stopColor="#9ca3af" />
+            </linearGradient>
+          </defs>
+        </svg>
       </div>
       
       {/* Summary */}
       <div className="grid grid-cols-2 gap-3">
-        <div className="text-center p-3 bg-green-50 rounded-lg border border-green-200">
+        <div className="text-center p-4 bg-green-50 rounded-lg border border-green-200">
           <div className="text-sm text-green-700 font-medium">Geothermal</div>
-          <div className="text-lg font-bold text-green-800">
+          <div className="text-2xl font-bold text-green-800">
             ${Math.round(data.Geothermal / 1000)}K
           </div>
           <div className="text-xs text-green-600">After incentives</div>
         </div>
-        <div className="text-center p-3 bg-gray-50 rounded-lg border border-gray-200">
+        <div className="text-center p-4 bg-gray-50 rounded-lg border border-gray-200">
           <div className="text-sm text-gray-700 font-medium">Avg Alternative</div>
-          <div className="text-lg font-bold text-gray-800">
+          <div className="text-2xl font-bold text-gray-800">
             ${Math.round(Object.values(data).filter((_, i) => Object.keys(data)[i] !== 'Geothermal').reduce((a, b) => a + b, 0) / (Object.keys(data).length - 1) / 1000)}K
           </div>
           <div className="text-xs text-gray-600">Before any rebates</div>
@@ -83,7 +156,69 @@ const ROIChart = ({ data }) => {
   const breakEvenYear = data.netCost / data.cumulativeSavings
   const maxValue = Math.max(...dataPoints.map(p => p.savings), 0)
   const minValue = Math.min(...dataPoints.map(p => p.savings), 0)
-  const range = maxValue - minValue
+  const range = maxValue - minValue || 1
+  
+  // SVG dimensions
+  const svgWidth = 700
+  const svgHeight = 280
+  const padding = { top: 40, right: 40, bottom: 50, left: 60 }
+  const chartWidth = svgWidth - padding.left - padding.right
+  const chartHeight = svgHeight - padding.top - padding.bottom
+  
+  // Calculate pixel positions
+  const getX = (index) => padding.left + (index / (dataPoints.length - 1)) * chartWidth
+  const getY = (value) => {
+    const normalizedValue = (value - minValue) / range
+    return padding.top + chartHeight - (normalizedValue * chartHeight)
+  }
+  const zeroY = getY(0)
+  
+  // Create smooth curve path
+  const createCurvePath = () => {
+    const points = dataPoints.map((point, index) => ({
+      x: getX(index),
+      y: getY(point.savings)
+    }))
+    
+    // Create smooth bezier curve
+    let path = `M ${points[0].x} ${points[0].y}`
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1]
+      const curr = points[i]
+      const tension = 0.3
+      const cp1x = prev.x + (curr.x - prev.x) * tension
+      const cp1y = prev.y
+      const cp2x = curr.x - (curr.x - prev.x) * tension
+      const cp2y = curr.y
+      path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`
+    }
+    return path
+  }
+  
+  // Create area path (for fill under curve)
+  const createAreaPath = () => {
+    const points = dataPoints.map((point, index) => ({
+      x: getX(index),
+      y: getY(point.savings)
+    }))
+    
+    let path = `M ${points[0].x} ${zeroY}`
+    path += ` L ${points[0].x} ${points[0].y}`
+    
+    for (let i = 1; i < points.length; i++) {
+      const prev = points[i - 1]
+      const curr = points[i]
+      const tension = 0.3
+      const cp1x = prev.x + (curr.x - prev.x) * tension
+      const cp1y = prev.y
+      const cp2x = curr.x - (curr.x - prev.x) * tension
+      const cp2y = curr.y
+      path += ` C ${cp1x} ${cp1y}, ${cp2x} ${cp2y}, ${curr.x} ${curr.y}`
+    }
+    
+    path += ` L ${points[points.length - 1].x} ${zeroY} Z`
+    return path
+  }
   
   return (
     <div className="space-y-6">
@@ -92,7 +227,7 @@ const ROIChart = ({ data }) => {
       {/* Simple Line Graph */}
       <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
         {/* Chart Header */}
-        <div className="flex justify-between items-center mb-6">
+        <div className="flex justify-between items-center mb-4">
           <div className="text-sm text-gray-600">Cumulative Cash Flow Over Time</div>
           <div className="flex items-center gap-4 text-xs">
             <div className="flex items-center gap-1">
@@ -106,124 +241,109 @@ const ROIChart = ({ data }) => {
           </div>
         </div>
         
-        {/* Line Chart Area */}
-        <div className="relative h-80 bg-gray-50 rounded-lg p-6">
-          {/* Background grid */}
-          <div className="absolute inset-6">
-            {[0, 25, 50, 75, 100].map(percent => (
-              <div key={percent} className="absolute w-full border-t border-gray-200" 
-                   style={{ top: `${percent}%` }}></div>
-            ))}
-          </div>
-          
-          {/* Zero line - positioned at 50% (middle) */}
-          <div className="absolute w-full border-t-2 border-gray-600 border-dashed z-10" 
-               style={{ 
-                 top: '50%',
-                 left: '24px',
-                 right: '24px'
-               }}>
-            <span className="absolute -left-16 -top-3 text-xs font-medium text-gray-700 bg-white px-2 rounded">
-              $0
-            </span>
-          </div>
-          
-          {/* Y-axis labels */}
-          <div className="absolute left-0 top-6 bottom-6 flex flex-col justify-between text-xs text-gray-600">
-            <span>${Math.round(maxValue / 1000)}K</span>
-            <span style={{ position: 'absolute', top: '50%', transform: 'translateY(-50%)' }}>$0</span>
-            <span>${Math.round(minValue / 1000)}K</span>
-          </div>
-          
-          {/* X-axis labels */}
-          <div className="absolute bottom-0 left-6 right-6 flex justify-between text-xs text-gray-600">
-            {years.map((year, index) => (
-              <span 
-                key={year} 
-                style={{ 
-                  marginLeft: index === 0 ? '36px' : '0' // Shift Year 0 right by 0.5 inches (36px)
-                }}
-              >
-                Year {year}
-              </span>
-            ))}
-          </div>
-          
-          {/* Line Graph */}
-          <svg className="absolute inset-6 w-full h-full" style={{ width: 'calc(100% - 48px)', height: 'calc(100% - 48px)' }}>
+        {/* SVG Line Chart */}
+        <div className="w-full overflow-x-auto">
+          <svg 
+            viewBox={`0 0 ${svgWidth} ${svgHeight}`} 
+            className="w-full min-w-[500px]"
+            style={{ maxHeight: '320px' }}
+          >
             <defs>
-              <linearGradient id="lineGradient" x1="0%" y1="0%" x2="100%" y2="0%">
+              <linearGradient id="lineGradientNew" x1="0%" y1="0%" x2="100%" y2="0%">
                 <stop offset="0%" stopColor="#ef4444" />
-                <stop offset={`${(breakEvenYear / 30) * 100}%`} stopColor="#f59e0b" />
+                <stop offset={`${Math.min((breakEvenYear / 30) * 100, 100)}%`} stopColor="#f59e0b" />
                 <stop offset="100%" stopColor="#10b981" />
               </linearGradient>
-              <linearGradient id="areaGradient" x1="0%" y1="0%" x2="0%" y2="100%">
-                <stop offset="0%" stopColor="#10b981" stopOpacity="0.3" />
-                <stop offset="100%" stopColor="#10b981" stopOpacity="0.1" />
+              <linearGradient id="areaGradientPositive" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stopColor="#10b981" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#10b981" stopOpacity="0.05" />
+              </linearGradient>
+              <linearGradient id="areaGradientNegative" x1="0%" y1="100%" x2="0%" y2="0%">
+                <stop offset="0%" stopColor="#ef4444" stopOpacity="0.4" />
+                <stop offset="100%" stopColor="#ef4444" stopOpacity="0.05" />
               </linearGradient>
             </defs>
             
-            {/* Area under curve (positive values only) */}
+            {/* Background grid */}
+            {[0, 0.25, 0.5, 0.75, 1].map((ratio, i) => (
+              <line
+                key={i}
+                x1={padding.left}
+                y1={padding.top + chartHeight * ratio}
+                x2={svgWidth - padding.right}
+                y2={padding.top + chartHeight * ratio}
+                stroke="#e5e7eb"
+                strokeWidth="1"
+              />
+            ))}
+            
+            {/* Zero line */}
+            <line
+              x1={padding.left}
+              y1={zeroY}
+              x2={svgWidth - padding.right}
+              y2={zeroY}
+              stroke="#374151"
+              strokeWidth="2"
+              strokeDasharray="6,4"
+            />
+            
+            {/* Area fill (split by positive/negative) */}
             <path
-              d={`M ${dataPoints.map((point, index) => {
-                const x = (index / (dataPoints.length - 1)) * 100
-                const y = 50 + ((point.savings / Math.max(Math.abs(maxValue), Math.abs(minValue))) * 35) // Center around 50% with ±35% range
-                return `${index === 0 ? 'M' : 'L'} ${x}% ${Math.max(y, 50)}%`
-              }).join(' ')} L 100% 50% L 0% 50% Z`}
-              fill="url(#areaGradient)"
-              className="opacity-50"
+              d={createAreaPath()}
+              fill="url(#areaGradientPositive)"
+              clipPath="url(#positiveClip)"
             />
             
-            {/* Main line */}
-            <polyline
-              points={dataPoints.map((point, index) => {
-                const x = (index / (dataPoints.length - 1)) * 100
-                const y = 50 - ((point.savings / Math.max(Math.abs(maxValue), Math.abs(minValue))) * 35) // Center around 50% with ±35% range
-                return `${x}%,${y}%`
-              }).join(' ')}
+            {/* Smooth curve line */}
+            <path
+              d={createCurvePath()}
               fill="none"
-              stroke="url(#lineGradient)"
-              strokeWidth="3"
-              className="drop-shadow-sm"
+              stroke="url(#lineGradientNew)"
+              strokeWidth="4"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }}
             />
             
-            {/* Data points */}
+            {/* Data points with labels */}
             {dataPoints.map((point, index) => {
-              const x = (index / (dataPoints.length - 1)) * 100
-              const y = 50 - ((point.savings / Math.max(Math.abs(maxValue), Math.abs(minValue))) * 35) // Center around 50% with ±35% range
+              const x = getX(index)
+              const y = getY(point.savings)
               const isPositive = point.savings >= 0
               
               return (
                 <g key={index}>
-                  {/* Line from data point to zero line */}
+                  {/* Vertical dashed line to zero */}
                   <line
-                    x1={`${x}%`}
-                    y1={`${y}%`}
-                    x2={`${x}%`}
-                    y2="50%"
+                    x1={x}
+                    y1={y}
+                    x2={x}
+                    y2={zeroY}
                     stroke={isPositive ? "#10b981" : "#ef4444"}
                     strokeWidth="1"
-                    strokeDasharray="2,2"
-                    opacity="0.5"
+                    strokeDasharray="3,3"
+                    opacity="0.4"
                   />
                   
                   {/* Point circle */}
                   <circle
-                    cx={`${x}%`}
-                    cy={`${y}%`}
-                    r="6"
+                    cx={x}
+                    cy={y}
+                    r="8"
                     fill={isPositive ? "#10b981" : "#ef4444"}
                     stroke="white"
-                    strokeWidth="2"
-                    className="drop-shadow-sm hover:r-8 transition-all cursor-pointer"
+                    strokeWidth="3"
+                    style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.2))' }}
                   />
                   
                   {/* Value label */}
                   <text
-                    x={`${x}%`}
-                    y={`${y < 50 ? y - 15 : y + 20}%`}
+                    x={x}
+                    y={isPositive ? y - 16 : y + 24}
                     textAnchor="middle"
-                    className={`text-xs font-bold fill-current ${isPositive ? 'text-green-600' : 'text-red-600'}`}
+                    className="text-xs font-bold"
+                    fill={isPositive ? "#059669" : "#dc2626"}
                   >
                     {isPositive ? '+' : ''}${Math.round(point.savings / 1000)}K
                   </text>
@@ -232,25 +352,64 @@ const ROIChart = ({ data }) => {
             })}
             
             {/* Break-even indicator */}
-            <line
-              x1={`${(breakEvenYear / 30) * 100}%`}
-              y1="0%"
-              x2={`${(breakEvenYear / 30) * 100}%`}
-              y2="100%"
-              stroke="#f59e0b"
-              strokeWidth="2"
-              strokeDasharray="5,5"
-              className="opacity-70"
-            />
+            {breakEvenYear <= 30 && (
+              <>
+                <line
+                  x1={getX(breakEvenYear / 5)}
+                  y1={padding.top}
+                  x2={getX(breakEvenYear / 5)}
+                  y2={svgHeight - padding.bottom}
+                  stroke="#f59e0b"
+                  strokeWidth="2"
+                  strokeDasharray="6,4"
+                />
+                <rect
+                  x={getX(breakEvenYear / 5) - 55}
+                  y={padding.top - 5}
+                  width="110"
+                  height="24"
+                  rx="4"
+                  fill="#fef3c7"
+                  stroke="#f59e0b"
+                  strokeWidth="1"
+                />
+                <text
+                  x={getX(breakEvenYear / 5)}
+                  y={padding.top + 12}
+                  textAnchor="middle"
+                  className="text-xs font-semibold"
+                  fill="#92400e"
+                >
+                  Break-even: {breakEvenYear.toFixed(1)}yr
+                </text>
+              </>
+            )}
+            
+            {/* X-axis labels */}
+            {years.map((year, index) => (
+              <text
+                key={year}
+                x={getX(index)}
+                y={svgHeight - 15}
+                textAnchor="middle"
+                className="text-xs"
+                fill="#6b7280"
+              >
+                Year {year}
+              </text>
+            ))}
+            
+            {/* Y-axis labels */}
+            <text x={padding.left - 10} y={padding.top + 5} textAnchor="end" className="text-xs" fill="#6b7280">
+              ${Math.round(maxValue / 1000)}K
+            </text>
+            <text x={padding.left - 10} y={zeroY + 4} textAnchor="end" className="text-xs font-medium" fill="#374151">
+              $0
+            </text>
+            <text x={padding.left - 10} y={svgHeight - padding.bottom} textAnchor="end" className="text-xs" fill="#6b7280">
+              ${Math.round(minValue / 1000)}K
+            </text>
           </svg>
-          
-          {/* Break-even label */}
-          <div 
-            className="absolute top-2 bg-amber-100 text-amber-800 text-xs px-2 py-1 rounded"
-            style={{ left: `${24 + (breakEvenYear / 30) * (100 - 48)}%` }}
-          >
-            Break-even: {breakEvenYear.toFixed(1)} years
-          </div>
         </div>
         
         {/* Summary Cards */}
@@ -288,56 +447,121 @@ const ROIChart = ({ data }) => {
 }
 
 const LifetimeCostChart = ({ data }) => {
-  const systems = [data.geothermal, data.conventional]
-  const maxCost = Math.max(...systems.map(s => s.totalLifetimeCost))
+  // Calculate costs with 5% annual inflation on electricity (applies to both geo and traditional)
+  const calcInflatedCost = (annualCost, years) => {
+    let total = 0
+    for (let i = 0; i < years; i++) {
+      total += annualCost * Math.pow(1.05, i)
+    }
+    return total
+  }
+  
+  // Geo also uses electricity (just less) - apply 5% inflation to geo's electric costs too
+  const geo10Year = data.geothermal.upfrontCost + calcInflatedCost(data.geothermal.annualCost, 10)
+  const geo30Year = data.geothermal.upfrontCost + calcInflatedCost(data.geothermal.annualCost, 30)
+  
+  // Traditional: fuel + electric + maintenance ($200/yr base, all with 5% inflation)
+  const tradAnnualWithMaint = data.conventional.annualCost + 200
+  const trad10Year = data.conventional.upfrontCost + calcInflatedCost(tradAnnualWithMaint, 10)
+  const trad30Year = data.conventional.upfrontCost + calcInflatedCost(tradAnnualWithMaint, 30) + data.conventional.replacementCost
+  
+  const comparisons = [
+    {
+      label: '10-Year Total Cost',
+      sublabel: 'Install + Operating (5% electric inflation)',
+      geo: geo10Year,
+      trad: trad10Year,
+      color: 'amber'
+    },
+    {
+      label: '30-Year Total Cost',
+      sublabel: 'Including replacement + inflation',
+      geo: geo30Year,
+      trad: trad30Year,
+      color: 'green'
+    }
+  ]
+  
+  const maxCost = Math.max(geo10Year, geo30Year, trad10Year, trad30Year)
+  
+  // SVG dimensions
+  const svgWidth = 450
+  const barHeight = 32
+  const barGap = 8
+  const sectionGap = 30
+  const labelWidth = 100
+  const valueWidth = 70
+  const chartWidth = svgWidth - labelWidth - valueWidth - 20
   
   return (
     <div className="space-y-6">
-      <h4 className="font-semibold text-gray-900">30-Year Total Cost of Ownership</h4>
+      <h4 className="font-semibold text-gray-900">10 & 30-Year Total Cost Comparison</h4>
+      <p className="text-xs text-gray-500">Both systems include 5% annual inflation. Traditional includes maintenance ($200/yr base + inflation).</p>
       
-      {/* Bar Chart */}
-      <div className="relative h-64 bg-gray-50 rounded-lg p-4">
-        <div className="flex items-end justify-between h-full space-x-4">
-          {systems.map((system, index) => {
-            const height = (system.totalLifetimeCost / maxCost) * 100
-            const isGeothermal = system.name.includes('Geothermal')
-            
-            return (
-              <div key={index} className="flex-1 flex flex-col items-center">
-                <div className="w-full flex flex-col items-center mb-2">
-                  <span className={`text-xs font-bold mb-1 ${isGeothermal ? 'text-green-600' : 'text-red-700'}`}>
-                    ${Math.round(system.totalLifetimeCost / 1000)}K
-                  </span>
-                  <div 
-                    className={`w-full rounded-t-lg transition-all duration-1000 relative ${
-                      isGeothermal 
-                        ? 'bg-gradient-to-t from-green-500 to-green-400' 
-                        : 'bg-gradient-to-t from-red-500 to-red-400'
-                    }`}
-                    style={{ height: `${height}%`, minHeight: '20px' }}
-                  >
-                    {/* Show replacement indicator for conventional systems */}
-                    {!isGeothermal && (
-                      <div className="absolute top-1/2 left-0 right-0 border-t-2 border-yellow-400 border-dashed">
-                        <span className="absolute -right-2 -top-3 text-xs bg-yellow-100 px-1 rounded text-yellow-800">
-                          Replace
-                        </span>
-                      </div>
-                    )}
-                  </div>
+      {/* Horizontal Bar Chart */}
+      <div className="bg-gray-50 rounded-lg p-4">
+        {comparisons.map((comp, compIdx) => {
+          const geoWidth = Math.max((comp.geo / maxCost) * chartWidth, 40)
+          const tradWidth = Math.max((comp.trad / maxCost) * chartWidth, 40)
+          const savings = comp.trad - comp.geo
+          const savingsPercent = Math.round((savings / comp.trad) * 100)
+          
+          return (
+            <div key={compIdx} className={compIdx > 0 ? 'mt-6 pt-6 border-t border-gray-200' : ''}>
+              {/* Section Header */}
+              <div className="flex justify-between items-center mb-3">
+                <div>
+                  <div className="font-semibold text-gray-800">{comp.label}</div>
+                  <div className="text-xs text-gray-500">{comp.sublabel}</div>
                 </div>
-                <div className="text-center">
-                  <div className="text-xs font-medium text-gray-800 leading-tight mb-1">
-                    {system.name}
-                  </div>
-                  <div className="text-xs text-gray-600">
-                    {system.lifespan} year lifespan
-                  </div>
+                <div className={`px-3 py-1 rounded-full text-xs font-bold ${
+                  comp.color === 'amber' ? 'bg-amber-100 text-amber-700' : 'bg-green-100 text-green-700'
+                }`}>
+                  Save ${Math.round(savings / 1000)}K ({savingsPercent}%)
                 </div>
               </div>
-            )
-          })}
-        </div>
+              
+              <svg viewBox={`0 0 ${svgWidth} ${(barHeight + barGap) * 2 + 10}`} className="w-full">
+                <defs>
+                  <linearGradient id={`geoGrad${compIdx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#22c55e" />
+                    <stop offset="100%" stopColor="#4ade80" />
+                  </linearGradient>
+                  <linearGradient id={`tradGrad${compIdx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                    <stop offset="0%" stopColor="#ef4444" />
+                    <stop offset="100%" stopColor="#f87171" />
+                  </linearGradient>
+                </defs>
+                
+                {/* Geothermal Bar */}
+                <g>
+                  <text x={labelWidth - 8} y={barHeight / 2 + 5} textAnchor="end" className="text-xs font-medium" fill="#374151">
+                    Geothermal
+                  </text>
+                  <rect x={labelWidth} y={0} width={chartWidth} height={barHeight} rx="6" fill="#e5e7eb" />
+                  <rect x={labelWidth} y={0} width={geoWidth} height={barHeight} rx="6" fill={`url(#geoGrad${compIdx})`} 
+                        style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }} />
+                  <text x={labelWidth + geoWidth + 8} y={barHeight / 2 + 5} textAnchor="start" className="text-sm font-bold" fill="#15803d">
+                    ${Math.round(comp.geo / 1000)}K
+                  </text>
+                </g>
+                
+                {/* Traditional Bar */}
+                <g transform={`translate(0, ${barHeight + barGap})`}>
+                  <text x={labelWidth - 8} y={barHeight / 2 + 5} textAnchor="end" className="text-xs font-medium" fill="#374151">
+                    {data.conventional.name.replace(' + AC', '').replace('Furnace', '')}
+                  </text>
+                  <rect x={labelWidth} y={0} width={chartWidth} height={barHeight} rx="6" fill="#e5e7eb" />
+                  <rect x={labelWidth} y={0} width={tradWidth} height={barHeight} rx="6" fill={`url(#tradGrad${compIdx})`}
+                        style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }} />
+                  <text x={labelWidth + tradWidth + 8} y={barHeight / 2 + 5} textAnchor="start" className="text-sm font-bold" fill="#dc2626">
+                    ${Math.round(comp.trad / 1000)}K
+                  </text>
+                </g>
+              </svg>
+            </div>
+          )
+        })}
       </div>
       
       {/* Cost Breakdown */}
@@ -350,17 +574,21 @@ const LifetimeCostChart = ({ data }) => {
               <span>${Math.round(data.geothermal.upfrontCost / 1000)}K</span>
             </div>
             <div className="flex justify-between">
-              <span>30yr Operating:</span>
-              <span>${Math.round((data.geothermal.annualCost * 30) / 1000)}K</span>
+              <span>Annual Electric (yr 1):</span>
+              <span>${Math.round(data.geothermal.annualCost).toLocaleString()}/yr</span>
             </div>
             <div className="flex justify-between">
-              <span>Replacements:</span>
-              <span>$0K</span>
+              <span>Electric Inflation:</span>
+              <span>5%/yr</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Lifespan:</span>
+              <span>30+ years</span>
             </div>
             <hr className="border-green-300" />
             <div className="flex justify-between font-semibold">
-              <span>Total 30yr:</span>
-              <span>${Math.round(data.geothermal.totalLifetimeCost / 1000)}K</span>
+              <span>30-Year Total:</span>
+              <span>${Math.round(geo30Year / 1000)}K</span>
             </div>
           </div>
         </div>
@@ -373,17 +601,21 @@ const LifetimeCostChart = ({ data }) => {
               <span>${Math.round(data.conventional.upfrontCost / 1000)}K</span>
             </div>
             <div className="flex justify-between">
-              <span>30yr Operating:</span>
-              <span>${Math.round((data.conventional.annualCost * 30) / 1000)}K</span>
+              <span>Annual Fuel+Elec (yr 1):</span>
+              <span>${Math.round(data.conventional.annualCost).toLocaleString()}/yr</span>
             </div>
             <div className="flex justify-between">
-              <span>Replacement (15yr):</span>
+              <span>Annual Maint (yr 1):</span>
+              <span>$200/yr</span>
+            </div>
+            <div className="flex justify-between">
+              <span>Replace @15yr:</span>
               <span>${Math.round(data.conventional.replacementCost / 1000)}K</span>
             </div>
             <hr className="border-red-300" />
             <div className="flex justify-between font-semibold">
-              <span>Total 30yr:</span>
-              <span>${Math.round(data.conventional.totalLifetimeCost / 1000)}K</span>
+              <span>30-Year Total:</span>
+              <span>${Math.round(trad30Year / 1000)}K</span>
             </div>
           </div>
         </div>
@@ -394,10 +626,272 @@ const LifetimeCostChart = ({ data }) => {
         <div className="text-center">
           <div className="text-sm font-medium text-blue-800">30-Year Lifetime Savings</div>
           <div className="text-2xl font-bold text-blue-600">
-            ${Math.round((data.conventional.totalLifetimeCost - data.geothermal.totalLifetimeCost) / 1000)}K
+            ${Math.round((trad30Year - geo30Year) / 1000)}K
           </div>
           <div className="text-xs text-blue-700">
-            Geothermal saves {Math.round(((data.conventional.totalLifetimeCost - data.geothermal.totalLifetimeCost) / data.conventional.totalLifetimeCost) * 100)}% over conventional systems
+            Geothermal saves {Math.round(((trad30Year - geo30Year) / trad30Year) * 100)}% over conventional systems
+          </div>
+        </div>
+      </div>
+    </div>
+  )
+}
+
+// 3-Milestone Comparison: Install, 10-Year, 30-Year
+const ThreeMilestoneComparison = ({ data }) => {
+  // Calculate costs with 5% annual inflation for traditional
+  const calcInflatedCost = (annualCost, years) => {
+    let total = 0
+    for (let i = 0; i < years; i++) {
+      total += annualCost * Math.pow(1.05, i)
+    }
+    return total
+  }
+  
+  // Traditional: fuel + electric + maintenance ($200/yr base, all with 5% inflation)
+  const tradAnnualTotal = (data.tradAnnualFuel || 0) + (data.tradAnnualElectric || 0) + 200
+  
+  // Geo with solar uses minimal electricity - also apply 5% inflation
+  const geoAnnual = data.geoAnnualOperating || 500
+  
+  // Recalculate with proper inflation for both systems
+  const geo10YearWithInflation = data.geoInstallCost + calcInflatedCost(geoAnnual, 10)
+  const geo30YearWithInflation = data.geoInstallCost + calcInflatedCost(geoAnnual, 30)
+  
+  const trad10YearWithInflation = data.tradInstallCost + calcInflatedCost(tradAnnualTotal, 10)
+  const trad30YearWithInflation = data.tradInstallCost + calcInflatedCost(tradAnnualTotal, 30) + (data.tradReplacementCost || 0)
+  
+  const milestones = [
+    { 
+      label: 'At Install', 
+      sublabel: 'After Rebates & Tax Credits',
+      geo: data.geoInstallCost,
+      trad: data.tradInstallCost,
+      icon: CheckCircle2,
+      color: 'blue'
+    },
+    { 
+      label: 'After 10 Years', 
+      sublabel: 'Install + Operating (5% inflation)',
+      geo: geo10YearWithInflation,
+      trad: trad10YearWithInflation,
+      icon: Clock,
+      color: 'amber'
+    },
+    { 
+      label: 'After 30 Years', 
+      sublabel: 'Including replacement + inflation',
+      geo: geo30YearWithInflation,
+      trad: trad30YearWithInflation,
+      icon: TrendingUp,
+      color: 'green'
+    }
+  ]
+
+  const maxCost = Math.max(...milestones.flatMap(m => [m.geo, m.trad]))
+  
+  // SVG dimensions for horizontal bars
+  const svgWidth = 400
+  const barHeight = 28
+  const barGap = 6
+  const labelWidth = 90
+  const valueWidth = 60
+  const chartWidth = svgWidth - labelWidth - valueWidth - 20
+
+  return (
+    <div className="space-y-6">
+      {/* System Cost Breakdown Header */}
+      <div className="bg-gradient-to-r from-blue-600 to-green-600 rounded-xl p-6 text-white">
+        <h4 className="text-xl font-bold mb-4 text-center">GEO (Heating + Cooling) + SOLAR</h4>
+        <div className="grid grid-cols-2 md:grid-cols-4 gap-4 text-center">
+          <div className="bg-white/20 rounded-lg p-3">
+            <div className="text-2xl font-bold">${(data.drillingCost/1000).toFixed(0)}K</div>
+            <div className="text-xs opacity-90">Drilling</div>
+            <div className="text-[10px] opacity-75">2×400ft bores</div>
+          </div>
+          <div className="bg-white/20 rounded-lg p-3">
+            <div className="text-2xl font-bold">${(data.hvacCost/1000).toFixed(0)}K</div>
+            <div className="text-xs opacity-90">VRF 5-Ton GSHP</div>
+            <div className="text-[10px] opacity-75">+ multi-zone</div>
+          </div>
+          <div className="bg-white/20 rounded-lg p-3">
+            <div className="text-2xl font-bold">${(data.solarCost/1000).toFixed(0)}K</div>
+            <div className="text-xs opacity-90">Solar System</div>
+            <div className="text-[10px] opacity-75">15kW</div>
+          </div>
+          <div className="bg-white/20 rounded-lg p-3 border-2 border-white/50">
+            <div className="text-2xl font-bold">FREE</div>
+            <div className="text-xs opacity-90">Battery 48kWh</div>
+            <div className="text-[10px] opacity-75">(${(data.batteryCost/1000).toFixed(0)}K value)</div>
+          </div>
+        </div>
+        
+        {/* Incentives Breakdown */}
+        <div className="mt-4 bg-white/10 rounded-lg p-4">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2 text-center text-sm">
+            <div>
+              <div className="opacity-75">Gross Total</div>
+              <div className="font-bold">${(data.geoGrossTotal/1000).toFixed(0)}K</div>
+            </div>
+            <div>
+              <div className="opacity-75">MassSave Rebate</div>
+              <div className="font-bold text-green-300">-${(data.massSaveRebate/1000).toFixed(1)}K</div>
+            </div>
+            <div>
+              <div className="opacity-75">Federal IRA (30%)</div>
+              <div className="font-bold text-green-300">-${(data.geoFederalCredit/1000).toFixed(1)}K</div>
+            </div>
+            <div className="bg-white/20 rounded-lg py-1">
+              <div className="opacity-75">Your Cost</div>
+              <div className="font-bold text-xl">${(data.geoInstallCost/1000).toFixed(0)}K</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      {/* 3 Milestone Comparison - Horizontal Bar Style */}
+      <div className="space-y-6">
+        {milestones.map((milestone, idx) => {
+          const savings = milestone.trad - milestone.geo
+          const savingsPercent = Math.round((savings / milestone.trad) * 100)
+          const IconComponent = milestone.icon
+          const geoWidth = Math.max((milestone.geo / maxCost) * chartWidth, 40)
+          const tradWidth = Math.max((milestone.trad / maxCost) * chartWidth, 40)
+          
+          return (
+            <div key={idx} className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
+              {/* Header */}
+              <div className={`flex items-center justify-between p-4 ${
+                milestone.color === 'blue' ? 'bg-blue-50 border-b border-blue-200' :
+                milestone.color === 'amber' ? 'bg-amber-50 border-b border-amber-200' :
+                'bg-green-50 border-b border-green-200'
+              }`}>
+                <div className="flex items-center gap-3">
+                  <div className={`w-10 h-10 rounded-full flex items-center justify-center ${
+                    milestone.color === 'blue' ? 'bg-blue-500' :
+                    milestone.color === 'amber' ? 'bg-amber-500' :
+                    'bg-green-500'
+                  }`}>
+                    <IconComponent className="h-5 w-5 text-white" />
+                  </div>
+                  <div>
+                    <div className="font-bold text-gray-800">{milestone.label}</div>
+                    <div className="text-xs text-gray-500">{milestone.sublabel}</div>
+                  </div>
+                </div>
+                <div className={`px-4 py-2 rounded-lg text-sm font-bold ${
+                  milestone.color === 'blue' ? 'bg-blue-100 text-blue-700' :
+                  milestone.color === 'amber' ? 'bg-amber-100 text-amber-700' :
+                  'bg-green-100 text-green-700'
+                }`}>
+                  Save ${Math.round(savings / 1000)}K ({savingsPercent}%)
+                </div>
+              </div>
+              
+              {/* Horizontal Bar Chart */}
+              <div className="p-4">
+                <svg viewBox={`0 0 ${svgWidth} ${(barHeight + barGap) * 2 + 5}`} className="w-full">
+                  <defs>
+                    <linearGradient id={`geoGradM${idx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#22c55e" />
+                      <stop offset="100%" stopColor="#4ade80" />
+                    </linearGradient>
+                    <linearGradient id={`tradGradM${idx}`} x1="0%" y1="0%" x2="100%" y2="0%">
+                      <stop offset="0%" stopColor="#ef4444" />
+                      <stop offset="100%" stopColor="#f87171" />
+                    </linearGradient>
+                  </defs>
+                  
+                  {/* GEO+Solar Bar */}
+                  <g>
+                    <text x={labelWidth - 8} y={barHeight / 2 + 5} textAnchor="end" className="text-xs font-medium" fill="#374151">
+                      GEO+Solar
+                    </text>
+                    <rect x={labelWidth} y={0} width={chartWidth} height={barHeight} rx="6" fill="#e5e7eb" />
+                    <rect x={labelWidth} y={0} width={geoWidth} height={barHeight} rx="6" fill={`url(#geoGradM${idx})`} 
+                          style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }} />
+                    <text x={labelWidth + geoWidth + 8} y={barHeight / 2 + 5} textAnchor="start" className="text-sm font-bold" fill="#15803d">
+                      ${Math.round(milestone.geo / 1000)}K
+                    </text>
+                  </g>
+                  
+                  {/* Traditional Bar */}
+                  <g transform={`translate(0, ${barHeight + barGap})`}>
+                    <text x={labelWidth - 8} y={barHeight / 2 + 5} textAnchor="end" className="text-xs font-medium" fill="#374151">
+                      Traditional
+                    </text>
+                    <rect x={labelWidth} y={0} width={chartWidth} height={barHeight} rx="6" fill="#e5e7eb" />
+                    <rect x={labelWidth} y={0} width={tradWidth} height={barHeight} rx="6" fill={`url(#tradGradM${idx})`}
+                          style={{ filter: 'drop-shadow(0 2px 4px rgba(0,0,0,0.1))' }} />
+                    <text x={labelWidth + tradWidth + 8} y={barHeight / 2 + 5} textAnchor="start" className="text-sm font-bold" fill="#dc2626">
+                      ${Math.round(milestone.trad / 1000)}K
+                    </text>
+                  </g>
+                </svg>
+              </div>
+            </div>
+          )
+        })}
+      </div>
+
+      {/* Cost Comparison Table */}
+      <div className="bg-gray-50 rounded-xl p-6 border border-gray-200">
+        <h5 className="font-bold text-gray-800 mb-4 text-center">Annual Operating Costs Comparison</h5>
+        <div className="grid md:grid-cols-2 gap-6">
+          {/* GeoPioneer Annual */}
+          <div className="bg-green-50 rounded-lg p-4 border border-green-200">
+            <div className="font-semibold text-green-800 mb-3 text-center">GeoPioneer (with Solar)</div>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Annual Operating:</span>
+                <span className="font-bold text-green-700">~${data.geoAnnualOperating?.toLocaleString() || 500}/yr</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Fuel Cost:</span>
+                <span className="font-bold text-green-700">$0</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Maintenance:</span>
+                <span className="font-bold text-green-700">~$200/yr</span>
+              </div>
+            </div>
+          </div>
+          
+          {/* Traditional Annual */}
+          <div className="bg-red-50 rounded-lg p-4 border border-red-200">
+            <div className="font-semibold text-red-800 mb-3 text-center">Traditional HVAC</div>
+            <div className="space-y-2 text-sm">
+              <div className="flex justify-between">
+                <span className="text-gray-600">Annual Fuel:</span>
+                <span className="font-bold text-red-700">${data.tradAnnualFuel?.toLocaleString()}/yr</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Annual Electric:</span>
+                <span className="font-bold text-red-700">${data.tradAnnualElectric?.toLocaleString()}/yr</span>
+              </div>
+              <div className="flex justify-between">
+                <span className="text-gray-600">Equipment @15yr:</span>
+                <span className="font-bold text-red-700">${(data.tradReplacementCost/1000).toFixed(0)}K</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div className="mt-4 text-center text-xs text-gray-500">
+          * Traditional costs include 5% annual fuel inflation. GeoPioneer: solar offsets most electricity.
+        </div>
+      </div>
+
+      {/* Battery Benefit Note */}
+      <div className="bg-gradient-to-r from-purple-50 to-blue-50 rounded-xl p-4 border border-purple-200">
+        <div className="flex items-start gap-3">
+          <Battery className="h-6 w-6 text-purple-600 flex-shrink-0 mt-1" />
+          <div>
+            <div className="font-semibold text-purple-800">FREE Battery Backup Included</div>
+            <div className="text-sm text-purple-700">
+              GeoPioneer provides a 48kWh battery system (${(data.batteryCost/1000).toFixed(0)}K value) at no cost to you. 
+              You get reliable home backup power during outages. GeoPioneer manages the battery as part of our 
+              distributed energy network for grid stability.
+            </div>
           </div>
         </div>
       </div>
@@ -501,129 +995,78 @@ const CalculatorPage = () => {
     }
 
     const geothermalAnnualKWh = estimatedAnnualKWh * efficiencyFactor
-    
-    // With Solar+Geo: near-zero energy cost (solar covers geo electricity needs)
-    const geothermalAnnualCost = 0 // Solar offsets all electricity
-    
-    // Battery revenue from demand response programs (ConnectedSolutions)
-    // This is INCOME - battery pays you ~$2K/year for 5-8 years
-    const hasBattery = true // User has battery in Tier 2 package
-    const batteryAnnualRevenue = hasBattery ? 2000 : 0 // ~$2K/year positive cash flow
+    const geothermalAnnualCost = geothermalAnnualKWh * energyPrices.electricity
 
-    // Annual savings = eliminated energy costs (propane + electric)
-    // Battery revenue is ADDITIONAL positive cash flow on top
-    const annualSavings = currentAnnualCost // Just the eliminated costs
-    const totalAnnualBenefit = currentAnnualCost + batteryAnnualRevenue // Savings + battery income
+    // Calculate savings
+    const annualSavings = currentAnnualCost - geothermalAnnualCost
     const monthlySavings = annualSavings / 12
     const tenYearSavings = annualSavings * 10
     const twentyFiveYearSavings = annualSavings * 25
-    
-    // With battery income (5-8 years of battery revenue)
-    const batteryRevenueYears = 6 // Average of 5-8 years
-    const totalBatteryRevenue = batteryAnnualRevenue * batteryRevenueYears
-    const tenYearTotalBenefit = tenYearSavings + totalBatteryRevenue
-    const monthlyTotalBenefit = totalAnnualBenefit / 12
 
     // Energy reduction percentage
     const energyReduction = Math.round((1 - efficiencyFactor) * 100)
 
-    // System costs - Tier 2 Full Ownership (realistic pricing)
-    // Drilling: $30K, Geothermal: $25K, Solar: $35K, Battery: $15K = $105K total
-    const drillingCost = 30000
-    const geothermalEquipment = 25000
-    const solarCost = 35000
-    const batteryCost = 15000
-    const systemCostBase = drillingCost + geothermalEquipment + solarCost + batteryCost // $105K
+    // OPTION 1: Geothermal Only System costs (scaled from 2200 sqft base)
+    const geoOnlyBaseSqft = 2200
+    const geoOnlyScale = sqft / geoOnlyBaseSqft
     
-    const massSaveRebate = 13500 // 2026 MassSave whole-home GSHP rebate
-    const federalTaxCredit = systemCostBase * 0.30 // 30% ITC on full system
-    const netSystemCost = systemCostBase - massSaveRebate - federalTaxCredit
+    const geoOnlyDrilling = Math.round(30000 * geoOnlyScale)  // 2x400ft bores
+    const geoOnlyHVAC = Math.round(30000 * geoOnlyScale)      // VRF 5-ton GSHP + multi-zone
+    const geoOnlyGross = geoOnlyDrilling + geoOnlyHVAC        // $60K for 2200sqft
+    
+    const geoOnlyMassSave = 13500  // MassSave rebate
+    const geoOnlyFederalBase = geoOnlyGross - geoOnlyMassSave
+    const geoOnlyFederalCredit = geoOnlyFederalBase * 0.30    // 30% IRA
+    const geoOnlyNetCost = geoOnlyGross - geoOnlyMassSave - geoOnlyFederalCredit
 
-    // Payback period (using total benefit including battery revenue)
-    const paybackYears = netSystemCost / totalAnnualBenefit
+    // For backwards compatibility
+    const systemCostBase = geoOnlyGross
+    const massSaveRebateOld = geoOnlyMassSave
+    const federalTaxCredit = geoOnlyFederalCredit
+    const netSystemCost = geoOnlyNetCost
 
-    // CAPEX Comparison Data - Tier 2 Full System vs Alternatives
+    // Payback period
+    const paybackYears = netSystemCost / annualSavings
+
+    // CAPEX Comparison Data (Option 1: Geo Only)
     const capexComparison = {
-      'Geo+Solar+Battery': Math.round(netSystemCost),
-      'Generator Backup': 10000, // $5K generator + $5K install
-      'Propane + AC': 25000,
-      'ASHP Only': 35000
-    }
-    
-    // Tier breakdown for display
-    const tierBreakdown = {
-      drilling: drillingCost,
-      geothermal: geothermalEquipment,
-      solar: solarCost,
-      battery: batteryCost,
-      totalGross: systemCostBase,
-      massSaveRebate: massSaveRebate,
-      federalITC: Math.round(federalTaxCredit),
-      netCost: Math.round(netSystemCost)
-    }
-    
-    // Tier 2 (Own) - additional costs over time
-    const tier2Maintenance = 200 // $200/year maintenance
-    const tier2MajorRepair = 5000 // $5K major repair in 10 years
-    const tier2TenYearCost = netSystemCost + (tier2Maintenance * 10) + tier2MajorRepair
-    const tier2TenYearBenefit = (annualSavings * 10) - tier2TenYearCost
-    
-    // Tier 3 (EaaS) - lease model
-    const eaasMonthlyPayment = Math.round((annualSavings * 0.90) / 12) // 90% of savings over 12 months
-    const eaasYouKeep = Math.round(annualSavings * 0.10) // You keep 10% of savings
-    const eaasTenYearPayments = eaasMonthlyPayment * 12 * 10 // If payments continue
-    const eaasNoMaintenance = tier2Maintenance * 10 // Savings from no maintenance
-    const eaasNoRepairs = tier2MajorRepair // Savings from no major repairs
-    
-    // Tier comparison
-    const tierComparison = {
-      tier2: {
-        name: 'Tier 2: Own',
-        upfrontCost: Math.round(netSystemCost),
-        monthlyPayment: 0,
-        annualMaintenance: tier2Maintenance,
-        majorRepair10yr: tier2MajorRepair,
-        annualBenefit: Math.round(annualSavings),
-        tenYearNetBenefit: Math.round(tier2TenYearBenefit),
-        youKeepPercent: 100
-      },
-      tier3: {
-        name: 'Tier 3: EaaS (Lease)',
-        upfrontCost: 0,
-        monthlyPayment: eaasMonthlyPayment,
-        annualMaintenance: 0,
-        majorRepair10yr: 0,
-        annualBenefit: eaasYouKeep,
-        tenYearNetBenefit: Math.round(eaasYouKeep * 10),
-        youKeepPercent: 10
-      }
+      'Geothermal': Math.round(geoOnlyNetCost),
+      'Propane + AC': Math.round(12000 * geoOnlyScale),
+      'ASHP': Math.round(18000 * geoOnlyScale),
+      'Natural Gas + AC': Math.round(10000 * geoOnlyScale)
     }
 
     // ROI Chart Data
     const roiData = {
-      netCost: netSystemCost,
-      cumulativeSavings: annualSavings
+      netCost: geoOnlyNetCost,
+      cumulativeSavings: annualSavings,
+      geoOnlyDrilling,
+      geoOnlyHVAC,
+      geoOnlyGross,
+      geoOnlyMassSave,
+      geoOnlyFederalCredit
     }
 
-    // Lifetime Cost Comparison Data (GSHP 25-50 years vs others 10-15 years)
+    // Lifetime Cost Comparison Data (GSHP 30 years vs others 15 years)
+    const tradUpfrontCost = Math.round(12000 * geoOnlyScale) // Traditional HVAC scaled
     const lifetimeCostData = {
       geothermal: {
         name: 'Geothermal GSHP',
         lifespan: 30,
-        upfrontCost: netSystemCost,
+        upfrontCost: geoOnlyNetCost,
         annualCost: geothermalAnnualCost,
         replacementCost: 0, // No replacement needed in 30 years
-        totalLifetimeCost: netSystemCost + (geothermalAnnualCost * 30)
+        totalLifetimeCost: geoOnlyNetCost + (geothermalAnnualCost * 30)
       },
       conventional: {
         name: calculatorData.heatingFuel === 'oil' ? 'Oil Furnace + AC' : 
               calculatorData.heatingFuel === 'propane' ? 'Propane Furnace + AC' :
               calculatorData.heatingFuel === 'naturalGas' ? 'Gas Furnace + AC' : 'Electric Heat + AC',
         lifespan: 15,
-        upfrontCost: sqft * 8, // Lower upfront cost
+        upfrontCost: tradUpfrontCost,
         annualCost: currentAnnualCost,
-        replacementCost: sqft * 8, // Need replacement after 15 years
-        totalLifetimeCost: (sqft * 8) + (currentAnnualCost * 15) + (sqft * 8) + (currentAnnualCost * 15) // 30 years total
+        replacementCost: Math.round(tradUpfrontCost * 1.3), // Replacement at 15 years with inflation
+        totalLifetimeCost: tradUpfrontCost + (currentAnnualCost * 15) + Math.round(tradUpfrontCost * 1.3) + (currentAnnualCost * 15) // 30 years total
       }
     }
 
@@ -653,6 +1096,84 @@ const CalculatorPage = () => {
       }
     }
 
+    // 3-Milestone Comparison Data (GeoPioneer complete system vs Traditional)
+    // Base costs for 2200 sqft house - scale for other sizes
+    const baseSqft = 2200
+    const scaleFactor = sqft / baseSqft
+    
+    // System component costs (base for 2200 sqft)
+    const drillingCost = Math.round(30000 * scaleFactor)  // 2x400ft bores for 5-ton system
+    const hvacCost = Math.round(30000 * scaleFactor)      // VRF 5-ton water-to-air GSHP + install + multi-zone control
+    const solarCost = Math.round(45000 * scaleFactor)     // 15kW solar system
+    const batteryCost = Math.round(25000 * scaleFactor)   // 3x16kWh = 48kWh battery (FREE to customer)
+    
+    // Total system cost (battery included in gross but FREE to customer)
+    const geoGrossTotal = drillingCost + hvacCost + solarCost + batteryCost
+    
+    // Incentives calculation
+    const massSaveRebate = 13500  // MassSave rebate (fixed - Tier 1/2 renovation)
+    const federalCreditBase = geoGrossTotal - massSaveRebate  // IRA applies to cost after MassSave
+    const geoFederalCredit = federalCreditBase * 0.30  // 30% federal IRA tax credit
+    const geoNetInstall = geoGrossTotal - massSaveRebate - geoFederalCredit
+    
+    // Traditional system costs (scaled)
+    const tradHVACCost = Math.round(12000 * scaleFactor) // Base $12K for 2200sqft
+    const tradAnnualFuel = calculatorData.heatingFuel === 'oil' ? Math.round(2700 * scaleFactor) : 
+                          calculatorData.heatingFuel === 'propane' ? Math.round(3200 * scaleFactor) :
+                          calculatorData.heatingFuel === 'naturalGas' ? Math.round(2200 * scaleFactor) : 
+                          Math.round(2000 * scaleFactor)
+    const tradAnnualElectric = Math.round(2400 * scaleFactor)
+    const tradReplacementCost = Math.round(tradHVACCost * 1.3) // Replacement at 15 years (with inflation)
+    
+    // GeoPioneer annual operating cost (near $0 with solar, just minimal grid + maintenance)
+    const geoAnnualOperating = Math.round(500 * scaleFactor) // ~$500/yr for 2200sqft
+    
+    // Calculate 10-year costs (with 5% fuel inflation for traditional)
+    const tradFuel10Year = Array.from({length: 10}, (_, i) => tradAnnualFuel * Math.pow(1.05, i)).reduce((a,b) => a+b, 0)
+    const tradElectric10Year = tradAnnualElectric * 10
+    const geo10YearOperating = geoAnnualOperating * 10
+    
+    // Calculate 30-year costs (with replacement and continued inflation)
+    const tradFuel30Year = Array.from({length: 30}, (_, i) => tradAnnualFuel * Math.pow(1.05, i)).reduce((a,b) => a+b, 0)
+    const tradElectric30Year = tradAnnualElectric * 30
+    const geo30YearOperating = geoAnnualOperating * 30
+    
+    const threeMilestoneData = {
+      // GeoPioneer system component costs
+      drillingCost,
+      hvacCost,
+      solarCost,
+      batteryCost,
+      scaleFactor,
+      baseSqft,
+      
+      // Incentives
+      geoGrossTotal,
+      massSaveRebate,
+      geoFederalCredit,
+      
+      // Install costs (after rebates)
+      geoInstallCost: Math.round(geoNetInstall),
+      tradInstallCost: tradHVACCost,
+      
+      // 10-year total costs
+      geo10YearCost: Math.round(geoNetInstall + geo10YearOperating),
+      trad10YearCost: Math.round(tradHVACCost + tradFuel10Year + tradElectric10Year),
+      
+      // 30-year total costs (including replacement)
+      geo30YearCost: Math.round(geoNetInstall + geo30YearOperating),
+      trad30YearCost: Math.round(tradHVACCost + tradFuel30Year + tradElectric30Year + tradReplacementCost),
+      
+      // Annual operating costs
+      geoAnnualOperating,
+      tradAnnualFuel,
+      tradAnnualElectric,
+      
+      // Traditional breakdown
+      tradHVACCost,
+      tradReplacementCost
+    }
+
     setResults({
       currentAnnualCost,
       geothermalAnnualCost,
@@ -670,13 +1191,7 @@ const CalculatorPage = () => {
       capexComparison,
       roiData,
       lifetimeCostData,
-      tierBreakdown,
-      batteryAnnualRevenue,
-      tierComparison,
-      totalAnnualBenefit,
-      totalBatteryRevenue,
-      tenYearTotalBenefit,
-      hasBattery
+      threeMilestoneData
     })
     setShowResults(true)
   }
@@ -733,7 +1248,7 @@ const CalculatorPage = () => {
     console.log('Assessment Request:', assessmentRequest)
     
     // Show success message
-    alert(`Thank you ${calculatorData.name}! Your Free Site Review request has been submitted. We'll contact you within 24 hours to schedule your ${assessmentData.assessmentType === 'full' ? 'comprehensive site assessment' : 'consultation call'}.`)
+    alert(`Thank you ${calculatorData.name}! Your free assessment request has been submitted. We'll contact you within 24 hours to schedule your ${assessmentData.assessmentType === 'full' ? 'comprehensive site assessment' : 'consultation call'}.`)
   }
 
   const handleDownloadReport = () => {
@@ -932,233 +1447,61 @@ const CalculatorPage = () => {
           </CardHeader>
         </Card>
 
-        {/* Cost Savings Breakdown */}
-        <Card className="bg-blue-50 border-blue-200">
-          <CardHeader>
-            <CardTitle className="text-xl text-blue-800">Your Annual Benefit Breakdown</CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="grid md:grid-cols-2 gap-6">
-              <div className="space-y-3">
-                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <span className="text-gray-700">Energy Costs Eliminated:</span>
-                  <span className="text-xl font-bold text-green-600">+${Math.round(results.currentAnnualCost).toLocaleString()}/yr</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <span className="text-gray-700">New Energy Cost:</span>
-                  <span className="text-xl font-bold text-gray-500">$0</span>
-                </div>
-                <hr className="border-blue-300" />
-                <div className="flex justify-between items-center p-4 bg-green-100 rounded-lg">
-                  <span className="text-lg font-semibold text-green-800">Annual Savings:</span>
-                  <span className="text-2xl font-bold text-green-700">${Math.round(results.annualSavings).toLocaleString()}/yr</span>
-                </div>
-                
-                {/* Battery Revenue - Separate Positive Cash Flow */}
-                {results.hasBattery && (
-                  <div className="mt-4 p-4 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
-                    <div className="text-center">
-                      <div className="text-sm font-medium text-yellow-800 mb-1">🔋 PLUS: Battery Pays You!</div>
-                      <div className="text-2xl font-bold text-yellow-700">+${results.batteryAnnualRevenue?.toLocaleString() || '2,000'}/yr</div>
-                      <div className="text-xs text-yellow-600 mt-1">Cash income for 5-8 years (ConnectedSolutions)</div>
-                    </div>
-                  </div>
-                )}
-                
-                <div className="flex justify-between items-center p-4 bg-purple-100 rounded-lg mt-2">
-                  <span className="text-lg font-semibold text-purple-800">Total Annual Benefit:</span>
-                  <span className="text-2xl font-bold text-purple-700">${Math.round(results.totalAnnualBenefit).toLocaleString()}/yr</span>
-                </div>
+        {/* Cost Savings */}
+        <div className="grid md:grid-cols-3 gap-6">
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-lg">Monthly Savings</CardTitle>
+              <div className="text-2xl font-bold text-blue-600">
+                ${Math.round(results.monthlySavings).toLocaleString()}
               </div>
-              <div className="grid grid-cols-1 gap-4">
-                <Card className="text-center">
-                  <CardHeader className="py-4">
-                    <CardTitle className="text-sm text-gray-600">Monthly Benefit</CardTitle>
-                    <div className="text-2xl font-bold text-blue-600">
-                      ${Math.round(results.totalAnnualBenefit / 12).toLocaleString()}
-                    </div>
-                  </CardHeader>
-                </Card>
-                <Card className="text-center bg-yellow-50">
-                  <CardHeader className="py-4">
-                    <CardTitle className="text-sm text-yellow-700">Battery Revenue (6 yrs)</CardTitle>
-                    <div className="text-2xl font-bold text-yellow-600">
-                      +${Math.round(results.totalBatteryRevenue || 12000).toLocaleString()}
-                    </div>
-                  </CardHeader>
-                </Card>
-                <Card className="text-center">
-                  <CardHeader className="py-4">
-                    <CardTitle className="text-sm text-gray-600">25-Year Savings</CardTitle>
-                    <div className="text-2xl font-bold text-blue-600">
-                      ${Math.round(results.twentyFiveYearSavings).toLocaleString()}
-                    </div>
-                  </CardHeader>
-                </Card>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-lg">Annual Savings</CardTitle>
+              <div className="text-2xl font-bold text-blue-600">
+                ${Math.round(results.annualSavings).toLocaleString()}
               </div>
-            </div>
-          </CardContent>
-        </Card>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader className="text-center">
+              <CardTitle className="text-lg">25-Year Savings</CardTitle>
+              <div className="text-2xl font-bold text-blue-600">
+                ${Math.round(results.twentyFiveYearSavings).toLocaleString()}
+              </div>
+            </CardHeader>
+          </Card>
+        </div>
 
-        {/* System Cost Breakdown - Tier 2 Full Ownership */}
+        {/* System Cost Breakdown */}
         <Card>
           <CardHeader>
-            <CardTitle>Tier 2: Full System Ownership</CardTitle>
-            <CardDescription>Complete Geo + Solar + Battery Package</CardDescription>
+            <CardTitle>System Cost & Incentives</CardTitle>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              {/* Component Breakdown */}
-              <div className="bg-gray-50 p-4 rounded-lg space-y-2">
-                <div className="text-sm font-semibold text-gray-700 mb-2">System Components:</div>
-                <div className="flex justify-between text-sm">
-                  <span>🔧 Drilling (Ground Loop):</span>
-                  <span className="font-medium">${results.tierBreakdown?.drilling?.toLocaleString() || '30,000'}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>🌡️ Geothermal Heat Pump:</span>
-                  <span className="font-medium">${results.tierBreakdown?.geothermal?.toLocaleString() || '25,000'}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>☀️ Solar Panels:</span>
-                  <span className="font-medium">${results.tierBreakdown?.solar?.toLocaleString() || '35,000'}</span>
-                </div>
-                <div className="flex justify-between text-sm">
-                  <span>🔋 Battery Storage:</span>
-                  <span className="font-medium">${results.tierBreakdown?.battery?.toLocaleString() || '15,000'}</span>
-                </div>
-                <hr className="my-2" />
-                <div className="flex justify-between font-semibold">
-                  <span>Total System Cost:</span>
-                  <span>${results.systemCostBase.toLocaleString()}</span>
-                </div>
+              <div className="flex justify-between">
+                <span>Base System Cost:</span>
+                <span className="font-semibold">${results.systemCostBase.toLocaleString()}</span>
               </div>
-              
-              {/* Incentives */}
-              <div className="space-y-2 pt-2">
-                <div className="flex justify-between text-green-600">
-                  <span>MassSave Rebate:</span>
-                  <span className="font-semibold">-${results.massSaveRebate.toLocaleString()}</span>
-                </div>
-                <div className="flex justify-between text-green-600">
-                  <span>Federal Tax Credit (30%):</span>
-                  <span className="font-semibold">-${Math.round(results.federalTaxCredit).toLocaleString()}</span>
-                </div>
+              <div className="flex justify-between text-green-600">
+                <span>MassSave Rebate:</span>
+                <span className="font-semibold">-${results.massSaveRebate.toLocaleString()}</span>
               </div>
-              
+              <div className="flex justify-between text-green-600">
+                <span>Federal Tax Credit (30%):</span>
+                <span className="font-semibold">-${Math.round(results.federalTaxCredit).toLocaleString()}</span>
+              </div>
               <hr />
-              <div className="flex justify-between text-xl font-bold text-blue-700">
-                <span>Your Net Cost:</span>
+              <div className="flex justify-between text-lg font-bold">
+                <span>Net System Cost:</span>
                 <span>${Math.round(results.netSystemCost).toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Payback Period:</span>
-                <span className="font-semibold">{results.paybackYears.toFixed(1)} years</span>
-              </div>
-              
-              {/* Comparison vs Generator */}
-              <div className="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
-                <div className="text-sm font-medium text-amber-800">
-                  Compare: Generator Backup = $10,000 ($5K unit + $5K install)
-                </div>
-                <div className="text-xs text-amber-700 mt-1">
-                  Generator provides backup only. Geo+Solar eliminates energy bills entirely.
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
-
-        {/* Tier 2 vs Tier 3 Comparison */}
-        <Card className="border-2 border-purple-200">
-          <CardHeader className="bg-purple-50">
-            <CardTitle className="text-xl text-purple-800">Own vs Lease: Which is Right for You?</CardTitle>
-            <CardDescription className="text-purple-600">Compare Tier 2 (Ownership) vs Tier 3 (EaaS Lease)</CardDescription>
-          </CardHeader>
-          <CardContent className="pt-6">
-            <div className="grid md:grid-cols-2 gap-6">
-              {/* Tier 2 - Own */}
-              <div className="p-5 bg-blue-50 rounded-xl border-2 border-blue-300">
-                <div className="text-center mb-4">
-                  <h4 className="text-lg font-bold text-blue-800">🏠 Tier 2: OWN</h4>
-                  <p className="text-sm text-blue-600">Full ownership with incentives</p>
-                </div>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span>Upfront Cost:</span>
-                    <span className="font-bold">${results.tierComparison?.tier2?.upfrontCost?.toLocaleString() || '60,000'}</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Monthly Payment:</span>
-                    <span className="font-bold text-green-600">$0</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Annual Maintenance:</span>
-                    <span className="font-medium">$200/yr</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Major Repair (10yr):</span>
-                    <span className="font-medium">~$5,000</span>
-                  </div>
-                  <hr className="border-blue-300" />
-                  <div className="flex justify-between text-base">
-                    <span>You Keep:</span>
-                    <span className="font-bold text-green-600">100% of savings</span>
-                  </div>
-                  <div className="flex justify-between text-base">
-                    <span>Annual Benefit:</span>
-                    <span className="font-bold text-green-600">${results.tierComparison?.tier2?.annualBenefit?.toLocaleString() || '8,200'}/yr</span>
-                  </div>
-                </div>
-                <div className="mt-4 p-3 bg-blue-100 rounded-lg text-center">
-                  <div className="text-xs text-blue-700">Best if you have capital & want max ROI</div>
-                </div>
-              </div>
-
-              {/* Tier 3 - EaaS */}
-              <div className="p-5 bg-green-50 rounded-xl border-2 border-green-300">
-                <div className="text-center mb-4">
-                  <h4 className="text-lg font-bold text-green-800">📋 Tier 3: EaaS LEASE</h4>
-                  <p className="text-sm text-green-600">Zero upfront, hassle-free</p>
-                </div>
-                <div className="space-y-3 text-sm">
-                  <div className="flex justify-between">
-                    <span>Upfront Cost:</span>
-                    <span className="font-bold text-green-600">$0</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Monthly Payment:</span>
-                    <span className="font-bold">${results.tierComparison?.tier3?.monthlyPayment?.toLocaleString() || '350'}/mo</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Annual Maintenance:</span>
-                    <span className="font-bold text-green-600">$0 (included)</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Major Repairs:</span>
-                    <span className="font-bold text-green-600">$0 (covered)</span>
-                  </div>
-                  <hr className="border-green-300" />
-                  <div className="flex justify-between text-base">
-                    <span>You Keep:</span>
-                    <span className="font-bold text-green-600">~10% of savings</span>
-                  </div>
-                  <div className="flex justify-between text-base">
-                    <span>Annual Benefit:</span>
-                    <span className="font-bold text-green-600">${results.tierComparison?.tier3?.annualBenefit?.toLocaleString() || '820'}/yr</span>
-                  </div>
-                </div>
-                <div className="mt-4 p-3 bg-green-100 rounded-lg text-center">
-                  <div className="text-xs text-green-700">Best if you want $0 down & no hassle</div>
-                </div>
-              </div>
-            </div>
-            
-            {/* Summary */}
-            <div className="mt-6 p-4 bg-gray-100 rounded-lg">
-              <div className="text-center text-sm text-gray-700">
-                <strong>Bottom line:</strong> Own keeps 100% of ~${results.annualSavings?.toLocaleString()}/yr savings. 
-                EaaS = $0 down, no maintenance worries, immediate savings day 1.
+                <span>{results.paybackYears.toFixed(1)} years</span>
               </div>
             </div>
           </CardContent>
@@ -1223,318 +1566,284 @@ const CalculatorPage = () => {
             </CardContent>
           </Card>
 
-          {/* Side by Side Charts */}
-          <div className="grid md:grid-cols-2 gap-6">
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <BarChart3 className="h-5 w-5 text-blue-600" />
-                  Investment Comparison
-                </CardTitle>
-                <CardDescription>
-                  Compare upfront costs across heating systems
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <CapexComparisonChart data={results.capexComparison} />
+          {/* OPTION 1: Geothermal Only */}
+          <div className="mt-8">
+            <div className="text-center mb-6">
+              <Badge className="bg-blue-600 text-white px-4 py-2 text-lg mb-2">OPTION 1</Badge>
+              <h3 className="text-2xl font-bold text-gray-900">Geothermal HVAC Only</h3>
+              <p className="text-gray-600">Replace your heating/cooling with geothermal heat pump</p>
+            </div>
+            
+            <div className="grid md:grid-cols-2 gap-6">
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <BarChart3 className="h-5 w-5 text-blue-600" />
+                    Investment Comparison
+                  </CardTitle>
+                  <CardDescription>
+                    Compare upfront costs across heating systems
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <CapexComparisonChart data={results.capexComparison} />
+                </CardContent>
+              </Card>
+
+              <Card>
+                <CardHeader>
+                  <CardTitle className="flex items-center gap-2">
+                    <Leaf className="h-5 w-5 text-purple-600" />
+                    30-Year Lifetime Cost
+                  </CardTitle>
+                  <CardDescription>
+                    Total cost including replacements (GSHP 30yr vs Conventional 15yr lifespan)
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <LifetimeCostChart data={results.lifetimeCostData} />
+                </CardContent>
+              </Card>
+            </div>
+          </div>
+
+          {/* OPTION 2: Geothermal + Solar + Battery */}
+          <div className="mt-12">
+            <div className="text-center mb-6">
+              <Badge className="bg-green-600 text-white px-4 py-2 text-lg mb-2">OPTION 2 - RECOMMENDED</Badge>
+              <h3 className="text-2xl font-bold text-gray-900">GEO (Heating + Cooling) + SOLAR + FREE Battery</h3>
+              <p className="text-gray-600">Maximum savings with full energy independence (5% annual inflation on traditional costs)</p>
+            </div>
+            
+            <Card className="border-2 border-green-300">
+              <CardContent className="pt-6">
+                <ThreeMilestoneComparison data={results.threeMilestoneData} />
               </CardContent>
             </Card>
+          </div>
 
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Leaf className="h-5 w-5 text-purple-600" />
-                  30-Year Lifetime Cost
-                </CardTitle>
-                <CardDescription>
-                  Total cost including replacements (GSHP 30yr vs Conventional 15yr lifespan)
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <LifetimeCostChart data={results.lifetimeCostData} />
+          {/* OPTION 3: Energy as a Service (EaaS) */}
+          <div className="mt-12">
+            <div className="text-center mb-6">
+              <Badge className="bg-purple-600 text-white px-4 py-2 text-lg mb-2">OPTION 3</Badge>
+              <h3 className="text-2xl font-bold text-gray-900">Energy as a Service (EaaS)</h3>
+              <p className="text-gray-600">$0 upfront — 10% discount on your current utility bills</p>
+            </div>
+            
+            <Card className="border-2 border-purple-300 overflow-hidden">
+              <div className="bg-gradient-to-r from-purple-600 to-indigo-600 p-6 text-white">
+                <div className="flex items-center justify-center gap-3 mb-4">
+                  <Shield className="h-10 w-10" />
+                  <div>
+                    <h4 className="text-2xl font-bold">Zero Upfront Cost</h4>
+                    <p className="text-purple-200">GeoPioneer owns and maintains the system</p>
+                  </div>
+                </div>
+                <div className="grid grid-cols-3 gap-4 text-center mt-6">
+                  <div className="bg-white/20 rounded-lg p-4">
+                    <div className="text-3xl font-bold">$0</div>
+                    <div className="text-sm opacity-90">Installation</div>
+                  </div>
+                  <div className="bg-white/20 rounded-lg p-4">
+                    <div className="text-3xl font-bold">$0</div>
+                    <div className="text-sm opacity-90">Maintenance</div>
+                  </div>
+                  <div className="bg-white/20 rounded-lg p-4">
+                    <div className="text-3xl font-bold">$0</div>
+                    <div className="text-sm opacity-90">Repairs</div>
+                  </div>
+                </div>
+              </div>
+              
+              <CardContent className="pt-6">
+                <div className="space-y-6">
+                  {/* How EaaS Works */}
+                  <div className="bg-purple-50 rounded-xl p-6 border border-purple-200">
+                    <h5 className="font-bold text-purple-800 mb-4 flex items-center gap-2">
+                      <Zap className="h-5 w-5" />
+                      How Energy as a Service Works
+                    </h5>
+                    <div className="grid md:grid-cols-4 gap-4">
+                      <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <span className="text-purple-600 font-bold">1</span>
+                        </div>
+                        <div className="text-sm font-medium text-gray-800">We Install</div>
+                        <div className="text-xs text-gray-600">Full system at no cost to you</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <span className="text-purple-600 font-bold">2</span>
+                        </div>
+                        <div className="text-sm font-medium text-gray-800">You Pay Monthly</div>
+                        <div className="text-xs text-gray-600">Fixed rate for heating & cooling</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <span className="text-purple-600 font-bold">3</span>
+                        </div>
+                        <div className="text-sm font-medium text-gray-800">We Maintain</div>
+                        <div className="text-xs text-gray-600">All service & repairs included</div>
+                      </div>
+                      <div className="text-center p-4 bg-white rounded-lg shadow-sm">
+                        <div className="w-10 h-10 bg-purple-100 rounded-full flex items-center justify-center mx-auto mb-2">
+                          <span className="text-purple-600 font-bold">4</span>
+                        </div>
+                        <div className="text-sm font-medium text-gray-800">Option to Buy</div>
+                        <div className="text-xs text-gray-600">Purchase system anytime</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Monthly Cost Comparison */}
+                  <div className="grid md:grid-cols-2 gap-6">
+                    <div className="bg-red-50 rounded-xl p-5 border border-red-200">
+                      <h6 className="font-semibold text-red-800 mb-3">Traditional Monthly Costs</h6>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Heating (Fuel)</span>
+                          <span className="font-medium text-red-700">${Math.round((results?.threeMilestoneData?.tradAnnualFuel || 2700) / 12)}/mo</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Cooling (Electric)</span>
+                          <span className="font-medium text-red-700">${Math.round((results?.threeMilestoneData?.tradAnnualElectric || 2400) / 12)}/mo</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Maintenance</span>
+                          <span className="font-medium text-red-700">~$17/mo</span>
+                        </div>
+                        <hr className="border-red-200" />
+                        <div className="flex justify-between">
+                          <span className="font-semibold text-red-800">Current Total</span>
+                          <span className="font-bold text-red-700 text-lg">
+                            ${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 200) / 12)}/mo
+                          </span>
+                        </div>
+                        <div className="text-xs text-red-600 mt-2">+ 5% annual price increases</div>
+                      </div>
+                    </div>
+                    
+                    <div className="bg-purple-50 rounded-xl p-5 border-2 border-purple-400">
+                      <h6 className="font-semibold text-purple-800 mb-3">EaaS Monthly Rate</h6>
+                      <div className="space-y-2">
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Heating & Cooling</span>
+                          <span className="font-medium text-purple-700">Included</span>
+                        </div>
+                        <div className="flex justify-between text-sm">
+                          <span className="text-gray-600">Maintenance</span>
+                          <span className="font-medium text-purple-700">Included</span>
+                        </div>
+                        <hr className="border-purple-200" />
+                        <div className="flex justify-between">
+                          <span className="font-semibold text-purple-800">Fixed Monthly</span>
+                          <span className="font-bold text-purple-700 text-lg">
+                            ${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 200) * 0.9 / 12)}/mo*
+                          </span>
+                        </div>
+                        <div className="text-xs text-purple-600 mt-2">*10% savings vs current bills, locked rate</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* EaaS Benefits */}
+                  <div className="grid md:grid-cols-3 gap-4">
+                    <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-gray-800">No Capital Risk</div>
+                        <div className="text-xs text-gray-600">Keep your money for other investments</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-gray-800">Predictable Costs</div>
+                        <div className="text-xs text-gray-600">No surprise heating bills</div>
+                      </div>
+                    </div>
+                    <div className="flex items-start gap-3 p-4 bg-gray-50 rounded-lg">
+                      <CheckCircle2 className="h-5 w-5 text-green-600 flex-shrink-0 mt-0.5" />
+                      <div>
+                        <div className="font-medium text-gray-800">Worry-Free</div>
+                        <div className="text-xs text-gray-600">We handle everything</div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Comparison Table */}
+                  <div className="overflow-x-auto">
+                    <table className="w-full text-sm">
+                      <thead>
+                        <tr className="border-b border-gray-200">
+                          <th className="text-left py-3 px-2 font-semibold text-gray-700">Feature</th>
+                          <th className="text-center py-3 px-2 font-semibold text-blue-700">Option 1<br/><span className="font-normal text-xs">Geo Only</span></th>
+                          <th className="text-center py-3 px-2 font-semibold text-green-700">Option 2<br/><span className="font-normal text-xs">Complete System</span></th>
+                          <th className="text-center py-3 px-2 font-semibold text-purple-700 bg-purple-50">Option 3<br/><span className="font-normal text-xs">EaaS</span></th>
+                        </tr>
+                      </thead>
+                      <tbody className="text-xs">
+                        <tr className="border-b border-gray-100">
+                          <td className="py-3 px-2 text-gray-600">Upfront Cost</td>
+                          <td className="text-center py-3 px-2">${Math.round((results?.netSystemCost || 32000) / 1000)}K</td>
+                          <td className="text-center py-3 px-2">${Math.round((results?.threeMilestoneData?.geoInstallCost || 50000) / 1000)}K</td>
+                          <td className="text-center py-3 px-2 bg-purple-50 font-bold text-purple-700">$0</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-3 px-2 text-gray-600">Monthly Payment</td>
+                          <td className="text-center py-3 px-2">$0</td>
+                          <td className="text-center py-3 px-2">$0</td>
+                          <td className="text-center py-3 px-2 bg-purple-50">~${Math.round(((results?.threeMilestoneData?.tradAnnualFuel || 2700) + (results?.threeMilestoneData?.tradAnnualElectric || 2400) + 200) * 0.9 / 12)}</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-3 px-2 text-gray-600">Maintenance</td>
+                          <td className="text-center py-3 px-2">Your responsibility</td>
+                          <td className="text-center py-3 px-2">Your responsibility</td>
+                          <td className="text-center py-3 px-2 bg-purple-50 font-medium text-purple-700">Included</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-3 px-2 text-gray-600">Solar + Battery</td>
+                          <td className="text-center py-3 px-2">❌</td>
+                          <td className="text-center py-3 px-2">✅</td>
+                          <td className="text-center py-3 px-2 bg-purple-50">✅</td>
+                        </tr>
+                        <tr className="border-b border-gray-100">
+                          <td className="py-3 px-2 text-gray-600">Own Equipment</td>
+                          <td className="text-center py-3 px-2">✅</td>
+                          <td className="text-center py-3 px-2">✅</td>
+                          <td className="text-center py-3 px-2 bg-purple-50">After buyout</td>
+                        </tr>
+                        <tr>
+                          <td className="py-3 px-2 text-gray-600">Best For</td>
+                          <td className="text-center py-3 px-2 text-xs">Budget-conscious</td>
+                          <td className="text-center py-3 px-2 text-xs">Max long-term savings</td>
+                          <td className="text-center py-3 px-2 bg-purple-50 text-xs font-medium text-purple-700">Zero risk entry</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="text-center mt-4">
+                    <p className="text-sm text-gray-600 mb-4">
+                      Perfect for homeowners who want geothermal benefits without the upfront investment
+                    </p>
+                    <Button 
+                      variant="outline" 
+                      className="border-purple-400 text-purple-700 hover:bg-purple-50"
+                      onClick={() => {
+                        const contactSection = document.querySelector('[data-section="contact"]')
+                        if (contactSection) contactSection.scrollIntoView({ behavior: 'smooth' })
+                      }}
+                    >
+                      Learn More About EaaS
+                    </Button>
+                  </div>
+                </div>
               </CardContent>
             </Card>
           </div>
         </div>
 
-        {/* Free Site Review Section */}
-        <Card className="bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200">
-          <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-cyan-800">Get Your Free Site Review</CardTitle>
-            <CardDescription className="text-cyan-700">
-              Receive a comprehensive site evaluation and personalized geothermal plan for your {activeTab === 'existing' ? 'existing home' : 'new construction project'}
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            {/* Assessment Type Selection */}
-            <div className="mb-6">
-              <Label className="text-base font-semibold text-gray-800 mb-3 block">
-                What type of assessment do you need?
-              </Label>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div 
-                  className={`p-4 border-2 rounded-lg hover:border-cyan-400 transition-colors cursor-pointer bg-white ${
-                    assessmentData.assessmentType === 'full' ? 'border-cyan-400' : 'border-cyan-200'
-                  }`}
-                  onClick={() => handleAssessmentChange('assessmentType', 'full')}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 border-2 border-cyan-400 rounded-full mt-1 flex items-center justify-center">
-                      {assessmentData.assessmentType === 'full' && <div className="w-3 h-3 bg-cyan-400 rounded-full"></div>}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-1">
-                        {activeTab === 'existing' ? 'Home Retrofit Assessment' : 'New Construction Planning'}
-                      </h4>
-                      <p className="text-sm text-gray-600">
-                        {activeTab === 'existing' 
-                          ? 'Evaluate your existing home for geothermal retrofit potential, including soil analysis and system sizing'
-                          : 'Complete geothermal system design and integration planning for your new construction project'
-                        }
-                      </p>
-                      <ul className="mt-2 text-xs text-gray-500 space-y-1">
-                        {activeTab === 'existing' ? (
-                          <>
-                            <li>• Site survey and soil analysis</li>
-                            <li>• Existing system evaluation</li>
-                            <li>• Retrofit feasibility study</li>
-                            <li>• Detailed cost estimate</li>
-                          </>
-                        ) : (
-                          <>
-                            <li>• Site planning and design</li>
-                            <li>• System sizing and layout</li>
-                            <li>• Construction coordination</li>
-                            <li>• Permit assistance</li>
-                          </>
-                        )}
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-                
-                <div 
-                  className={`p-4 border-2 rounded-lg hover:border-gray-400 transition-colors cursor-pointer bg-white ${
-                    assessmentData.assessmentType === 'consultation' ? 'border-gray-400' : 'border-gray-200'
-                  }`}
-                  onClick={() => handleAssessmentChange('assessmentType', 'consultation')}
-                >
-                  <div className="flex items-start gap-3">
-                    <div className="w-6 h-6 border-2 border-gray-400 rounded-full mt-1 flex items-center justify-center">
-                      {assessmentData.assessmentType === 'consultation' && <div className="w-3 h-3 bg-gray-400 rounded-full"></div>}
-                    </div>
-                    <div>
-                      <h4 className="font-semibold text-gray-800 mb-1">Consultation Only</h4>
-                      <p className="text-sm text-gray-600">
-                        Initial consultation to discuss options, answer questions, and provide general guidance
-                      </p>
-                      <ul className="mt-2 text-xs text-gray-500 space-y-1">
-                        <li>• 30-minute phone/video call</li>
-                        <li>• General feasibility discussion</li>
-                        <li>• Cost range estimates</li>
-                        <li>• Next steps planning</li>
-                      </ul>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Contact Information */}
-            <div className="grid md:grid-cols-3 gap-4 mb-6">
-              <div>
-                <Label htmlFor="name">Full Name *</Label>
-                <Input
-                  id="name"
-                  placeholder="Your full name"
-                  value={calculatorData.name}
-                  onChange={(e) => handleInputChange('name', e.target.value)}
-                  className="border-cyan-200 focus:border-cyan-400"
-                />
-              </div>
-              <div>
-                <Label htmlFor="email">Email Address *</Label>
-                <Input
-                  id="email"
-                  type="email"
-                  placeholder="your@email.com"
-                  value={calculatorData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  className="border-cyan-200 focus:border-cyan-400"
-                />
-              </div>
-              <div>
-                <Label htmlFor="phone">Phone Number *</Label>
-                <Input
-                  id="phone"
-                  placeholder="(781) 654-5879"
-                  value={calculatorData.phone}
-                  onChange={(e) => handleInputChange('phone', e.target.value)}
-                  className="border-cyan-200 focus:border-cyan-400"
-                />
-              </div>
-            </div>
-
-            {/* Property Details */}
-            <div className="grid md:grid-cols-2 gap-4 mb-6">
-              <div>
-                <Label htmlFor="propertyAddress">Property Address</Label>
-                <Input
-                  id="propertyAddress"
-                  placeholder="123 Main St, City, State, ZIP"
-                  value={assessmentData.propertyAddress}
-                  onChange={(e) => handleAssessmentChange('propertyAddress', e.target.value)}
-                  className="border-cyan-200 focus:border-cyan-400"
-                />
-              </div>
-              <div>
-                <Label htmlFor="timeframe">Project Timeframe</Label>
-                <Select value={assessmentData.timeframe} onValueChange={(value) => handleAssessmentChange('timeframe', value)}>
-                  <SelectTrigger className="border-cyan-200 focus:border-cyan-400">
-                    <SelectValue placeholder="When are you planning?" />
-                  </SelectTrigger>
-                  <SelectContent>
-                    <SelectItem value="immediate">Within 3 months</SelectItem>
-                    <SelectItem value="soon">3-6 months</SelectItem>
-                    <SelectItem value="planning">6-12 months</SelectItem>
-                    <SelectItem value="future">More than 1 year</SelectItem>
-                  </SelectContent>
-                </Select>
-              </div>
-            </div>
-
-            {/* Additional Information */}
-            <div className="mb-6">
-              <Label htmlFor="additionalInfo">Additional Information (Optional)</Label>
-              <textarea
-                id="additionalInfo"
-                placeholder={activeTab === 'existing' 
-                  ? "Tell us about your current heating/cooling system, any specific concerns, or questions you have..."
-                  : "Tell us about your construction project, timeline, builder information, or any specific requirements..."
-                }
-                value={assessmentData.additionalInfo}
-                onChange={(e) => handleAssessmentChange('additionalInfo', e.target.value)}
-                className="w-full p-3 border border-cyan-200 rounded-md focus:border-cyan-400 focus:outline-none focus:ring-2 focus:ring-cyan-200 resize-none"
-                rows="4"
-              />
-            </div>
-
-            {/* Assessment Benefits */}
-            <div className="bg-white p-4 rounded-lg border border-cyan-200 mb-6">
-              <h4 className="font-semibold text-gray-800 mb-3">What You'll Receive:</h4>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Detailed site evaluation report</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Custom system design and sizing</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Accurate cost estimates</span>
-                  </div>
-                </div>
-                <div className="space-y-2">
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Financing and incentive guidance</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>Timeline and project planning</span>
-                  </div>
-                  <div className="flex items-center gap-2 text-sm text-gray-700">
-                    <div className="w-2 h-2 bg-green-500 rounded-full"></div>
-                    <span>No obligation consultation</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-
-
-            {/* Submit Button */}
-            <div className="text-center mb-6">
-              <Button 
-                size="lg"
-                onClick={async () => {
-                  // Validate required fields
-                  if (!calculatorData.name || !calculatorData.email || !calculatorData.phone) {
-                    alert('Please fill in your name, email, and phone number.')
-                    return
-                  }
-                  
-                  // Prepare form data
-                  const formData = {
-                    'form-name': 'calculator-assessment',
-                    name: calculatorData.name,
-                    email: calculatorData.email,
-                    phone: calculatorData.phone,
-                    address: assessmentData.propertyAddress,
-                    squareFootage: calculatorData.squareFootage,
-                    heatingFuel: calculatorData.heatingFuel,
-                    annualHeatingCost: calculatorData.annualHeatingCost,
-                    annualElectricityCost: calculatorData.annualElectricityCost,
-                    zipCode: calculatorData.zipCode,
-                    assessmentType: assessmentData.assessmentType,
-                    timeframe: assessmentData.timeframe,
-                    additionalInfo: assessmentData.additionalInfo,
-                    calculationResults: JSON.stringify(results),
-                    projectType: activeTab
-                  }
-                  
-                  try {
-                    const response = await fetch('/', {
-                      method: 'POST',
-                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                      body: new URLSearchParams(formData).toString()
-                    })
-                    
-                    if (response.ok) {
-                      alert(`Thank you ${calculatorData.name}! 
-
-Your Free Site Review request has been submitted.
-
-Summary:
-✅ Annual Savings: $${Math.round(results?.annualSavings || 0).toLocaleString()}/year
-✅ 25-Year Savings: $${Math.round(results?.twentyFiveYearSavings || 0).toLocaleString()}
-✅ Payback Period: ${results?.paybackYears?.toFixed(1) || 'N/A'} years
-
-We'll contact you within 24 hours to schedule your ${assessmentData.assessmentType === 'full' ? 'on-site evaluation' : 'consultation call'}.
-
-Questions? Call us at (781) 654-5879`)
-                    } else {
-                      alert('There was an issue. Please try again or call (781) 654-5879.')
-                    }
-                  } catch (error) {
-                    console.error('Submission error:', error)
-                    alert('There was an issue. Please call (781) 654-5879.')
-                  }
-                }}
-                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-12 py-4 text-lg"
-              >
-                🏠 Submit Free Site Review Request
-              </Button>
-            </div>
-
-            {/* Trust Indicators */}
-            <div className="mt-6 pt-6 border-t border-cyan-200">
-              <div className="grid grid-cols-2 gap-4 text-center max-w-md mx-auto">
-                <div>
-                  <div className="text-2xl font-bold text-cyan-600">15+</div>
-                  <div className="text-xs text-gray-600">Years Experience</div>
-                </div>
-                <div>
-                  <div className="text-2xl font-bold text-cyan-600">100%</div>
-                  <div className="text-xs text-gray-600">Free Site Review</div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
     )
   }
@@ -1580,7 +1889,7 @@ Questions? Call us at (781) 654-5879`)
                     Existing Home Renovation Calculator
                   </CardTitle>
                   <CardDescription>
-                    See Estimated Savings from retrofitting your existing home with geothermal
+                    Calculate savings from retrofitting your existing home with geothermal
                   </CardDescription>
                 </CardHeader>
                 <CardContent>
@@ -1616,6 +1925,131 @@ Questions? Call us at (781) 654-5879`)
                 Your Geothermal Savings Report
               </h2>
               {renderResults()}
+              
+              {/* Simple Assessment Form */}
+              <Card className="mt-8 bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
+                <CardHeader className="text-center">
+                  <CardTitle className="text-xl text-green-800">Get Your Detailed Assessment Report</CardTitle>
+                  <CardDescription className="text-green-700">
+                    Download a comprehensive PDF report with your calculations and next steps
+                  </CardDescription>
+                </CardHeader>
+                <CardContent>
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                      <Label htmlFor="reportName">Full Name *</Label>
+                      <Input
+                        id="reportName"
+                        placeholder="Your full name"
+                        value={assessmentData.name}
+                        onChange={(e) => handleAssessmentChange('name', e.target.value)}
+                        className="border-green-200 focus:border-green-400"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reportEmail">Email Address *</Label>
+                      <Input
+                        id="reportEmail"
+                        type="email"
+                        placeholder="your.email@example.com"
+                        value={assessmentData.email}
+                        onChange={(e) => handleAssessmentChange('email', e.target.value)}
+                        className="border-green-200 focus:border-green-400"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="grid md:grid-cols-2 gap-4 mb-6">
+                    <div>
+                      <Label htmlFor="reportPhone">Phone Number *</Label>
+                      <Input
+                        id="reportPhone"
+                        placeholder="(555) 123-4567"
+                        value={assessmentData.phone}
+                        onChange={(e) => handleAssessmentChange('phone', e.target.value)}
+                        className="border-green-200 focus:border-green-400"
+                      />
+                    </div>
+                    <div>
+                      <Label htmlFor="reportAddress">Property Address</Label>
+                      <Input
+                        id="reportAddress"
+                        placeholder="123 Main St, City, State"
+                        value={assessmentData.address}
+                        onChange={(e) => handleAssessmentChange('address', e.target.value)}
+                        className="border-green-200 focus:border-green-400"
+                      />
+                    </div>
+                  </div>
+                  
+                  <div className="text-center">
+                    <Button 
+                      size="lg"
+                      onClick={async () => {
+                        // Validate required fields
+                        if (!assessmentData.name || !assessmentData.email || !assessmentData.phone) {
+                          alert('Please fill in your name, email, and phone number to generate the report.')
+                          return
+                        }
+                        
+                        // Prepare form data
+                        const formData = {
+                          name: assessmentData.name,
+                          email: assessmentData.email,
+                          phone: assessmentData.phone,
+                          address: assessmentData.address,
+                          squareFootage: calculatorData.squareFootage,
+                          heatingFuel: calculatorData.heatingFuel,
+                          annualHeatingCost: calculatorData.annualHeatingCost,
+                          annualElectricityCost: calculatorData.annualElectricityCost,
+                          zipCode: calculatorData.zipCode,
+                          calculationResults: results,
+                          submissionDate: new Date().toLocaleDateString(),
+                          submissionTime: new Date().toLocaleTimeString(),
+                          assessmentType: 'Calculator Assessment'
+                        }
+                        
+                        // Generate and download PDF report
+                        try {
+                          const { generateAndSendReport } = await import('../../services/reportService.js')
+                          const result = await generateAndSendReport(formData, 'calculator')
+                          
+                          if (result.success) {
+                            alert(`Thank you ${formData.name}! 
+
+Your comprehensive savings assessment report has been generated and downloaded.
+
+Report ID: ${result.reportId}
+
+The report includes:
+✅ Your calculated savings: $${results?.annualSavings?.toLocaleString() || '0'}/year
+✅ ROI analysis and break-even timeline
+✅ Available rebates and incentives (up to $30,000 total)
+✅ Step-by-step installation process
+
+Email notification sent to: ${formData.email}
+CC: info@geopioneer.com
+
+We'll contact you within 24 hours to schedule your on-site evaluation.`)
+                          } else {
+                            alert(`Error: ${result.message}. Please try again or contact us directly at (555) 123-4567.`)
+                          }
+                        } catch (error) {
+                          console.error('Report generation error:', error)
+                          alert('There was an issue generating your report. Please try again or contact us directly at (555) 123-4567.')
+                        }
+                      }}
+                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
+                    >
+                      📄 Generate Report & Submit Assessment
+                    </Button>
+                  </div>
+                  
+                  <div className="mt-4 text-center text-sm text-gray-600">
+                    <p>Your report will include detailed savings calculations, available rebates, and installation timeline.</p>
+                  </div>
+                </CardContent>
+              </Card>
             </div>
           )}
         </div>
@@ -1659,7 +2093,7 @@ Questions? Call us at (781) 654-5879`)
               </CardHeader>
               <CardContent>
                 <p className="text-gray-600">
-                  Includes current MassSave $13.5K rebate and 30% federal tax credit calculations
+                  Includes current MassSave $15K rebate and 30% federal tax credit calculations
                 </p>
               </CardContent>
             </Card>
