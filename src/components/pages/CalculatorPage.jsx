@@ -506,13 +506,23 @@ const CalculatorPage = () => {
     const geothermalAnnualCost = 0 // Solar offsets all electricity
     
     // Battery revenue from demand response programs (ConnectedSolutions)
-    const batteryAnnualRevenue = 2000 // ~$2K/year for 5-8 years
+    // This is INCOME - battery pays you ~$2K/year for 5-8 years
+    const hasBattery = true // User has battery in Tier 2 package
+    const batteryAnnualRevenue = hasBattery ? 2000 : 0 // ~$2K/year positive cash flow
 
-    // Total annual benefit = eliminated costs + battery revenue
-    const annualSavings = currentAnnualCost + batteryAnnualRevenue
+    // Annual savings = eliminated energy costs (propane + electric)
+    // Battery revenue is ADDITIONAL positive cash flow on top
+    const annualSavings = currentAnnualCost // Just the eliminated costs
+    const totalAnnualBenefit = currentAnnualCost + batteryAnnualRevenue // Savings + battery income
     const monthlySavings = annualSavings / 12
     const tenYearSavings = annualSavings * 10
     const twentyFiveYearSavings = annualSavings * 25
+    
+    // With battery income (5-8 years of battery revenue)
+    const batteryRevenueYears = 6 // Average of 5-8 years
+    const totalBatteryRevenue = batteryAnnualRevenue * batteryRevenueYears
+    const tenYearTotalBenefit = tenYearSavings + totalBatteryRevenue
+    const monthlyTotalBenefit = totalAnnualBenefit / 12
 
     // Energy reduction percentage
     const energyReduction = Math.round((1 - efficiencyFactor) * 100)
@@ -529,8 +539,8 @@ const CalculatorPage = () => {
     const federalTaxCredit = systemCostBase * 0.30 // 30% ITC on full system
     const netSystemCost = systemCostBase - massSaveRebate - federalTaxCredit
 
-    // Payback period
-    const paybackYears = netSystemCost / annualSavings
+    // Payback period (using total benefit including battery revenue)
+    const paybackYears = netSystemCost / totalAnnualBenefit
 
     // CAPEX Comparison Data - Tier 2 Full System vs Alternatives
     const capexComparison = {
@@ -662,7 +672,11 @@ const CalculatorPage = () => {
       lifetimeCostData,
       tierBreakdown,
       batteryAnnualRevenue,
-      tierComparison
+      tierComparison,
+      totalAnnualBenefit,
+      totalBatteryRevenue,
+      tenYearTotalBenefit,
+      hasBattery
     })
     setShowResults(true)
   }
@@ -927,21 +941,33 @@ const CalculatorPage = () => {
             <div className="grid md:grid-cols-2 gap-6">
               <div className="space-y-3">
                 <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <span className="text-gray-700">Current Energy Costs Eliminated:</span>
-                  <span className="text-xl font-bold text-green-600">+${Math.round(results.currentAnnualCost).toLocaleString()}</span>
+                  <span className="text-gray-700">Energy Costs Eliminated:</span>
+                  <span className="text-xl font-bold text-green-600">+${Math.round(results.currentAnnualCost).toLocaleString()}/yr</span>
                 </div>
                 <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <span className="text-gray-700">🔋 Battery Revenue (5-8 yrs):</span>
-                  <span className="text-xl font-bold text-green-600">+${results.batteryAnnualRevenue?.toLocaleString() || '2,000'}</span>
-                </div>
-                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
-                  <span className="text-gray-700">New Energy Cost (Solar covers):</span>
+                  <span className="text-gray-700">New Energy Cost:</span>
                   <span className="text-xl font-bold text-gray-500">$0</span>
                 </div>
                 <hr className="border-blue-300" />
                 <div className="flex justify-between items-center p-4 bg-green-100 rounded-lg">
-                  <span className="text-lg font-semibold text-green-800">Total Annual Benefit:</span>
+                  <span className="text-lg font-semibold text-green-800">Annual Savings:</span>
                   <span className="text-2xl font-bold text-green-700">${Math.round(results.annualSavings).toLocaleString()}/yr</span>
+                </div>
+                
+                {/* Battery Revenue - Separate Positive Cash Flow */}
+                {results.hasBattery && (
+                  <div className="mt-4 p-4 bg-yellow-50 border-2 border-yellow-300 rounded-lg">
+                    <div className="text-center">
+                      <div className="text-sm font-medium text-yellow-800 mb-1">🔋 PLUS: Battery Pays You!</div>
+                      <div className="text-2xl font-bold text-yellow-700">+${results.batteryAnnualRevenue?.toLocaleString() || '2,000'}/yr</div>
+                      <div className="text-xs text-yellow-600 mt-1">Cash income for 5-8 years (ConnectedSolutions)</div>
+                    </div>
+                  </div>
+                )}
+                
+                <div className="flex justify-between items-center p-4 bg-purple-100 rounded-lg mt-2">
+                  <span className="text-lg font-semibold text-purple-800">Total Annual Benefit:</span>
+                  <span className="text-2xl font-bold text-purple-700">${Math.round(results.totalAnnualBenefit).toLocaleString()}/yr</span>
                 </div>
               </div>
               <div className="grid grid-cols-1 gap-4">
@@ -949,21 +975,21 @@ const CalculatorPage = () => {
                   <CardHeader className="py-4">
                     <CardTitle className="text-sm text-gray-600">Monthly Benefit</CardTitle>
                     <div className="text-2xl font-bold text-blue-600">
-                      ${Math.round(results.monthlySavings).toLocaleString()}
+                      ${Math.round(results.totalAnnualBenefit / 12).toLocaleString()}
+                    </div>
+                  </CardHeader>
+                </Card>
+                <Card className="text-center bg-yellow-50">
+                  <CardHeader className="py-4">
+                    <CardTitle className="text-sm text-yellow-700">Battery Revenue (6 yrs)</CardTitle>
+                    <div className="text-2xl font-bold text-yellow-600">
+                      +${Math.round(results.totalBatteryRevenue || 12000).toLocaleString()}
                     </div>
                   </CardHeader>
                 </Card>
                 <Card className="text-center">
                   <CardHeader className="py-4">
-                    <CardTitle className="text-sm text-gray-600">10-Year Benefit</CardTitle>
-                    <div className="text-2xl font-bold text-blue-600">
-                      ${Math.round(results.tenYearSavings).toLocaleString()}
-                    </div>
-                  </CardHeader>
-                </Card>
-                <Card className="text-center">
-                  <CardHeader className="py-4">
-                    <CardTitle className="text-sm text-gray-600">25-Year Benefit</CardTitle>
+                    <CardTitle className="text-sm text-gray-600">25-Year Savings</CardTitle>
                     <div className="text-2xl font-bold text-blue-600">
                       ${Math.round(results.twentyFiveYearSavings).toLocaleString()}
                     </div>
