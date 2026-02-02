@@ -551,6 +551,43 @@ const CalculatorPage = () => {
       federalITC: Math.round(federalTaxCredit),
       netCost: Math.round(netSystemCost)
     }
+    
+    // Tier 2 (Own) - additional costs over time
+    const tier2Maintenance = 200 // $200/year maintenance
+    const tier2MajorRepair = 5000 // $5K major repair in 10 years
+    const tier2TenYearCost = netSystemCost + (tier2Maintenance * 10) + tier2MajorRepair
+    const tier2TenYearBenefit = (annualSavings * 10) - tier2TenYearCost
+    
+    // Tier 3 (EaaS) - lease model
+    const eaasMonthlyPayment = Math.round((annualSavings * 0.90) / 21) // 90% of savings over 21 months
+    const eaasYouKeep = Math.round(annualSavings * 0.10) // You keep 10% of savings
+    const eaasTenYearPayments = eaasMonthlyPayment * 12 * 10 // If payments continue
+    const eaasNoMaintenance = tier2Maintenance * 10 // Savings from no maintenance
+    const eaasNoRepairs = tier2MajorRepair // Savings from no major repairs
+    
+    // Tier comparison
+    const tierComparison = {
+      tier2: {
+        name: 'Tier 2: Own',
+        upfrontCost: Math.round(netSystemCost),
+        monthlyPayment: 0,
+        annualMaintenance: tier2Maintenance,
+        majorRepair10yr: tier2MajorRepair,
+        annualBenefit: Math.round(annualSavings),
+        tenYearNetBenefit: Math.round(tier2TenYearBenefit),
+        youKeepPercent: 100
+      },
+      tier3: {
+        name: 'Tier 3: EaaS (Lease)',
+        upfrontCost: 0,
+        monthlyPayment: eaasMonthlyPayment,
+        annualMaintenance: 0,
+        majorRepair10yr: 0,
+        annualBenefit: eaasYouKeep,
+        tenYearNetBenefit: Math.round(eaasYouKeep * 10),
+        youKeepPercent: 10
+      }
+    }
 
     // ROI Chart Data
     const roiData = {
@@ -624,7 +661,8 @@ const CalculatorPage = () => {
       roiData,
       lifetimeCostData,
       tierBreakdown,
-      batteryAnnualRevenue
+      batteryAnnualRevenue,
+      tierComparison
     })
     setShowResults(true)
   }
@@ -1000,6 +1038,101 @@ const CalculatorPage = () => {
                 <div className="text-xs text-amber-700 mt-1">
                   Generator provides backup only. Geo+Solar eliminates energy bills entirely.
                 </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+
+        {/* Tier 2 vs Tier 3 Comparison */}
+        <Card className="border-2 border-purple-200">
+          <CardHeader className="bg-purple-50">
+            <CardTitle className="text-xl text-purple-800">Own vs Lease: Which is Right for You?</CardTitle>
+            <CardDescription className="text-purple-600">Compare Tier 2 (Ownership) vs Tier 3 (EaaS Lease)</CardDescription>
+          </CardHeader>
+          <CardContent className="pt-6">
+            <div className="grid md:grid-cols-2 gap-6">
+              {/* Tier 2 - Own */}
+              <div className="p-5 bg-blue-50 rounded-xl border-2 border-blue-300">
+                <div className="text-center mb-4">
+                  <h4 className="text-lg font-bold text-blue-800">🏠 Tier 2: OWN</h4>
+                  <p className="text-sm text-blue-600">Full ownership with incentives</p>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span>Upfront Cost:</span>
+                    <span className="font-bold">${results.tierComparison?.tier2?.upfrontCost?.toLocaleString() || '60,000'}</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Monthly Payment:</span>
+                    <span className="font-bold text-green-600">$0</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Annual Maintenance:</span>
+                    <span className="font-medium">$200/yr</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Major Repair (10yr):</span>
+                    <span className="font-medium">~$5,000</span>
+                  </div>
+                  <hr className="border-blue-300" />
+                  <div className="flex justify-between text-base">
+                    <span>You Keep:</span>
+                    <span className="font-bold text-green-600">100% of savings</span>
+                  </div>
+                  <div className="flex justify-between text-base">
+                    <span>Annual Benefit:</span>
+                    <span className="font-bold text-green-600">${results.tierComparison?.tier2?.annualBenefit?.toLocaleString() || '8,200'}/yr</span>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-blue-100 rounded-lg text-center">
+                  <div className="text-xs text-blue-700">Best if you have capital & want max ROI</div>
+                </div>
+              </div>
+
+              {/* Tier 3 - EaaS */}
+              <div className="p-5 bg-green-50 rounded-xl border-2 border-green-300">
+                <div className="text-center mb-4">
+                  <h4 className="text-lg font-bold text-green-800">📋 Tier 3: EaaS LEASE</h4>
+                  <p className="text-sm text-green-600">Zero upfront, hassle-free</p>
+                </div>
+                <div className="space-y-3 text-sm">
+                  <div className="flex justify-between">
+                    <span>Upfront Cost:</span>
+                    <span className="font-bold text-green-600">$0</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Monthly Payment:</span>
+                    <span className="font-bold">${results.tierComparison?.tier3?.monthlyPayment?.toLocaleString() || '350'}/mo</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Annual Maintenance:</span>
+                    <span className="font-bold text-green-600">$0 (included)</span>
+                  </div>
+                  <div className="flex justify-between">
+                    <span>Major Repairs:</span>
+                    <span className="font-bold text-green-600">$0 (covered)</span>
+                  </div>
+                  <hr className="border-green-300" />
+                  <div className="flex justify-between text-base">
+                    <span>You Keep:</span>
+                    <span className="font-bold text-green-600">~10% of savings</span>
+                  </div>
+                  <div className="flex justify-between text-base">
+                    <span>Annual Benefit:</span>
+                    <span className="font-bold text-green-600">${results.tierComparison?.tier3?.annualBenefit?.toLocaleString() || '820'}/yr</span>
+                  </div>
+                </div>
+                <div className="mt-4 p-3 bg-green-100 rounded-lg text-center">
+                  <div className="text-xs text-green-700">Best if you want $0 down & no hassle</div>
+                </div>
+              </div>
+            </div>
+            
+            {/* Summary */}
+            <div className="mt-6 p-4 bg-gray-100 rounded-lg">
+              <div className="text-center text-sm text-gray-700">
+                <strong>Bottom line:</strong> Own keeps 100% of ~${results.annualSavings?.toLocaleString()}/yr savings. 
+                EaaS = $0 down, no maintenance worries, immediate savings day 1.
               </div>
             </div>
           </CardContent>
