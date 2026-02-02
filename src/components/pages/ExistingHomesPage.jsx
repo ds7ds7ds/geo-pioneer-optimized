@@ -509,12 +509,42 @@ const ExistingHomesPage = () => {
                 </button>
               </div>
               
-              <div className="space-y-4">
+              <form 
+                name="site-review"
+                method="POST"
+                data-netlify="true"
+                data-netlify-honeypot="bot-field"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const form = e.target
+                  const formData = new FormData(form)
+                  fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(formData).toString()
+                  })
+                  .then(res => {
+                    if (res.ok) {
+                      alert('Thank you! We\'ll contact you within 24 hours to schedule your Free Site Review.')
+                      setShowAssessment(false)
+                      form.reset()
+                    } else {
+                      alert('Error submitting form. Please call us at (781) 654-5879')
+                    }
+                  })
+                  .catch(() => alert('Error submitting form. Please call us at (781) 654-5879'))
+                }}
+                className="space-y-4"
+              >
+                <input type="hidden" name="form-name" value="site-review" />
+                <input type="hidden" name="bot-field" />
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                     <input 
-                      type="text" 
+                      type="text"
+                      name="name"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="Your full name"
                     />
@@ -522,7 +552,9 @@ const ExistingHomesPage = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                     <input 
-                      type="email" 
+                      type="email"
+                      name="email"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="your@email.com"
                     />
@@ -533,14 +565,16 @@ const ExistingHomesPage = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
                     <input 
-                      type="tel" 
+                      type="tel"
+                      name="phone"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="(555) 555-5555"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Current Heating</label>
-                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
+                    <select name="currentHeating" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none">
                       <option value="">Select heating type</option>
                       <option value="oil">Oil</option>
                       <option value="propane">Propane</option>
@@ -554,7 +588,8 @@ const ExistingHomesPage = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Home Size (sq ft)</label>
                     <input 
-                      type="number" 
+                      type="number"
+                      name="homeSize"
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="2500"
                     />
@@ -562,7 +597,8 @@ const ExistingHomesPage = () => {
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Town/City</label>
                     <input 
-                      type="text" 
+                      type="text"
+                      name="city"
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none"
                       placeholder="Lexington"
                     />
@@ -572,6 +608,7 @@ const ExistingHomesPage = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Additional Notes</label>
                   <textarea 
+                    name="notes"
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-blue-500 outline-none resize-none"
                     rows="3"
                     placeholder="Tell us about your home, current issues, or questions..."
@@ -591,15 +628,13 @@ const ExistingHomesPage = () => {
                 
                 <div className="flex gap-4 pt-4">
                   <Button 
+                    type="submit"
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3"
-                    onClick={() => {
-                      alert('Thank you! We\'ll contact you within 24 hours to schedule your Free Site Review.')
-                      setShowAssessment(false)
-                    }}
                   >
                     Submit Request
                   </Button>
                   <Button 
+                    type="button"
                     variant="outline" 
                     className="flex-1 py-3"
                     onClick={() => setShowAssessment(false)}
@@ -607,7 +642,7 @@ const ExistingHomesPage = () => {
                     Cancel
                   </Button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>

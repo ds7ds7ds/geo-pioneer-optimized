@@ -432,28 +432,34 @@ const HomePage = () => {
               </div>
               
               <form 
-                name="site-review" 
-                method="POST" 
+                name="site-review"
+                method="POST"
                 data-netlify="true"
-                netlify-honeypot="bot-field"
+                data-netlify-honeypot="bot-field"
                 onSubmit={(e) => {
                   e.preventDefault()
                   const form = e.target
+                  const formData = new FormData(form)
                   fetch('/', {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                    body: new URLSearchParams(new FormData(form)).toString()
+                    body: new URLSearchParams(formData).toString()
                   })
-                  .then(() => {
-                    alert('Thank you! We\'ll contact you within 24 hours.')
-                    setShowAssessment(false)
+                  .then(res => {
+                    if (res.ok) {
+                      alert('Thank you! We\'ll contact you within 24 hours.')
+                      setShowAssessment(false)
+                      form.reset()
+                    } else {
+                      alert('Error submitting form. Please call us at (781) 654-5879')
+                    }
                   })
                   .catch(() => alert('Error submitting form. Please call us at (781) 654-5879'))
                 }}
                 className="space-y-4"
               >
                 <input type="hidden" name="form-name" value="site-review" />
-                <p className="hidden"><input name="bot-field" /></p>
+                <input type="hidden" name="bot-field" />
                 
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
