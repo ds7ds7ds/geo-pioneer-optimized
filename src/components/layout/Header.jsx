@@ -36,8 +36,8 @@ const Header = () => {
                 alt="GeoPioneer" 
                 className="h-10 w-auto"
               />
-              <span className="text-xl font-bold hidden sm:block">
-                <span className="text-green-600">Geo</span><span className="text-blue-600">Pioneer</span>
+              <span className="text-xl font-bold hidden sm:block bg-gradient-to-r from-green-500 via-cyan-500 to-blue-600 bg-clip-text text-transparent">
+                GeoPioneer
               </span>
             </Link>
           </div>
