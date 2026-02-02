@@ -1207,6 +1207,70 @@ const CalculatorPage = () => {
 
 
 
+            {/* Submit Button */}
+            <div className="text-center mb-6">
+              <Button 
+                size="lg"
+                onClick={async () => {
+                  // Validate required fields
+                  if (!calculatorData.name || !calculatorData.email || !calculatorData.phone) {
+                    alert('Please fill in your name, email, and phone number.')
+                    return
+                  }
+                  
+                  // Prepare form data
+                  const formData = {
+                    'form-name': 'calculator-assessment',
+                    name: calculatorData.name,
+                    email: calculatorData.email,
+                    phone: calculatorData.phone,
+                    address: assessmentData.propertyAddress,
+                    squareFootage: calculatorData.squareFootage,
+                    heatingFuel: calculatorData.heatingFuel,
+                    annualHeatingCost: calculatorData.annualHeatingCost,
+                    annualElectricityCost: calculatorData.annualElectricityCost,
+                    zipCode: calculatorData.zipCode,
+                    assessmentType: assessmentData.assessmentType,
+                    timeframe: assessmentData.timeframe,
+                    additionalInfo: assessmentData.additionalInfo,
+                    calculationResults: JSON.stringify(results),
+                    projectType: activeTab
+                  }
+                  
+                  try {
+                    const response = await fetch('/', {
+                      method: 'POST',
+                      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                      body: new URLSearchParams(formData).toString()
+                    })
+                    
+                    if (response.ok) {
+                      alert(`Thank you ${calculatorData.name}! 
+
+Your Free Site Review request has been submitted.
+
+Summary:
+✅ Annual Savings: $${Math.round(results?.annualSavings || 0).toLocaleString()}/year
+✅ 25-Year Savings: $${Math.round(results?.twentyFiveYearSavings || 0).toLocaleString()}
+✅ Payback Period: ${results?.paybackYears?.toFixed(1) || 'N/A'} years
+
+We'll contact you within 24 hours to schedule your ${assessmentData.assessmentType === 'full' ? 'on-site evaluation' : 'consultation call'}.
+
+Questions? Call us at (781) 654-5879`)
+                    } else {
+                      alert('There was an issue. Please try again or call (781) 654-5879.')
+                    }
+                  } catch (error) {
+                    console.error('Submission error:', error)
+                    alert('There was an issue. Please call (781) 654-5879.')
+                  }
+                }}
+                className="bg-gradient-to-r from-cyan-500 to-blue-500 hover:from-cyan-600 hover:to-blue-600 text-white px-12 py-4 text-lg"
+              >
+                🏠 Submit Free Site Review Request
+              </Button>
+            </div>
+
             {/* Trust Indicators */}
             <div className="mt-6 pt-6 border-t border-cyan-200">
               <div className="grid grid-cols-3 gap-4 text-center">
@@ -1307,131 +1371,6 @@ const CalculatorPage = () => {
                 Your Geothermal Savings Report
               </h2>
               {renderResults()}
-              
-              {/* Simple Assessment Form */}
-              <Card className="mt-8 bg-gradient-to-br from-green-50 to-blue-50 border-green-200">
-                <CardHeader className="text-center">
-                  <CardTitle className="text-xl text-green-800">Get Your Detailed Assessment Report</CardTitle>
-                  <CardDescription className="text-green-700">
-                    Download a comprehensive PDF report with your calculations and next steps
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                    <div>
-                      <Label htmlFor="reportName">Full Name *</Label>
-                      <Input
-                        id="reportName"
-                        placeholder="Your full name"
-                        value={assessmentData.name}
-                        onChange={(e) => handleAssessmentChange('name', e.target.value)}
-                        className="border-green-200 focus:border-green-400"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="reportEmail">Email Address *</Label>
-                      <Input
-                        id="reportEmail"
-                        type="email"
-                        placeholder="your.email@example.com"
-                        value={assessmentData.email}
-                        onChange={(e) => handleAssessmentChange('email', e.target.value)}
-                        className="border-green-200 focus:border-green-400"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="grid md:grid-cols-2 gap-4 mb-6">
-                    <div>
-                      <Label htmlFor="reportPhone">Phone Number *</Label>
-                      <Input
-                        id="reportPhone"
-                        placeholder="(781) 654-5879"
-                        value={assessmentData.phone}
-                        onChange={(e) => handleAssessmentChange('phone', e.target.value)}
-                        className="border-green-200 focus:border-green-400"
-                      />
-                    </div>
-                    <div>
-                      <Label htmlFor="reportAddress">Property Address</Label>
-                      <Input
-                        id="reportAddress"
-                        placeholder="123 Main St, City, State"
-                        value={assessmentData.address}
-                        onChange={(e) => handleAssessmentChange('address', e.target.value)}
-                        className="border-green-200 focus:border-green-400"
-                      />
-                    </div>
-                  </div>
-                  
-                  <div className="text-center">
-                    <Button 
-                      size="lg"
-                      onClick={async () => {
-                        // Validate required fields
-                        if (!assessmentData.name || !assessmentData.email || !assessmentData.phone) {
-                          alert('Please fill in your name, email, and phone number to generate the report.')
-                          return
-                        }
-                        
-                        // Prepare form data
-                        const formData = {
-                          'form-name': 'calculator-assessment',
-                          name: assessmentData.name,
-                          email: assessmentData.email,
-                          phone: assessmentData.phone,
-                          address: assessmentData.address,
-                          squareFootage: calculatorData.squareFootage,
-                          heatingFuel: calculatorData.heatingFuel,
-                          annualHeatingCost: calculatorData.annualHeatingCost,
-                          annualElectricityCost: calculatorData.annualElectricityCost,
-                          zipCode: calculatorData.zipCode,
-                          calculationResults: JSON.stringify(results),
-                          submissionDate: new Date().toLocaleDateString(),
-                          submissionTime: new Date().toLocaleTimeString(),
-                          assessmentType: 'Calculator Assessment'
-                        }
-                        
-                        // Submit to Netlify Forms first
-                        try {
-                          const netlifyResponse = await fetch('/', {
-                            method: 'POST',
-                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
-                            body: new URLSearchParams(formData).toString()
-                          })
-                          
-                          if (netlifyResponse.ok) {
-                            alert(`Thank you ${formData.name}! 
-
-Your assessment request has been submitted successfully.
-
-Summary:
-✅ Annual Savings: $${Math.round(results?.annualSavings || 0).toLocaleString()}/year
-✅ 25-Year Savings: $${Math.round(results?.twentyFiveYearSavings || 0).toLocaleString()}
-✅ Payback Period: ${results?.paybackYears?.toFixed(1) || 'N/A'} years
-
-We'll contact you within 24 hours to schedule your Free Site Review.
-
-Questions? Call us at (781) 654-5879`)
-                          } else {
-                            alert('There was an issue submitting your request. Please try again or call us at (781) 654-5879.')
-                          }
-                        } catch (error) {
-                          console.error('Form submission error:', error)
-                          alert('There was an issue submitting your request. Please call us at (781) 654-5879.')
-                        }
-                      }}
-                      className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
-                    >
-                      📄 Generate Report & Submit Assessment
-                    </Button>
-                  </div>
-                  
-                  <div className="mt-4 text-center text-sm text-gray-600">
-                    <p>Your report will include detailed savings calculations, available rebates, and installation timeline.</p>
-                  </div>
-                </CardContent>
-              </Card>
             </div>
           )}
         </div>
