@@ -559,7 +559,7 @@ const CalculatorPage = () => {
     const tier2TenYearBenefit = (annualSavings * 10) - tier2TenYearCost
     
     // Tier 3 (EaaS) - lease model
-    const eaasMonthlyPayment = Math.round((annualSavings * 0.90) / 21) // 90% of savings over 21 months
+    const eaasMonthlyPayment = Math.round((annualSavings * 0.90) / 12) // 90% of savings over 12 months
     const eaasYouKeep = Math.round(annualSavings * 0.10) // You keep 10% of savings
     const eaasTenYearPayments = eaasMonthlyPayment * 12 * 10 // If payments continue
     const eaasNoMaintenance = tier2Maintenance * 10 // Savings from no maintenance
