@@ -512,21 +512,39 @@ const CalculatorPage = () => {
     // Energy reduction percentage
     const energyReduction = Math.round((1 - efficiencyFactor) * 100)
 
-    // System costs (estimates)
-    const systemCostBase = sqft * 25 // $25 per sq ft base cost
+    // System costs - Tier 2 Full Ownership (realistic pricing)
+    // Drilling: $30K, Geothermal: $25K, Solar: $35K, Battery: $15K = $105K total
+    const drillingCost = 30000
+    const geothermalEquipment = 25000
+    const solarCost = 35000
+    const batteryCost = 15000
+    const systemCostBase = drillingCost + geothermalEquipment + solarCost + batteryCost // $105K
+    
     const massSaveRebate = 13500 // 2026 MassSave whole-home GSHP rebate
-    const federalTaxCredit = systemCostBase * 0.30
+    const federalTaxCredit = systemCostBase * 0.30 // 30% ITC on full system
     const netSystemCost = systemCostBase - massSaveRebate - federalTaxCredit
 
     // Payback period
     const paybackYears = netSystemCost / annualSavings
 
-    // CAPEX Comparison Data
+    // CAPEX Comparison Data - Tier 2 Full System vs Alternatives
     const capexComparison = {
-      'Geothermal': Math.round(netSystemCost),
-      'Propane + AC': activeTab === 'new-construction' ? 48000 : Math.round(sqft * 12),
-      'ASHP': activeTab === 'new-construction' ? 60000 : Math.round(sqft * 15),
-      'Natural Gas + AC': Math.round(sqft * 10)
+      'Geo+Solar+Battery': Math.round(netSystemCost),
+      'Generator Backup': 10000, // $5K generator + $5K install
+      'Propane + AC': 25000,
+      'ASHP Only': 35000
+    }
+    
+    // Tier breakdown for display
+    const tierBreakdown = {
+      drilling: drillingCost,
+      geothermal: geothermalEquipment,
+      solar: solarCost,
+      battery: batteryCost,
+      totalGross: systemCostBase,
+      massSaveRebate: massSaveRebate,
+      federalITC: Math.round(federalTaxCredit),
+      netCost: Math.round(netSystemCost)
     }
 
     // ROI Chart Data
@@ -599,7 +617,8 @@ const CalculatorPage = () => {
       newConstructionComparison,
       capexComparison,
       roiData,
-      lifetimeCostData
+      lifetimeCostData,
+      tierBreakdown
     })
     setShowResults(true)
   }
@@ -883,33 +902,70 @@ const CalculatorPage = () => {
           </Card>
         </div>
 
-        {/* System Cost Breakdown */}
+        {/* System Cost Breakdown - Tier 2 Full Ownership */}
         <Card>
           <CardHeader>
-            <CardTitle>System Cost & Incentives</CardTitle>
+            <CardTitle>Tier 2: Full System Ownership</CardTitle>
+            <CardDescription>Complete Geo + Solar + Battery Package</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
-              <div className="flex justify-between">
-                <span>Base System Cost:</span>
-                <span className="font-semibold">${results.systemCostBase.toLocaleString()}</span>
+              {/* Component Breakdown */}
+              <div className="bg-gray-50 p-4 rounded-lg space-y-2">
+                <div className="text-sm font-semibold text-gray-700 mb-2">System Components:</div>
+                <div className="flex justify-between text-sm">
+                  <span>🔧 Drilling (Ground Loop):</span>
+                  <span className="font-medium">${results.tierBreakdown?.drilling?.toLocaleString() || '30,000'}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>🌡️ Geothermal Heat Pump:</span>
+                  <span className="font-medium">${results.tierBreakdown?.geothermal?.toLocaleString() || '25,000'}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>☀️ Solar Panels:</span>
+                  <span className="font-medium">${results.tierBreakdown?.solar?.toLocaleString() || '35,000'}</span>
+                </div>
+                <div className="flex justify-between text-sm">
+                  <span>🔋 Battery Storage:</span>
+                  <span className="font-medium">${results.tierBreakdown?.battery?.toLocaleString() || '15,000'}</span>
+                </div>
+                <hr className="my-2" />
+                <div className="flex justify-between font-semibold">
+                  <span>Total System Cost:</span>
+                  <span>${results.systemCostBase.toLocaleString()}</span>
+                </div>
               </div>
-              <div className="flex justify-between text-green-600">
-                <span>MassSave Rebate:</span>
-                <span className="font-semibold">-${results.massSaveRebate.toLocaleString()}</span>
+              
+              {/* Incentives */}
+              <div className="space-y-2 pt-2">
+                <div className="flex justify-between text-green-600">
+                  <span>MassSave Rebate:</span>
+                  <span className="font-semibold">-${results.massSaveRebate.toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between text-green-600">
+                  <span>Federal Tax Credit (30%):</span>
+                  <span className="font-semibold">-${Math.round(results.federalTaxCredit).toLocaleString()}</span>
+                </div>
               </div>
-              <div className="flex justify-between text-green-600">
-                <span>Federal Tax Credit (30%):</span>
-                <span className="font-semibold">-${Math.round(results.federalTaxCredit).toLocaleString()}</span>
-              </div>
+              
               <hr />
-              <div className="flex justify-between text-lg font-bold">
-                <span>Net System Cost:</span>
+              <div className="flex justify-between text-xl font-bold text-blue-700">
+                <span>Your Net Cost:</span>
                 <span>${Math.round(results.netSystemCost).toLocaleString()}</span>
               </div>
               <div className="flex justify-between text-sm text-gray-600">
                 <span>Payback Period:</span>
-                <span>{results.paybackYears.toFixed(1)} years</span>
+                <span className="font-semibold">{results.paybackYears.toFixed(1)} years</span>
+              </div>
+              
+              {/* Comparison vs Generator */}
+              <div className="mt-4 p-3 bg-amber-50 rounded-lg border border-amber-200">
+                <div className="text-sm font-medium text-amber-800">
+                  Compare: Generator Backup = $10,000 ($5K unit + $5K install)
+                </div>
+                <div className="text-xs text-amber-700 mt-1">
+                  Generator provides backup only. Geo+Solar eliminates energy bills entirely.
+                </div>
               </div>
             </div>
           </CardContent>
