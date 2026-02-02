@@ -12,7 +12,6 @@ const ImageCarousel = () => {
   const images = [
     { src: '/geo-aerial-boston.jpg', caption: 'GeoPioneer Installation - Greater Boston' },
     { src: '/geo-drilling-closeup.jpg', caption: 'Vertical Bore Drilling in Progress' },
-    { src: '/geo-indoor-unit.jpg', caption: 'ClimateMaster Heat Pump Installation' },
     { src: '/geo-cedar-house.jpg', caption: 'Solar + Geothermal NetZero Home' },
     { src: '/1_PERFORATRICE-COMACCHIO-GEO-601-1-1024x771.jpg', caption: 'Comacchio GEO 601 Drilling Rig' }
   ]
@@ -119,9 +118,9 @@ const HomePage = () => {
               <Badge className="mb-6 bg-cyan-500/20 text-cyan-400 border-cyan-400/30 text-sm px-4 py-1">
                 Massachusetts Geothermal Pioneers
               </Badge>
-              <h1 className="text-4xl lg:text-5xl xl:text-6xl font-bold mb-4">
+              <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 leading-tight">
                 Set the temperature.
-                <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent block mt-2">Forget the bills.</span>
+                <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent block mt-1">Forget the bills.</span>
               </h1>
               <p className="text-xl text-cyan-200 mb-4 font-medium">
                 Net-zero homes designed for full comfort and predictable costs.
