@@ -1273,11 +1273,7 @@ Questions? Call us at (781) 654-5879`)
 
             {/* Trust Indicators */}
             <div className="mt-6 pt-6 border-t border-cyan-200">
-              <div className="grid grid-cols-3 gap-4 text-center">
-                <div>
-                  <div className="text-2xl font-bold text-cyan-600">500+</div>
-                  <div className="text-xs text-gray-600">Homes Assessed</div>
-                </div>
+              <div className="grid grid-cols-2 gap-4 text-center max-w-md mx-auto">
                 <div>
                   <div className="text-2xl font-bold text-cyan-600">15+</div>
                   <div className="text-xs text-gray-600">Years Experience</div>
