@@ -110,7 +110,7 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Methods */}
-      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-7xl mx-auto">
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-16">
             {contactMethods.map((method, index) => (
@@ -178,7 +178,7 @@ const ContactPage = () => {
       </section>
 
       {/* Contact Form */}
-      <section id="contact-form" className="py-16 px-4 sm:px-6 lg:px-8 bg-white">
+      <section id="contact-form" className="py-16 px-4 sm:px-6 lg:px-8 bg-slate-50">
         <div className="max-w-4xl mx-auto">
           <div className="text-center mb-12">
             <h2 className="text-3xl font-bold text-gray-900 mb-4">Get Your Free Consultation</h2>
