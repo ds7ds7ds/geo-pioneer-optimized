@@ -7,6 +7,38 @@
     <title>GeoPioneer | Massachusetts Geothermal Pioneers | Clean Energy Solutions</title>
   </head>
   <body>
+    <!-- Netlify Forms - Hidden for detection -->
+    <form name="site-review" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="propertyType" />
+      <input type="text" name="address" />
+      <textarea name="message"></textarea>
+    </form>
+    
+    <form name="contact" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="address" />
+      <input type="text" name="projectType" />
+      <input type="text" name="homeSize" />
+      <input type="text" name="currentHeating" />
+      <textarea name="message"></textarea>
+    </form>
+    
+    <form name="builder-quote" netlify netlify-honeypot="bot-field" hidden>
+      <input type="text" name="name" />
+      <input type="text" name="company" />
+      <input type="email" name="email" />
+      <input type="tel" name="phone" />
+      <input type="text" name="homeSize" />
+      <input type="text" name="timeline" />
+      <input type="text" name="location" />
+      <textarea name="details"></textarea>
+    </form>
+
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>

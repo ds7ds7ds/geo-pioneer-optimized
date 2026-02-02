@@ -31,9 +31,21 @@ const ContactPage = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault()
-    // Handle form submission
-    console.log('Form submitted:', formData)
-    alert('Thank you for your inquiry! We will contact you within 24 hours.')
+    const form = e.target
+    fetch('/', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+      body: new URLSearchParams(new FormData(form)).toString()
+    })
+    .then(() => {
+      alert('Thank you for your inquiry! We will contact you within 24 hours.')
+      setFormData({
+        name: '', email: '', phone: '', address: '',
+        projectType: '', homeSize: '', currentHeating: '',
+        message: '', preferredContact: ''
+      })
+    })
+    .catch(() => alert('Error submitting form. Please call us at (781) 654-5879'))
   }
 
   const contactMethods = [
@@ -198,7 +210,16 @@ const ContactPage = () => {
               </CardDescription>
             </CardHeader>
             <CardContent>
-              <form onSubmit={handleSubmit} className="space-y-6">
+              <form 
+                name="contact" 
+                method="POST" 
+                data-netlify="true" 
+                netlify-honeypot="bot-field"
+                onSubmit={handleSubmit} 
+                className="space-y-6"
+              >
+                <input type="hidden" name="form-name" value="contact" />
+                <p className="hidden"><input name="bot-field" /></p>
                 {/* Personal Information */}
                 <div className="grid md:grid-cols-2 gap-6">
                   <div>

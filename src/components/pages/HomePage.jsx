@@ -431,12 +431,37 @@ const HomePage = () => {
                 </button>
               </div>
               
-              <div className="space-y-4">
+              <form 
+                name="site-review" 
+                method="POST" 
+                data-netlify="true"
+                netlify-honeypot="bot-field"
+                onSubmit={(e) => {
+                  e.preventDefault()
+                  const form = e.target
+                  fetch('/', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                    body: new URLSearchParams(new FormData(form)).toString()
+                  })
+                  .then(() => {
+                    alert('Thank you! We\'ll contact you within 24 hours.')
+                    setShowAssessment(false)
+                  })
+                  .catch(() => alert('Error submitting form. Please call us at (781) 654-5879'))
+                }}
+                className="space-y-4"
+              >
+                <input type="hidden" name="form-name" value="site-review" />
+                <p className="hidden"><input name="bot-field" /></p>
+                
                 <div className="grid md:grid-cols-2 gap-4">
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Name *</label>
                     <input 
                       type="text" 
+                      name="name"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                       placeholder="Your full name"
                     />
@@ -445,6 +470,8 @@ const HomePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Email *</label>
                     <input 
                       type="email" 
+                      name="email"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                       placeholder="your@email.com"
                     />
@@ -456,13 +483,15 @@ const HomePage = () => {
                     <label className="block text-sm font-medium text-gray-700 mb-1">Phone *</label>
                     <input 
                       type="tel" 
+                      name="phone"
+                      required
                       className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                       placeholder="(555) 555-5555"
                     />
                   </div>
                   <div>
                     <label className="block text-sm font-medium text-gray-700 mb-1">Property Type</label>
-                    <select className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
+                    <select name="propertyType" className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none">
                       <option value="">Select type</option>
                       <option value="existing">Existing Home</option>
                       <option value="new">New Construction</option>
@@ -474,6 +503,7 @@ const HomePage = () => {
                   <label className="block text-sm font-medium text-gray-700 mb-1">Address</label>
                   <input 
                     type="text" 
+                    name="address"
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none"
                     placeholder="City, State"
                   />
@@ -482,6 +512,7 @@ const HomePage = () => {
                 <div>
                   <label className="block text-sm font-medium text-gray-700 mb-1">Questions or Comments</label>
                   <textarea 
+                    name="message"
                     className="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500 outline-none resize-none"
                     rows="3"
                     placeholder="Tell us about your project..."
@@ -490,15 +521,13 @@ const HomePage = () => {
                 
                 <div className="flex gap-4 pt-4">
                   <Button 
+                    type="submit"
                     className="flex-1 bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white py-3 font-semibold"
-                    onClick={() => {
-                      alert('Thank you! We\'ll contact you within 24 hours.')
-                      setShowAssessment(false)
-                    }}
                   >
                     Submit Request
                   </Button>
                   <Button 
+                    type="button"
                     variant="outline" 
                     className="flex-1 py-3"
                     onClick={() => setShowAssessment(false)}
@@ -506,7 +535,7 @@ const HomePage = () => {
                     Cancel
                   </Button>
                 </div>
-              </div>
+              </form>
             </div>
           </div>
         </div>
