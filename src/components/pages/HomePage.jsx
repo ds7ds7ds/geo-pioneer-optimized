@@ -420,7 +420,7 @@ const HomePage = () => {
             <div className="p-6 lg:p-8">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Get Your Free Assessment</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">Get Your Free Site Review</h2>
                   <p className="text-gray-600">We'll contact you within 24 hours</p>
                 </div>
                 <button 

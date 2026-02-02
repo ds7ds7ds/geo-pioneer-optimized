@@ -71,7 +71,7 @@ const Header = () => {
             >
               <Link to="/calculator">
                 <Calculator className="h-4 w-4 mr-2" />
-                Calculate Savings
+                See Estimated Savings
               </Link>
             </Button>
             <Button
@@ -127,7 +127,7 @@ const Header = () => {
                 >
                   <Link to="/calculator" onClick={() => setIsMenuOpen(false)}>
                     <Calculator className="h-4 w-4 mr-2" />
-                    Calculate Savings
+                    See Estimated Savings
                   </Link>
                 </Button>
                 <Button

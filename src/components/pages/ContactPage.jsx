@@ -65,7 +65,7 @@ const ContactPage = () => {
 
   const quickActions = [
     {
-      title: "Calculate Savings",
+      title: "See Estimated Savings",
       description: "Get instant estimates for your home",
       icon: <Calculator className="h-8 w-8 text-blue-600" />,
       action: "calculator",

@@ -137,7 +137,7 @@ const ExistingHomesPage = () => {
                   className="bg-gradient-to-r from-blue-500 to-cyan-500 hover:from-blue-600 hover:to-cyan-600 text-white px-8 py-4 text-lg"
                   onClick={() => setShowAssessment(true)}
                 >
-                  Get Free Assessment
+                  Get Free Site Review
                   <ArrowRight className="h-5 w-5 ml-2" />
                 </Button>
                 <Link to="/calculator">
@@ -145,7 +145,7 @@ const ExistingHomesPage = () => {
                     size="lg" 
                     className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 text-lg font-semibold shadow-lg"
                   >
-                    Calculate Savings
+                    See Estimated Savings
                   </Button>
                 </Link>
               </div>
@@ -467,7 +467,7 @@ const ExistingHomesPage = () => {
             Ready to Transform Your Home's Energy?
           </h2>
           <p className="text-xl text-blue-100 mb-8">
-            Get a free assessment and discover how much you can save with geothermal
+            Get a Free Site Review and discover how much you can save with geothermal
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -475,7 +475,7 @@ const ExistingHomesPage = () => {
               className="bg-white text-blue-600 hover:bg-gray-100 px-8 py-4 text-lg font-bold"
               onClick={() => setShowAssessment(true)}
             >
-              Get Free Assessment
+              Get Free Site Review
               <ArrowRight className="h-5 w-5 ml-2" />
             </Button>
             <a href="tel:+17816545879">
@@ -498,7 +498,7 @@ const ExistingHomesPage = () => {
             <div className="p-6 lg:p-8">
               <div className="flex justify-between items-center mb-6">
                 <div>
-                  <h2 className="text-2xl font-bold text-gray-900">Get Your Free Assessment</h2>
+                  <h2 className="text-2xl font-bold text-gray-900">Get Your Free Site Review</h2>
                   <p className="text-gray-600">Existing home retrofit evaluation</p>
                 </div>
                 <button 
@@ -593,7 +593,7 @@ const ExistingHomesPage = () => {
                   <Button 
                     className="flex-1 bg-blue-600 hover:bg-blue-700 text-white py-3"
                     onClick={() => {
-                      alert('Thank you! We\'ll contact you within 24 hours to schedule your free assessment.')
+                      alert('Thank you! We\'ll contact you within 24 hours to schedule your Free Site Review.')
                       setShowAssessment(false)
                     }}
                   >

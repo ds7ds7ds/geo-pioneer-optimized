@@ -503,7 +503,7 @@ const CalculatorPage = () => {
     const geothermalAnnualKWh = estimatedAnnualKWh * efficiencyFactor
     const geothermalAnnualCost = geothermalAnnualKWh * energyPrices.electricity
 
-    // Calculate savings
+    // See Estimated Savings
     const annualSavings = currentAnnualCost - geothermalAnnualCost
     const monthlySavings = annualSavings / 12
     const tenYearSavings = annualSavings * 10
@@ -656,7 +656,7 @@ const CalculatorPage = () => {
     console.log('Assessment Request:', assessmentRequest)
     
     // Show success message
-    alert(`Thank you ${calculatorData.name}! Your free assessment request has been submitted. We'll contact you within 24 hours to schedule your ${assessmentData.assessmentType === 'full' ? 'comprehensive site assessment' : 'consultation call'}.`)
+    alert(`Thank you ${calculatorData.name}! Your Free Site Review request has been submitted. We'll contact you within 24 hours to schedule your ${assessmentData.assessmentType === 'full' ? 'comprehensive site assessment' : 'consultation call'}.`)
   }
 
   const handleDownloadReport = () => {
@@ -1008,10 +1008,10 @@ const CalculatorPage = () => {
           </div>
         </div>
 
-        {/* Free Assessment Section */}
+        {/* Free Site Review Section */}
         <Card className="bg-gradient-to-br from-cyan-50 to-blue-50 border-cyan-200">
           <CardHeader className="text-center">
-            <CardTitle className="text-2xl text-cyan-800">Get Your Free Assessment</CardTitle>
+            <CardTitle className="text-2xl text-cyan-800">Get Your Free Site Review</CardTitle>
             <CardDescription className="text-cyan-700">
               Receive a comprehensive site evaluation and personalized geothermal plan for your {activeTab === 'existing' ? 'existing home' : 'new construction project'}
             </CardDescription>
@@ -1220,7 +1220,7 @@ const CalculatorPage = () => {
                 </div>
                 <div>
                   <div className="text-2xl font-bold text-cyan-600">100%</div>
-                  <div className="text-xs text-gray-600">Free Assessment</div>
+                  <div className="text-xs text-gray-600">Free Site Review</div>
                 </div>
               </div>
             </div>
@@ -1271,7 +1271,7 @@ const CalculatorPage = () => {
                     Existing Home Renovation Calculator
                   </CardTitle>
                   <CardDescription>
-                    Calculate savings from retrofitting your existing home with geothermal
+                    See Estimated Savings from retrofitting your existing home with geothermal
                   </CardDescription>
                 </CardHeader>
                 <CardContent>

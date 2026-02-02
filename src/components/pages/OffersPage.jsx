@@ -146,7 +146,7 @@ const OffersPage = () => {
     },
     {
       question: "What are the requirements for these programs?",
-      answer: "Your home should be 2,000+ square feet, built before 2005, have central air conditioning, and currently heat with oil, propane, electric, or baseboard systems. You should also own your home and have a suitable outdoor location for equipment. We'll verify eligibility during your free assessment."
+      answer: "Your home should be 2,000+ square feet, built before 2005, have central air conditioning, and currently heat with oil, propane, electric, or baseboard systems. You should also own your home and have a suitable outdoor location for equipment. We'll verify eligibility during your Free Site Review."
     },
     {
       question: "Can I upgrade from Tier 1 to Tier 2 later?",
@@ -397,7 +397,7 @@ const OffersPage = () => {
 
                 <Link to="/calculator" className="block mt-6">
                   <Button className="w-full bg-white text-blue-700 hover:bg-blue-50 font-bold">
-                    Calculate Savings
+                    See Estimated Savings
                     <ArrowRight className="h-4 w-4 ml-2" />
                   </Button>
                 </Link>
@@ -651,7 +651,7 @@ const OffersPage = () => {
             <Link to="/contact">
               <Button size="lg" className="bg-white text-blue-700 hover:bg-gray-100 px-8 py-4 text-lg font-bold">
                 <Battery className="h-5 w-5 mr-2" />
-                Get Free Assessment
+                Get Free Site Review
               </Button>
             </Link>
             <a href="tel:+17816545879">

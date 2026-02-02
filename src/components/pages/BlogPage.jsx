@@ -189,7 +189,7 @@ const BlogPage = () => {
             Ready to Transform Your Home with Geothermal?
           </h2>
           <p className="text-xl text-green-100 mb-8 max-w-2xl mx-auto">
-            Get a free assessment and discover how much you can save with Massachusetts' most efficient heating and cooling solution
+            Get a Free Site Review and discover how much you can save with Massachusetts' most efficient heating and cooling solution
           </p>
           <div className="flex gap-4 justify-center flex-wrap">
             <Link to="/calculator">
