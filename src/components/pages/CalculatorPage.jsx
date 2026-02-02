@@ -1376,49 +1376,49 @@ const CalculatorPage = () => {
                         
                         // Prepare form data
                         const formData = {
+                          'form-name': 'calculator-assessment',
                           name: assessmentData.name,
                           email: assessmentData.email,
                           phone: assessmentData.phone,
                           address: assessmentData.address,
-                          squareFootage: formState.squareFootage,
-                          heatingFuel: formState.heatingFuel,
-                          annualHeatingCost: formState.annualHeatingCost,
-                          annualElectricityCost: formState.annualElectricityCost,
-                          zipCode: formState.zipCode,
-                          calculationResults: results,
+                          squareFootage: calculatorData.squareFootage,
+                          heatingFuel: calculatorData.heatingFuel,
+                          annualHeatingCost: calculatorData.annualHeatingCost,
+                          annualElectricityCost: calculatorData.annualElectricityCost,
+                          zipCode: calculatorData.zipCode,
+                          calculationResults: JSON.stringify(results),
                           submissionDate: new Date().toLocaleDateString(),
                           submissionTime: new Date().toLocaleTimeString(),
                           assessmentType: 'Calculator Assessment'
                         }
                         
-                        // Generate and download PDF report
+                        // Submit to Netlify Forms first
                         try {
-                          const { generateAndSendReport } = await import('../../services/reportService.js')
-                          const result = await generateAndSendReport(formData, 'calculator')
+                          const netlifyResponse = await fetch('/', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                            body: new URLSearchParams(formData).toString()
+                          })
                           
-                          if (result.success) {
+                          if (netlifyResponse.ok) {
                             alert(`Thank you ${formData.name}! 
 
-Your comprehensive savings assessment report has been generated and downloaded.
+Your assessment request has been submitted successfully.
 
-Report ID: ${result.reportId}
+Summary:
+✅ Annual Savings: $${Math.round(results?.annualSavings || 0).toLocaleString()}/year
+✅ 25-Year Savings: $${Math.round(results?.twentyFiveYearSavings || 0).toLocaleString()}
+✅ Payback Period: ${results?.paybackYears?.toFixed(1) || 'N/A'} years
 
-The report includes:
-✅ Your calculated savings: $${results?.annualSavings?.toLocaleString() || '0'}/year
-✅ ROI analysis and break-even timeline
-✅ Available rebates and incentives (up to $30,000 total)
-✅ Step-by-step installation process
+We'll contact you within 24 hours to schedule your Free Site Review.
 
-Email notification sent to: ${formData.email}
-CC: info@geopioneer.com
-
-We'll contact you within 24 hours to schedule your on-site evaluation.`)
+Questions? Call us at (781) 654-5879`)
                           } else {
-                            alert(`Error: ${result.message}. Please try again or contact us directly at (781) 654-5879.`)
+                            alert('There was an issue submitting your request. Please try again or call us at (781) 654-5879.')
                           }
                         } catch (error) {
-                          console.error('Report generation error:', error)
-                          alert('There was an issue generating your report. Please try again or contact us directly at (781) 654-5879.')
+                          console.error('Form submission error:', error)
+                          alert('There was an issue submitting your request. Please call us at (781) 654-5879.')
                         }
                       }}
                       className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"
