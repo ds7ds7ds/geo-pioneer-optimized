@@ -501,10 +501,15 @@ const CalculatorPage = () => {
     }
 
     const geothermalAnnualKWh = estimatedAnnualKWh * efficiencyFactor
-    const geothermalAnnualCost = geothermalAnnualKWh * energyPrices.electricity
+    
+    // With Solar+Geo: near-zero energy cost (solar covers geo electricity needs)
+    const geothermalAnnualCost = 0 // Solar offsets all electricity
+    
+    // Battery revenue from demand response programs (ConnectedSolutions)
+    const batteryAnnualRevenue = 2000 // ~$2K/year for 5-8 years
 
-    // See Estimated Savings
-    const annualSavings = currentAnnualCost - geothermalAnnualCost
+    // Total annual benefit = eliminated costs + battery revenue
+    const annualSavings = currentAnnualCost + batteryAnnualRevenue
     const monthlySavings = annualSavings / 12
     const tenYearSavings = annualSavings * 10
     const twentyFiveYearSavings = annualSavings * 25
@@ -618,7 +623,8 @@ const CalculatorPage = () => {
       capexComparison,
       roiData,
       lifetimeCostData,
-      tierBreakdown
+      tierBreakdown,
+      batteryAnnualRevenue
     })
     setShowResults(true)
   }
@@ -874,33 +880,61 @@ const CalculatorPage = () => {
           </CardHeader>
         </Card>
 
-        {/* Cost Savings */}
-        <div className="grid md:grid-cols-3 gap-6">
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Monthly Savings</CardTitle>
-              <div className="text-2xl font-bold text-blue-600">
-                ${Math.round(results.monthlySavings).toLocaleString()}
+        {/* Cost Savings Breakdown */}
+        <Card className="bg-blue-50 border-blue-200">
+          <CardHeader>
+            <CardTitle className="text-xl text-blue-800">Your Annual Benefit Breakdown</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="grid md:grid-cols-2 gap-6">
+              <div className="space-y-3">
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                  <span className="text-gray-700">Current Energy Costs Eliminated:</span>
+                  <span className="text-xl font-bold text-green-600">+${Math.round(results.currentAnnualCost).toLocaleString()}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                  <span className="text-gray-700">🔋 Battery Revenue (5-8 yrs):</span>
+                  <span className="text-xl font-bold text-green-600">+${results.batteryAnnualRevenue?.toLocaleString() || '2,000'}</span>
+                </div>
+                <div className="flex justify-between items-center p-3 bg-white rounded-lg">
+                  <span className="text-gray-700">New Energy Cost (Solar covers):</span>
+                  <span className="text-xl font-bold text-gray-500">$0</span>
+                </div>
+                <hr className="border-blue-300" />
+                <div className="flex justify-between items-center p-4 bg-green-100 rounded-lg">
+                  <span className="text-lg font-semibold text-green-800">Total Annual Benefit:</span>
+                  <span className="text-2xl font-bold text-green-700">${Math.round(results.annualSavings).toLocaleString()}/yr</span>
+                </div>
               </div>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">Annual Savings</CardTitle>
-              <div className="text-2xl font-bold text-blue-600">
-                ${Math.round(results.annualSavings).toLocaleString()}
+              <div className="grid grid-cols-1 gap-4">
+                <Card className="text-center">
+                  <CardHeader className="py-4">
+                    <CardTitle className="text-sm text-gray-600">Monthly Benefit</CardTitle>
+                    <div className="text-2xl font-bold text-blue-600">
+                      ${Math.round(results.monthlySavings).toLocaleString()}
+                    </div>
+                  </CardHeader>
+                </Card>
+                <Card className="text-center">
+                  <CardHeader className="py-4">
+                    <CardTitle className="text-sm text-gray-600">10-Year Benefit</CardTitle>
+                    <div className="text-2xl font-bold text-blue-600">
+                      ${Math.round(results.tenYearSavings).toLocaleString()}
+                    </div>
+                  </CardHeader>
+                </Card>
+                <Card className="text-center">
+                  <CardHeader className="py-4">
+                    <CardTitle className="text-sm text-gray-600">25-Year Benefit</CardTitle>
+                    <div className="text-2xl font-bold text-blue-600">
+                      ${Math.round(results.twentyFiveYearSavings).toLocaleString()}
+                    </div>
+                  </CardHeader>
+                </Card>
               </div>
-            </CardHeader>
-          </Card>
-          <Card>
-            <CardHeader className="text-center">
-              <CardTitle className="text-lg">25-Year Savings</CardTitle>
-              <div className="text-2xl font-bold text-blue-600">
-                ${Math.round(results.twentyFiveYearSavings).toLocaleString()}
-              </div>
-            </CardHeader>
-          </Card>
-        </div>
+            </div>
+          </CardContent>
+        </Card>
 
         {/* System Cost Breakdown - Tier 2 Full Ownership */}
         <Card>
