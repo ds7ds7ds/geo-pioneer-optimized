@@ -116,18 +116,20 @@ const HomePage = () => {
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             <div>
               <Badge className="mb-6 bg-cyan-500/20 text-cyan-400 border-cyan-400/30 text-sm px-4 py-1">
-                Massachusetts Geothermal Pioneers
+                NetZero Solutions for New England
               </Badge>
               <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl font-bold mb-4 leading-tight">
                 Set the temperature.
                 <span className="bg-gradient-to-r from-green-400 via-cyan-400 to-blue-400 bg-clip-text text-transparent block mt-1">Forget the bills.</span>
               </h1>
-              <p className="text-xl text-cyan-200 mb-4 font-medium">
-                Net-zero homes designed for full comfort and predictable costs.
+              <p className="text-xl text-cyan-200 mb-2 font-medium">
+                Net-zero comfort. Predictable energy costs. Engineered for cold climates.
               </p>
-              <p className="text-lg text-gray-400 mb-8 leading-relaxed">
-                In many parts of the world, comfort is assumed. In the U.S., comfort often comes with anxiety.
-                <span className="text-gray-300 block mt-2">Net-zero homes change that. Set the temperature once — stop worrying about energy prices forever.</span>
+              <p className="text-lg text-yellow-300/90 mb-4 font-medium">
+                Warm winters. Cool summers. No bill shock.
+              </p>
+              <p className="text-base text-gray-400 mb-8 leading-relaxed">
+                Your home should be comfortable — without fearing utility bills. GeoPioneer designs net-zero geothermal and solar systems that let you set your comfort once and stop worrying about energy price spikes.
               </p>
               <div className="flex flex-col sm:flex-row gap-4">
                 <Button 
@@ -137,7 +139,7 @@ const HomePage = () => {
                 >
                   <Link to="/calculator">
                     <Calculator className="h-5 w-5 mr-2" />
-                    Calculate Savings
+                    See Estimated Savings
                   </Link>
                 </Button>
                 <Button 
@@ -146,7 +148,7 @@ const HomePage = () => {
                   onClick={() => setShowAssessment(true)}
                 >
                   <FileText className="h-5 w-5 mr-2" />
-                  Free Assessment
+                  Get Free Site Review
                 </Button>
               </div>
             </div>
@@ -384,8 +386,11 @@ const HomePage = () => {
           <h2 className="text-3xl font-bold text-gray-900 mb-6">
             Ready to Start Saving?
           </h2>
-          <p className="text-lg text-gray-600 mb-8">
-            Get a free assessment and discover your savings potential
+          <p className="text-lg text-gray-600 mb-4">
+            Designed for New England winters, our systems deliver predictable energy costs and set-and-forget comfort.
+          </p>
+          <p className="text-base text-gray-500 mb-8">
+            Proudly serving New England homeowners with net-zero energy solutions designed for cold climates.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 justify-center">
             <Button 
@@ -393,7 +398,7 @@ const HomePage = () => {
               className="bg-gradient-to-r from-green-500 to-cyan-500 hover:from-green-600 hover:to-cyan-600 text-white px-8 py-4 font-bold"
               onClick={() => setShowAssessment(true)}
             >
-              Get Free Assessment
+              Get Free Site Review
             </Button>
             <a href="tel:+17816545879">
               <Button 
