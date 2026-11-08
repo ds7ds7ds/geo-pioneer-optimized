@@ -2024,19 +2024,18 @@ Report ID: ${result.reportId}
 The report includes:
 ✅ Your calculated savings: $${results?.annualSavings?.toLocaleString() || '0'}/year
 ✅ ROI analysis and break-even timeline
-✅ Available rebates and incentives (up to $30,000 total)
+✅ Available rebates and incentives
 ✅ Step-by-step installation process
 
-Email notification sent to: ${formData.email}
-CC: info@geopioneer.com
-
-We'll contact you within 24 hours to schedule your on-site evaluation.`)
+${result.leadReceived
+  ? "We've received your details and will contact you within one business day to schedule your on-site evaluation."
+  : "We couldn't send your details to our team. Please call (781) 654-5879 or email info@geo-pioneer.com so we can follow up."}`)
                           } else {
-                            alert(`Error: ${result.message}. Please try again or contact us directly at (555) 123-4567.`)
+                            alert(`Error: ${result.message}. Please try again or call us at (781) 654-5879.`)
                           }
                         } catch (error) {
                           console.error('Report generation error:', error)
-                          alert('There was an issue generating your report. Please try again or contact us directly at (555) 123-4567.')
+                          alert('There was an issue generating your report. Please try again or call us at (781) 654-5879.')
                         }
                       }}
                       className="bg-green-600 hover:bg-green-700 text-white px-8 py-3"

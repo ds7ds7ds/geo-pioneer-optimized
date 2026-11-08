@@ -158,26 +158,8 @@ const OffersPage = () => {
     }
   ]
 
-  const testimonials = [
-    {
-      quote: "Started with the free battery and loved having backup power. Six months later, we upgraded to the full EaaS package. Our oil bill is gone, and we're paying less than before. Best decision we've made.",
-      author: "Sarah M.",
-      location: "Lexington, MA",
-      tier: "Tier 1 → EaaS"
-    },
-    {
-      quote: "The EaaS program was perfect for us. Zero upfront, and we're saving $300/month compared to our old oil + electric bills. In 6 years, we'll own the whole system.",
-      author: "James & Linda T.",
-      location: "Newton, MA",
-      tier: "Tier 2 EaaS"
-    },
-    {
-      quote: "We had the capital, so we bought outright. The MassSave rebates covered a huge chunk. Now we produce more energy than we use—last month the utility paid us.",
-      author: "Michael R.",
-      location: "Brookline, MA",
-      tier: "Tier 2 Purchase"
-    }
-  ]
+  // Customer quotes go here once real customers have agreed to be quoted.
+  const testimonials = []
 
   return (
     <div className="min-h-screen">
@@ -568,6 +550,7 @@ const OffersPage = () => {
       </section>
 
       {/* Testimonials */}
+      {testimonials.length > 0 && (
       <section className="py-20 bg-gradient-to-br from-slate-100 to-gray-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="text-center mb-16">
@@ -601,6 +584,7 @@ const OffersPage = () => {
           </div>
         </div>
       </section>
+      )}
 
       {/* FAQ Section */}
       <section className="py-20 bg-white">

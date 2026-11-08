@@ -8,7 +8,7 @@ const blogPosts = {
   "from-skeptic-to-believer": {
     id: 1,
     title: "From Skeptic to Believer: Addressing Homeowner Concerns About Geothermal",
-    author: "Dmitry Kur",
+    author: "Dmitry Kuravskiy",
     date: "March 10, 2024",
     readTime: "8 min read",
     category: "Homeowner Guide",
@@ -127,7 +127,7 @@ const blogPosts = {
       {
         type: "list",
         items: [
-          "**30% Federal Tax Credit** — The Inflation Reduction Act provides a 30% tax credit for geothermal installations through 2032. On a $30,000 system, that's $9,000 back in your pocket.",
+          "**Federal credit through EaaS** — The 30% federal tax credit for homeowners who buy a system ended on December 31, 2025. Under GeoPioneer's EaaS program, GeoPioneer owns the system, claims the commercial credit and passes the savings on in your rate.",
           "**State and Utility Incentives** — Massachusetts offers additional rebates through Mass Save and other programs, potentially saving thousands more.",
           "**Energy Savings** — Most homeowners see 40-60% reductions in heating and cooling costs. For a home spending $4,000 annually on heating oil and air conditioning, that's $1,600-$2,400 saved every year.",
           "**Longevity** — Your geothermal system will last 20-25 years indoors and 50+ years underground. Over its lifetime, you'll avoid 2-3 conventional system replacements.",
@@ -137,8 +137,8 @@ const blogPosts = {
       {
         type: "callout",
         icon: "lightbulb",
-        title: "Real Payback Example",
-        content: "A typical Massachusetts homeowner switching from oil heat saves approximately $2,000 annually. After the 30% tax credit, their net investment might be $21,000. Simple payback: about 10 years—with 15+ years of additional savings to follow, plus a system that adds value to their home."
+        title: "Payback Example",
+        content: "A typical Massachusetts homeowner switching from oil heat saves approximately $2,000 annually. After Mass Save rebates, their net investment might be around $20,000. Simple payback: about 10 years—with 15+ years of additional savings to follow, plus a system that adds value to their home."
       },
       {
         type: "heading",
@@ -173,7 +173,7 @@ const blogPosts = {
   "geothermal-101": {
     id: 2,
     title: "Geothermal Heating & Cooling 101: Everything You Need to Know",
-    author: "Dmitry Kur",
+    author: "Dmitry Kuravskiy",
     date: "March 8, 2024",
     readTime: "10 min read",
     category: "Education",
@@ -385,7 +385,7 @@ const blogPosts = {
   "renew-home-netzero": {
     id: 3,
     title: "Transform Your Home to NetZero: A Complete Guide to Energy Independence",
-    author: "Dmitry Kur",
+    author: "Dmitry Kuravskiy",
     date: "March 3, 2024",
     readTime: "9 min read",
     category: "NetZero",
@@ -524,11 +524,11 @@ const blogPosts = {
       },
       {
         type: "heading",
-        content: "Real Results from Real Homes"
+        content: "What the Numbers Can Look Like"
       },
       {
         type: "paragraph",
-        content: "Let's look at a real example. The Andersons, a family in Lexington, lived in a 1960s colonial that was hemorrhaging energy. Their annual energy costs exceeded $6,000 between heating oil, electricity for AC, and general usage."
+        content: "Here's an illustrative example. Picture a family in Lexington living in a 1960s colonial that was hemorrhaging energy. Their annual energy costs exceeded $6,000 between heating oil, electricity for AC, and general usage."
       },
       {
         type: "paragraph",
@@ -546,7 +546,7 @@ const blogPosts = {
       {
         type: "callout",
         icon: "check",
-        title: "The Andersons' Results",
+        title: "Results in This Example",
         content: "Annual savings: $5,800. Net investment after incentives: approximately $45,000. Simple payback: under 8 years. And they'll continue saving for decades while living in a more comfortable, valuable home."
       },
       {
@@ -570,7 +570,7 @@ const blogPosts = {
   "achieve-netzero-standard": {
     id: 4,
     title: "Massachusetts Incentives & Rebates: Maximize Your Savings on Geothermal and Solar",
-    author: "Dmitry Kur",
+    author: "Dmitry Kuravskiy",
     date: "March 3, 2024",
     readTime: "8 min read",
     category: "Renewable Energy",
@@ -597,38 +597,19 @@ const blogPosts = {
       },
       {
         type: "subheading",
-        content: "Geothermal Tax Credit: 30%"
+        content: "Federal Tax Credit: Ended for Homeowners in 2025"
       },
       {
         type: "paragraph",
-        content: "The federal Residential Clean Energy Credit provides a 30% tax credit for geothermal heat pump installations. This credit is available through 2032, with a gradual phase-down thereafter. There's no maximum limit—if you install a $35,000 system, you receive a $10,500 tax credit."
-      },
-      {
-        type: "callout",
-        icon: "check",
-        title: "What's Covered",
-        content: "The 30% credit applies to the total installed cost, including equipment, labor, permits, and even the cost of removing your old system. Essentially, everything on your installer's invoice qualifies."
-      },
-      {
-        type: "paragraph",
-        content: "Important notes about claiming this credit:"
-      },
-      {
-        type: "list",
-        items: [
-          "You must have sufficient tax liability to claim the full credit. If you owe $8,000 in federal taxes and have a $10,500 credit, you can carry the remaining $2,500 forward to future tax years.",
-          "The credit applies to your primary residence and second homes, but not rental properties.",
-          "Both new construction and retrofits qualify.",
-          "There's no income limit—the credit is available regardless of how much you earn."
-        ]
+        content: "The federal Residential Clean Energy Credit gave homeowners 30% back on geothermal and solar installations. It ended for systems installed after December 31, 2025. The commercial credit for geothermal continues at 30% through 2032, then steps down. Homeowners can still benefit from it through third-party ownership: under GeoPioneer's EaaS program, GeoPioneer owns the system, claims the credit and passes the savings on in your rate."
       },
       {
         type: "subheading",
-        content: "Solar Tax Credit: 30%"
+        content: "Solar Tax Credit"
       },
       {
         type: "paragraph",
-        content: "Solar installations qualify for the same 30% federal tax credit, with the same rules and timelines. If you install both geothermal and solar, you can claim 30% on both systems. For a combined $60,000 installation, that's $18,000 in federal tax credits."
+        content: "The same homeowner credit covered solar and also ended on December 31, 2025. Solar owned by a third party, such as under EaaS, can still qualify for the commercial credit."
       },
       {
         type: "heading",
@@ -711,7 +692,7 @@ const blogPosts = {
       },
       {
         type: "heading",
-        content: "Putting It All Together: A Real Example"
+        content: "Putting It All Together: An Example"
       },
       {
         type: "paragraph",
@@ -732,7 +713,7 @@ const blogPosts = {
       {
         type: "list",
         items: [
-          "**Federal tax credit (30%)**: -$16,800",
+          "**Federal tax credit (30%, before 2026)**: -$16,800",
           "**Mass Save geothermal rebate**: -$10,000",
           "**Net cost**: $29,200"
         ]
@@ -741,7 +722,7 @@ const blogPosts = {
         type: "callout",
         icon: "lightbulb",
         title: "Nearly 50% Savings",
-        content: "Incentives reduced this homeowner's cost from $56,000 to $29,200—a savings of $26,800. Plus, SMART payments will provide ongoing income for the next 10 years, and energy savings will exceed $3,000 annually."
+        content: "Before 2026, incentives cut this homeowner's cost from $56,000 to $29,200. Buying outright today, the federal credit no longer applies, which is why GeoPioneer offers EaaS: we own the system, claim the commercial credit and pass the savings on in your rate. Plus, SMART payments will provide ongoing income for the next 10 years, and energy savings will exceed $3,000 annually."
       },
       {
         type: "heading",
@@ -911,6 +892,11 @@ const BlogPostPage = () => {
       <article className="py-12 lg:py-16">
         <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="bg-white rounded-2xl shadow-xl p-8 lg:p-12">
+            <div className="mb-8 rounded-lg border border-amber-300 bg-amber-50 p-4 text-sm text-amber-900">
+              <strong>Updated November 2026:</strong> the 30% federal tax credit for homeowners who buy geothermal
+              or solar ended on December 31, 2025. Figures in this article that include it no longer apply to an
+              outright purchase. Through GeoPioneer's EaaS program, the commercial credit still applies.
+            </div>
             {post.sections.map((section, index) => renderSection(section, index))}
 
             {/* Tags */}

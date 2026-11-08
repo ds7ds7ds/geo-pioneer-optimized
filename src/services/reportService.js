@@ -1,7 +1,38 @@
 // PDF Generation and Email Service
 import jsPDF from 'jspdf'
 
+// Send the assessment to the 'calculator-assessment' Netlify form (declared in index.html)
+const submitLead = async (formData) => {
+  const fields = {
+    'form-name': 'calculator-assessment',
+    name: formData.name || '',
+    email: formData.email || '',
+    phone: formData.phone || '',
+    address: formData.address || '',
+    squareFootage: formData.squareFootage || '',
+    heatingFuel: formData.heatingFuel || '',
+    annualHeatingCost: formData.annualHeatingCost || '',
+    annualElectricityCost: formData.annualElectricityCost || '',
+    zipCode: formData.zipCode || '',
+    assessmentType: formData.assessmentType || '',
+    calculationResults: JSON.stringify(formData.calculationResults || {}),
+  }
+  const res = await fetch('/', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+    body: new URLSearchParams(fields).toString(),
+  })
+  if (!res.ok) throw new Error(`Form submission failed (${res.status})`)
+}
+
 export const generateAndSendReport = async (formData, reportType = 'general') => {
+  let leadReceived = false
+  try {
+    await submitLead(formData)
+    leadReceived = true
+  } catch (error) {
+    console.error('Lead submission error:', error)
+  }
   try {
     // Generate PDF content based on report type
     const reportContent = generateReportContent(formData, reportType)
@@ -17,7 +48,8 @@ export const generateAndSendReport = async (formData, reportType = 'general') =>
     
     return {
       success: true,
-      message: `Report generated and sent to ${formData.email}`,
+      leadReceived,
+      message: 'Report generated',
       reportId: reportContent.reportMetadata.reportId,
       timestamp: new Date().toISOString(),
       pdfGenerated: true
@@ -216,7 +248,7 @@ const generatePDF = async (reportContent) => {
   pdf.setFontSize(8)
   pdf.setFont('helvetica', 'normal')
   pdf.text('GeoPioneer - Your Geothermal Energy Partner', pageWidth / 2, footerY, { align: 'center' })
-  pdf.text('Contact: info@geopioneer.com | (781) 654-5879', pageWidth / 2, footerY + 4, { align: 'center' })
+  pdf.text('Contact: info@geo-pioneer.com | (781) 654-5879', pageWidth / 2, footerY + 4, { align: 'center' })
   
   return pdf.output('blob')
 }
@@ -239,7 +271,7 @@ const sendEmailWithPDF = async (formData, reportContent, pdfBlob) => {
   // Prepare email data
   const emailData = {
     to: formData.email,
-    cc: 'info@geopioneer.com',
+    cc: 'info@geo-pioneer.com',
     subject: `Your ${reportContent.title}`,
     html: generateEmailHTML(formData, reportContent),
     attachments: [{
@@ -289,7 +321,7 @@ const generateEmailHTML = (formData, reportContent) => {
           
           <p>Best regards,<br>
           The GeoPioneer Team<br>
-          <a href="mailto:info@geopioneer.com">info@geopioneer.com</a><br>
+          <a href="mailto:info@geo-pioneer.com">info@geo-pioneer.com</a><br>
           (781) 654-5879</p>
           
           <hr style="margin: 20px 0; border: none; border-top: 1px solid #eee;">
@@ -342,8 +374,8 @@ const generateReportContent = (formData, reportType) => {
         {
           name: 'Federal Tax Credit (ITC)',
           amount: '30% of total cost',
-          description: 'Federal investment tax credit through 2032',
-          eligibility: 'All residential geothermal installations'
+          description: 'Commercial credit through 2032, available through GeoPioneer EaaS (third-party ownership); the homeowner credit ended after 2025',
+          eligibility: 'Systems owned by GeoPioneer under EaaS'
         },
         {
           name: 'Mass Save Heat Pump Rebates',
@@ -379,8 +411,8 @@ const generateReportContent = (formData, reportType) => {
         {
           name: 'Federal Tax Credit (ITC)',
           amount: '30% of total cost',
-          description: 'Federal investment tax credit through 2032',
-          eligibility: 'All residential geothermal installations'
+          description: 'Commercial credit through 2032, available through GeoPioneer EaaS (third-party ownership); the homeowner credit ended after 2025',
+          eligibility: 'Systems owned by GeoPioneer under EaaS'
         },
         {
           name: 'Mass Save Heat Pump Rebates',
@@ -427,7 +459,7 @@ const generateReportContent = (formData, reportType) => {
         {
           name: 'Federal Tax Credit (ITC)',
           amount: '30% of total cost',
-          description: 'Federal investment tax credit through 2032'
+          description: 'Commercial credit through 2032, available through GeoPioneer EaaS (third-party ownership); the homeowner credit ended after 2025'
         },
         {
           name: 'Mass Save Heat Pump Rebates',
@@ -454,7 +486,7 @@ const simulateEmailService = async (formData, reportContent) => {
   
   // Log the email that would be sent
   console.log('Email would be sent to:', formData.email)
-  console.log('CC:', 'info@geopioneer.com')
+  console.log('CC:', 'info@geo-pioneer.com')
   console.log('Subject:', `Your ${reportContent.title}`)
   console.log('Report Content:', reportContent)
   

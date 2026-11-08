@@ -1,6 +1,6 @@
 import React from 'react'
 import { Link } from 'react-router-dom'
-import { Phone, Mail, MapPin, Facebook, Twitter, Linkedin } from 'lucide-react'
+import { Phone, Mail, MapPin } from 'lucide-react'
 
 const Footer = () => {
   const currentYear = new Date().getFullYear()
@@ -18,8 +18,8 @@ const Footer = () => {
               <span className="text-xl font-bold">GeoPioneer</span>
             </div>
             <p className="text-gray-300 mb-6 max-w-md">
-              Massachusetts' leading geothermal installation company, specializing in efficient 
-              vertical bore systems for existing homes and new construction.
+              Geothermal, solar and battery systems for Massachusetts homes, existing and new, with
+              no-upfront-cost EaaS or outright purchase.
             </p>
             <div className="space-y-2">
               <div className="flex items-center">
@@ -94,15 +94,10 @@ const Footer = () => {
             <div className="text-gray-400 text-sm mb-4 md:mb-0">
               © {currentYear} GeoPioneer. All rights reserved.
             </div>
-            <div className="flex space-x-6">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Facebook className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Twitter className="h-5 w-5" />
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                <Linkedin className="h-5 w-5" />
+            <div className="text-gray-400 text-sm">
+              Commercial, campus and multifamily projects:{' '}
+              <a href="https://geostellar.io" target="_blank" rel="noopener noreferrer" className="text-gray-200 hover:text-white underline underline-offset-4">
+                GeoStellar Engineering
               </a>
             </div>
           </div>
